@@ -1,0 +1,1 @@
+<view class="content"><view data-event-opts="{{[['tap',[['switchAddress',['$event']]]]]}}" class="address-switch" bindtap="__e">{{''+currentAddress.addr}}<label class="fa fa-angle-right"></label></view></view>

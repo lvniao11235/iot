@@ -1,0 +1,61 @@
+{
+	"pages": [
+		{
+			"path": "pages/index/index"
+		},
+		{
+			"path": "pages/login/login"
+		},
+		{
+			"path": "pages/login/phoneLogin"
+		}, 
+		{
+			"path": "pages/login/clause"
+		},
+		{
+			"path": "pages/device/device"
+		},
+		{
+			"path": "pages/my/my"
+		},
+		{
+			"path": "pages/address/addressList"
+		},
+		{
+			"path": "pages/address/managerAddress"
+		},
+		{
+			"path": "pages/address/modifyAddress"
+		}
+    ],
+	"tabBar":{
+		"color":"#b1b1b1",
+		"selectedColor":"#1296db",
+		"list":[
+			{
+				"pagePath":"pages/index/index",
+				"iconPath":"static/images/home.png",
+				"selectedIconPath":"static/images/homeactive.png",
+				"text":"首页"
+			},
+			{
+				"pagePath":"pages/device/device",
+				"iconPath":"static/images/device.png",
+				"selectedIconPath":"static/images/deviceactive.png",
+				"text":"设备"
+			},  
+			{
+				"pagePath":"pages/my/my",
+				"iconPath":"static/images/my.png",
+				"selectedIconPath":"static/images/myactive.png",
+				"text":"我的"
+			}
+		]
+	},
+	"globalStyle": {
+		"navigationBarTextStyle": "black",
+		"navigationBarTitleText": "uni-app",
+		"navigationBarBackgroundColor": "#F8F8F8",
+		"backgroundColor": "#F8F8F8"
+	}
+}

@@ -1,0 +1,35 @@
+.icon-list-item{
+	padding:0 16px;
+	position:relative;
+	height:40px;
+	line-height:40px;
+	vertical-align:middle;
+}
+
+.icon-list-item > *{
+	display:inline-block;
+	margin-right:10px;
+}
+
+.icon-list-item > .icon > image{
+	height:23px;
+	width:20px;
+	top:6px;
+	position:relative;
+}
+
+.icon-list-item > .btns{
+	float:right;
+	font-size:12px;
+}
+
+.icon-list-item > .btns > label{
+	margin-left:10px;
+}
+
+.label-form-item > *{
+	display:inline-block;
+	height:40px;
+	line-height:40px;
+	vertical-align:middle;
+}

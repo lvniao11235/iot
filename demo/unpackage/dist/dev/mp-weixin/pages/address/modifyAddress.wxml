@@ -1,0 +1,1 @@
+<view style="padding-top:50px;"><view class="label-form-item"><label>家庭名称</label><input data-event-opts="{{[['input',[['__set_model',['$0','addr','$event',[]],['currentAddress']]]]]}}" value="{{currentAddress.addr}}" bindinput="__e"/></view><view class="label-form-item"><label>家庭所在城市</label><view class="city"></view></view></view>
