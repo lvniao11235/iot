@@ -31,7 +31,7 @@
 				})
 			},
 			remove(id){
-				
+				this.$store.commit("removeAddress", id);
 			}
 		}
 	}

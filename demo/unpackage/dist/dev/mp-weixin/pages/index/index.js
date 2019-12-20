@@ -142,6 +142,17 @@ var _vuex = __webpack_require__(/*! vuex */ 16);function _objectSpread(target) {
   (0, _vuex.mapState)(["currentAddress"])),
 
   onLoad: function onLoad() {
+    uni.login({
+      provider: "weixin",
+      success: function success(res) {
+        console.log(res);
+      } });
+
+    uni.getUserInfo({
+      provider: "weixin",
+      success: function success(res) {
+        console.log(res);
+      } });
 
   },
   mounted: function mounted() {

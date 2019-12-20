@@ -8434,7 +8434,7 @@ module.exports = {"_from":"@dcloudio/uni-stat@^2.0.0-alpha-24420191128001","_id"
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _default = { "pages": { "pages/index/index": {}, "pages/login/login": {}, "pages/login/phoneLogin": {}, "pages/login/clause": {}, "pages/device/device": {}, "pages/my/my": {}, "pages/address/addressList": {}, "pages/address/managerAddress": {}, "pages/address/modifyAddress": {} }, "globalStyle": { "navigationBarTextStyle": "black", "navigationBarTitleText": "uni-app", "navigationBarBackgroundColor": "#F8F8F8", "backgroundColor": "#F8F8F8" } };exports.default = _default;
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _default = { "pages": { "pages/index/index": {}, "pages/login/login": {}, "pages/login/phoneLogin": {}, "pages/login/clause": {}, "pages/device/device": {}, "pages/my/my": {}, "pages/address/addressList": {}, "pages/address/managerAddress": {}, "pages/address/modifyAddress": {}, "components/CitySelect": {} }, "globalStyle": { "navigationBarTextStyle": "black", "navigationBarTitleText": "uni-app", "navigationBarBackgroundColor": "#F8F8F8", "backgroundColor": "#F8F8F8" } };exports.default = _default;
 
 /***/ }),
 /* 8 */
@@ -8579,19 +8579,36 @@ var store = new _vuex.default.Store({
     address: [
     {
       id: 1,
-      addr: '北京的家' },
+      addr: '北京的家',
+      city: '北京' },
 
     {
       id: 2,
-      addr: '我的家' }],
+      addr: '我的家',
+      city: '西安' }],
 
 
     currentAddress: {
       id: 2,
-      addr: '我的家' } },
+      addr: '我的家',
+      city: '西安' },
 
+    modifyAddress: null },
 
   mutations: {
+    removeAddress: function removeAddress(state, id) {
+      var index = state.address.indexOf(function (x) {return x.id == id;});
+      state.address.splice(index, 1);
+    },
+    changeAddress: function changeAddress(state, address) {
+      var temp = state.address.find(function (x) {return x.id == address.id;});
+      temp.addr = address.addr;
+      temp.city = address.city;
+      //state.address = state.address;
+    },
+    setModifyAddress: function setModifyAddress(state, address) {
+      state.modifyAddress = address;
+    },
     setAppName: function setAppName(state, newAppName) {
       state.appName = newAppName;
     },

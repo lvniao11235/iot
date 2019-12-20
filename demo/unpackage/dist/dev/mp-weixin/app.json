@@ -8,7 +8,8 @@
     "pages/my/my",
     "pages/address/addressList",
     "pages/address/managerAddress",
-    "pages/address/modifyAddress"
+    "pages/address/modifyAddress",
+    "components/CitySelect"
   ],
   "subPackages": [],
   "window": {
@@ -41,6 +42,10 @@
       }
     ]
   },
-  "usingComponents": {},
-  "sitemapLocation": "sitemap81.json"
+  "permission": {
+    "scope.userLocation": {
+      "desc": "获取位置信息"
+    }
+  },
+  "usingComponents": {}
 }

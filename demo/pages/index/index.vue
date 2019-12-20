@@ -18,7 +18,18 @@
 			...mapState(["currentAddress"])
 		},
 		onLoad() {
-
+			uni.login({
+				provider:"weixin",
+				success:res=>{
+					console.log(res)
+				}
+			})
+			uni.getUserInfo({
+				provider:"weixin",
+				success:res=>{
+					console.log(res)
+				}
+			})
 		},
 		mounted(){
 			uni.setNavigationBarTitle({

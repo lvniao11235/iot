@@ -26,6 +26,9 @@
 		},
 		{
 			"path": "pages/address/modifyAddress"
+		},
+		{
+			"path": "components/CitySelect"
 		}
     ],
 	"tabBar":{
