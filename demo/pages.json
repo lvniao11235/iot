@@ -1,6 +1,9 @@
 {
 	"pages": [
 		{
+			"path": "pages/device/device"
+		},
+		{
 			"path": "pages/index/index"
 		},
 		{
@@ -13,7 +16,19 @@
 			"path": "pages/login/clause"
 		},
 		{
-			"path": "pages/device/device"
+			"path": "pages/device/addDevice"
+		},
+		{
+			"path": "pages/device/searchDevice"
+		},
+		{
+		    "path" : "pages/device/settingDevice"
+		},
+		{
+		    "path" : "pages/device/settingWifi"
+		},
+		{
+			"path": "pages/device/connectStatus"
 		},
 		{
 			"path": "pages/my/my"
@@ -26,6 +41,9 @@
 		},
 		{
 			"path": "pages/address/modifyAddress"
+		},
+		{
+			"path": "pages/address/createAddress" 
 		},
 		{
 			"path": "components/CitySelect"

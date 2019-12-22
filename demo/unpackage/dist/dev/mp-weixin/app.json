@@ -1,14 +1,20 @@
 {
   "pages": [
+    "pages/device/device",
     "pages/index/index",
     "pages/login/login",
     "pages/login/phoneLogin",
     "pages/login/clause",
-    "pages/device/device",
+    "pages/device/addDevice",
+    "pages/device/searchDevice",
+    "pages/device/settingDevice",
+    "pages/device/settingWifi",
+    "pages/device/connectStatus",
     "pages/my/my",
     "pages/address/addressList",
     "pages/address/managerAddress",
     "pages/address/modifyAddress",
+    "pages/address/createAddress",
     "components/CitySelect"
   ],
   "subPackages": [],

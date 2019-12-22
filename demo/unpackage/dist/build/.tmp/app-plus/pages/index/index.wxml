@@ -1,1 +1,1 @@
-<view class="content"><image class="logo" src="/static/logo.png" data-event-opts="{{[['tap',[['changeAppName',['$event']]]]]}}" bindtap="__e"></image><view class="text-area"><text class="title">{{appName}}</text></view></view>
+<view class="content"><view data-event-opts="{{[['tap',[['switchAddress',['$event']]]]]}}" class="address-switch" bindtap="__e">{{''+currentAddress.addr}}<label class="fa fa-angle-right"></label></view></view>

@@ -1,0 +1,17 @@
+
+.manager-address .btn{
+	width:60%;
+	position:absolute;
+	bottom:60px;
+	right:0;
+	left:0;
+	margin:auto;
+	background-color:rgba(74, 144, 226, 1);
+	height:35px;
+	line-height:35px;
+	vertical-align:middle;
+	color:#fff;
+	text-align:center;
+	border-radius:5px;
+}
+

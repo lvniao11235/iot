@@ -1,11 +1,15 @@
 {
   "pages": [
+    "pages/index/index",
     "pages/login/login",
     "pages/login/phoneLogin",
     "pages/login/clause",
-    "pages/index/index",
     "pages/device/device",
-    "pages/my/my"
+    "pages/my/my",
+    "pages/address/addressList",
+    "pages/address/managerAddress",
+    "pages/address/modifyAddress",
+    "components/CitySelect"
   ],
   "window": {
     "navigationBarTextStyle": "black",

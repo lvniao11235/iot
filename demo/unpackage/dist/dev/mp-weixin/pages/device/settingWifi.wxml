@@ -1,0 +1,1 @@
+<view class="setting-wifi"><view class="tip">选择设备工作的Wi-Fi</view><picker value="{{index}}" range="{{wifis}}" range-key="SSID" data-event-opts="{{[['change',[['bindPickerChange',['$event']]]]]}}" bindchange="__e"><view class="uni-input">{{wifis[index].SSID}}</view></picker><view class="next">下一步</view></view>

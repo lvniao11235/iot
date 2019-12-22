@@ -734,7 +734,7 @@ function initData(vueOptions, context) {
     try {
       data = data.call(context); // 支持 Vue.prototype 上挂的数据
     } catch (e) {
-      if (Object({"NODE_ENV":"development","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG) {
+      if (Object({"VUE_APP_PLATFORM":"mp-weixin","NODE_ENV":"development","BASE_URL":"/"}).VUE_APP_DEBUG) {
         console.warn('根据 Vue 的 data 函数初始化小程序 data 失败，请尽量确保 data 函数中不访问 vm 对象，否则可能影响首次数据渲染速度。', data);
       }
     }
@@ -7009,7 +7009,7 @@ function type(obj) {
 
 function flushCallbacks$1(vm) {
     if (vm.__next_tick_callbacks && vm.__next_tick_callbacks.length) {
-        if (Object({"NODE_ENV":"development","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG) {
+        if (Object({"VUE_APP_PLATFORM":"mp-weixin","NODE_ENV":"development","BASE_URL":"/"}).VUE_APP_DEBUG) {
             var mpInstance = vm.$scope;
             console.log('[' + (+new Date) + '][' + (mpInstance.is || mpInstance.route) + '][' + vm._uid +
                 ']:flushCallbacks[' + vm.__next_tick_callbacks.length + ']');
@@ -7030,14 +7030,14 @@ function nextTick$1(vm, cb) {
     //1.nextTick 之前 已 setData 且 setData 还未回调完成
     //2.nextTick 之前存在 render watcher
     if (!vm.__next_tick_pending && !hasRenderWatcher(vm)) {
-        if(Object({"NODE_ENV":"development","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG){
+        if(Object({"VUE_APP_PLATFORM":"mp-weixin","NODE_ENV":"development","BASE_URL":"/"}).VUE_APP_DEBUG){
             var mpInstance = vm.$scope;
             console.log('[' + (+new Date) + '][' + (mpInstance.is || mpInstance.route) + '][' + vm._uid +
                 ']:nextVueTick');
         }
         return nextTick(cb, vm)
     }else{
-        if(Object({"NODE_ENV":"development","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG){
+        if(Object({"VUE_APP_PLATFORM":"mp-weixin","NODE_ENV":"development","BASE_URL":"/"}).VUE_APP_DEBUG){
             var mpInstance$1 = vm.$scope;
             console.log('[' + (+new Date) + '][' + (mpInstance$1.is || mpInstance$1.route) + '][' + vm._uid +
                 ']:nextMPTick');
@@ -7113,7 +7113,7 @@ var patch = function(oldVnode, vnode) {
     });
     var diffData = diff(data, mpData);
     if (Object.keys(diffData).length) {
-      if (Object({"NODE_ENV":"development","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG) {
+      if (Object({"VUE_APP_PLATFORM":"mp-weixin","NODE_ENV":"development","BASE_URL":"/"}).VUE_APP_DEBUG) {
         console.log('[' + (+new Date) + '][' + (mpInstance.is || mpInstance.route) + '][' + this._uid +
           ']差量更新',
           JSON.stringify(diffData));
@@ -7520,9 +7520,9 @@ module.exports = g;
 
 /***/ }),
 /* 4 */
-/*!*****************************************************************!*\
-  !*** C:/Users/v-yojiao/Desktop/projects/uniapp/demo/pages.json ***!
-  \*****************************************************************/
+/*!************************************************************!*\
+  !*** C:/Users/lvniao/Desktop/projects/iot/demo/pages.json ***!
+  \************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -8427,20 +8427,20 @@ module.exports = {"_from":"@dcloudio/uni-stat@^2.0.0-alpha-24420191128001","_id"
 
 /***/ }),
 /* 7 */
-/*!**********************************************************************************!*\
-  !*** C:/Users/v-yojiao/Desktop/projects/uniapp/demo/pages.json?{"type":"style"} ***!
-  \**********************************************************************************/
+/*!*****************************************************************************!*\
+  !*** C:/Users/lvniao/Desktop/projects/iot/demo/pages.json?{"type":"style"} ***!
+  \*****************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _default = { "pages": { "pages/index/index": {}, "pages/login/login": {}, "pages/login/phoneLogin": {}, "pages/login/clause": {}, "pages/device/device": {}, "pages/my/my": {}, "pages/address/addressList": {}, "pages/address/managerAddress": {}, "pages/address/modifyAddress": {}, "components/CitySelect": {} }, "globalStyle": { "navigationBarTextStyle": "black", "navigationBarTitleText": "uni-app", "navigationBarBackgroundColor": "#F8F8F8", "backgroundColor": "#F8F8F8" } };exports.default = _default;
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _default = { "pages": { "pages/device/device": {}, "pages/index/index": {}, "pages/login/login": {}, "pages/login/phoneLogin": {}, "pages/login/clause": {}, "pages/device/addDevice": {}, "pages/device/searchDevice": {}, "pages/device/settingDevice": {}, "pages/device/settingWifi": {}, "pages/device/connectStatus": {}, "pages/my/my": {}, "pages/address/addressList": {}, "pages/address/managerAddress": {}, "pages/address/modifyAddress": {}, "pages/address/createAddress": {}, "components/CitySelect": {} }, "globalStyle": { "navigationBarTextStyle": "black", "navigationBarTitleText": "uni-app", "navigationBarBackgroundColor": "#F8F8F8", "backgroundColor": "#F8F8F8" } };exports.default = _default;
 
 /***/ }),
 /* 8 */
-/*!*********************************************************************************!*\
-  !*** C:/Users/v-yojiao/Desktop/projects/uniapp/demo/pages.json?{"type":"stat"} ***!
-  \*********************************************************************************/
+/*!****************************************************************************!*\
+  !*** C:/Users/lvniao/Desktop/projects/iot/demo/pages.json?{"type":"stat"} ***!
+  \****************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -8560,9 +8560,9 @@ function normalizeComponent (
 
 /***/ }),
 /* 15 */
-/*!*********************************************************************!*\
-  !*** C:/Users/v-yojiao/Desktop/projects/uniapp/demo/store/index.js ***!
-  \*********************************************************************/
+/*!****************************************************************!*\
+  !*** C:/Users/lvniao/Desktop/projects/iot/demo/store/index.js ***!
+  \****************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -8593,9 +8593,47 @@ var store = new _vuex.default.Store({
       addr: '我的家',
       city: '西安' },
 
-    modifyAddress: null },
+    modifyAddress: null,
+    brands: [
+    { id: 1, name: "美的", products: [
+      { id: 1, name: "V2空气净化器", img: '/static/images/v2.png' },
+      { id: 2, name: "V3空气净化器", img: '/static/images/v3.png' }] },
+
+    { id: 2, name: "沁园", products: [
+      { id: 1, name: "V2空气净化器", img: '/static/images/v2.png' },
+      { id: 2, name: "V3空气净化器", img: '/static/images/v3.png' }] },
+
+    { id: 3, name: "海尔", products: [
+      { id: 1, name: "V2空气净化器", img: '/static/images/v2.png' },
+      { id: 2, name: "V3空气净化器", img: '/static/images/v3.png' }] },
+
+    { id: 4, name: "Blue air", products: [
+      { id: 1, name: "V2空气净化器", img: '/static/images/v2.png' },
+      { id: 2, name: "V3空气净化器", img: '/static/images/v3.png' }] },
+
+    { id: 5, name: "华为", products: [
+      { id: 1, name: "V2空气净化器", img: '/static/images/v2.png' },
+      { id: 2, name: "V3空气净化器", img: '/static/images/v3.png' }] }],
+
+
+    selectBrand: null,
+    selectProduct: null },
 
   mutations: {
+    setSelectProduct: function setSelectProduct(state, product) {
+      state.selectProduct = product;
+    },
+    setSelectBrand: function setSelectBrand(state, brand) {
+      state.selectBrand = brand;
+    },
+    createAddress: function createAddress(state, address) {
+      var max = 0;
+      state.address.forEach(function (x) {
+        if (max < x.id) max = x.id;
+      });
+      address.id = max + 1;
+      state.address.push(address);
+    },
     removeAddress: function removeAddress(state, id) {
       var index = state.address.indexOf(function (x) {return x.id == id;});
       state.address.splice(index, 1);
@@ -9572,9 +9610,9 @@ var index_esm = {
 
 /***/ }),
 /* 17 */
-/*!***********************************************************************!*\
-  !*** C:/Users/v-yojiao/Desktop/projects/uniapp/demo/font-awesome.css ***!
-  \***********************************************************************/
+/*!******************************************************************!*\
+  !*** C:/Users/lvniao/Desktop/projects/iot/demo/font-awesome.css ***!
+  \******************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -9582,9 +9620,9 @@ var index_esm = {
 
 /***/ }),
 /* 18 */
-/*!***************************************************************!*\
-  !*** C:/Users/v-yojiao/Desktop/projects/uniapp/demo/base.css ***!
-  \***************************************************************/
+/*!**********************************************************!*\
+  !*** C:/Users/lvniao/Desktop/projects/iot/demo/base.css ***!
+  \**********************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 

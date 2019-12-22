@@ -18,18 +18,18 @@
 			...mapState(["currentAddress"])
 		},
 		onLoad() {
-			uni.login({
-				provider:"weixin",
-				success:res=>{
-					console.log(res)
-				}
-			})
-			uni.getUserInfo({
-				provider:"weixin",
-				success:res=>{
-					console.log(res)
-				}
-			})
+			// uni.login({
+			// 	provider:"weixin",
+			// 	success:res=>{
+			// 		console.log(res)
+			// 	}
+			// })
+			// uni.getUserInfo({
+			// 	provider:"weixin",
+			// 	success:res=>{
+			// 		console.log(res)
+			// 	}
+			// })
 		},
 		mounted(){
 			uni.setNavigationBarTitle({
@@ -73,14 +73,5 @@
 		color: #8f8f94;
 	}
 	
-	.address-switch{
-		text-align:left;
-		padding-left:16px;
-		font-size:20px;
-	}
 	
-	.address-switch label{
-		display:inline-block;
-		margin-left:5px;
-	}
 </style>

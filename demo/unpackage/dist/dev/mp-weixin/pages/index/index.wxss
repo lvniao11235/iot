@@ -34,13 +34,6 @@
 	font-size: 36rpx;
 	color: #8f8f94;
 }
-.address-switch{
-	text-align:left;
-	padding-left:16px;
-	font-size:20px;
-}
-.address-switch label{
-	display:inline-block;
-	margin-left:5px;
-}
+
+
 

@@ -46,7 +46,7 @@
 				})
 			},
 			nameChanged(e){
-				this.$store.commit("setModifyAddress", this.currentAddress);
+				//this.$store.commit("setModifyAddress", this.currentAddress);
 			},
 			save(){
 				this.$store.commit("changeAddress", this.currentAddress);

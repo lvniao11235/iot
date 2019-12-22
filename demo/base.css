@@ -33,3 +33,14 @@
 	line-height:40px;
 	vertical-align:middle;
 }
+
+.address-switch{
+	text-align:left;
+	padding-left:16px;
+	font-size:20px;
+}
+
+.address-switch label{
+	display:inline-block;
+	margin-left:5px;
+}

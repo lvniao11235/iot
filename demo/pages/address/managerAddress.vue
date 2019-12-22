@@ -1,5 +1,5 @@
 <template>
-	<view>
+	<view class="manager-address">
 		<template v-for="addr in address">
 			<view :key="addr.id" class="icon-list-item">
 				<label class="icon"><image src="../../static/images/Dingyue.PNG"></image></label>
@@ -10,6 +10,7 @@
 				</view>
 			</view>
 		</template>
+		<view class="btn" @click="create">添加</view>
 	</view>
 </template>
 
@@ -32,10 +33,30 @@
 			},
 			remove(id){
 				this.$store.commit("removeAddress", id);
+			},
+			create(){
+				uni.navigateTo({
+					url:'./createAddress'
+				})
 			}
 		}
 	}
 </script>
 
 <style>
+	.manager-address .btn{
+		width:60%;
+		position:absolute;
+		bottom:60px;
+		right:0;
+		left:0;
+		margin:auto;
+		background-color:rgba(74, 144, 226, 1);
+		height:35px;
+		line-height:35px;
+		vertical-align:middle;
+		color:#fff;
+		text-align:center;
+		border-radius:5px;
+	}
 </style>
