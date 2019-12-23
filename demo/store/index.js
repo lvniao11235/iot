@@ -49,8 +49,113 @@ const store = new Vuex.Store({
 		],
 		selectBrand:null,
 		selectProduct:null,
+		devices:[
+			{
+				id:1,
+				name:'空气净化器',
+				share:false,
+				quality:'优',
+				img:'/static/images/v2.png',
+				aufo:false,
+				speed:1,
+				sleep:false,
+				clock:false,
+				turnOn:true,
+				turnOff:false,
+				turnOnRepeat:null,
+				turnOffRepeat:null,
+				turnOnTime:'',
+				turnOffTime:'',
+				start:true
+			}, {
+				id:2,
+				name:'空气净化器',
+				share:true,
+				quality:'优',
+				img:'/static/images/v3.png',
+				aufo:false,
+				speed:1,
+				sleep:false,
+				clock:false,
+				turnOn:false,
+				turnOff:false,
+				turnOnRepeat:null,
+				turnOffRepeat:null,
+				turnOnTime:'',
+				turnOffTime:'',
+				start:true
+			}
+		],
+		selectDevice:null
 	},
 	mutations:{
+		setSelectDeviceStart(state, flag){
+			state.selectDevice.start = flag;
+			let device = state.selectDevice;
+			state.selectDevice = null;
+			state.selectDevice = device;
+		},
+		setSelectDeviceTurnOnTime(state, time){
+			state.selectDevice.turnOnTime = time;
+			let device = state.selectDevice;
+			state.selectDevice = null;
+			state.selectDevice = device;
+		},
+		setSelectDeviceTurnOffTime(state, time){
+			state.selectDevice.turnOffTime = time;
+			let device = state.selectDevice;
+			state.selectDevice = null;
+			state.selectDevice = device;
+		},
+		setSelectDeviceRepeat(state, value){
+			if(value.type == 1){
+				state.selectDevice.turnOnRepeat = value.value;
+			} else {
+				state.selectDevice.turnOffRepeat = value.value;
+			}
+			let device = state.selectDevice;
+			state.selectDevice = null;
+			state.selectDevice = device;
+		},
+		setSelectDeviceTurnOn(state, flag){
+			state.selectDevice.turnOn = flag;
+			let device = state.selectDevice;
+			state.selectDevice = null;
+			state.selectDevice = device;
+		},
+		setSelectDeviceTurnOff(state, flag){
+			state.selectDevice.turnOff = flag;
+			let device = state.selectDevice;
+			state.selectDevice = null;
+			state.selectDevice = device;
+		},
+		setSelectDeviceClock(state, flag){
+			state.selectDevice.clock = flag;
+			let device = state.selectDevice;
+			state.selectDevice = null;
+			state.selectDevice = device;
+		},
+		setSelectDeviceSpeed(state, speed){
+			state.selectDevice.speed = speed;
+			let device = state.selectDevice;
+			state.selectDevice = null;
+			state.selectDevice = device;
+		},
+		setSelectDeviceAuto(state, flag){
+			state.selectDevice.auto = flag;
+			let device = state.selectDevice;
+			state.selectDevice = null;
+			state.selectDevice = device;
+		},
+		setSelectDeviceSleep(state, flag){
+			state.selectDevice.sleep = flag;
+			let device = state.selectDevice;
+			state.selectDevice = null;
+			state.selectDevice = device;
+		},
+		setSelectDevice(state, device){
+			state.selectDevice = device;
+		},
 		setSelectProduct(state, product){
 			state.selectProduct = product;
 		},

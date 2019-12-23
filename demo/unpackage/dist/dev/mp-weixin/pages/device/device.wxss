@@ -83,18 +83,39 @@ page{
 	padding-left:5px;
 	font-size:14px;
 	margin-top:10px;
+	margin-bottom:10px;
 }
 .device .devices{
 	font-size:0px;
 }
 .device .device-item{
-	width:calc(50% - 10px);
+	width:calc(50% - 20px);
 	margin:5px;
 	background-color:#fff;
 	font-size:14px;
+	display:inline-block;
+	box-shadow:0 0 5px #8F8F8F;
+	padding:5px;
+	border-radius:5px;
 }
 .device .device-item .title-right{
 	float:right;
-	margin-left:10px;
+	margin-right:10px;
+	color:#C0C0C0;
+	font-size:12px;
 }
+.device .device-item .title-right.fa{
+	color:rgba(22, 155, 213, 1);
+}
+.device .device-item cover-image{
+	width:35px;
+	height:70px
+}
+.device .device-item .quality{
+	color:#c0c0c0;
+	margin-top:5px;
+	margin-bottom:10px;
+	font-size:12px;
+}
+
 

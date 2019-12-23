@@ -1,20 +1,23 @@
 <template>
 	<view class="device">
-		<view class="address-switch" @click="switchAddress">
-			{{currentAddress.addr}}<label class="fa fa-angle-right"></label>
-			<view class="add-device" v-if="devices && devices.length > 0">
+		<view class="address-switch">
+			<label @click="switchAddress">{{currentAddress.addr}}<label class="fa fa-angle-right"></label></label>
+			<view @click="addDevice" class="add-device" v-if="devices && devices.length > 0">
 				<label>添加设备</label><label class="fa fa-plus"></label>
 			</view>
 		</view>
 		<view class="has-device" v-if="devices && devices.length > 0">
 			<view class="mydevice">我的设备</view>
 			<view class="devices">
-				<view class="device-item" v-for="device in devices" :key="device.id">
+				<view class="device-item" v-for="device in devices"
+				 :key="device.id" @click="selectDevice(device)">
 					<view>
 						<label>{{device.name}}</label>
-						<label v-if="!device.share" class="title-right fa fa-ellipsis-v"></label>
+						<label @click.stop="configDevice(device)" v-if="!device.share" class="title-right fa fa-ellipsis-v"></label>
 						<label v-else class="title-right">共享</label>
 					</view>
+					<view class="quality">空气质量：{{device.quality}}</view>
+					<cover-image :src="device.img"></cover-image>
 				</view>
 			</view>
 		</view>
@@ -29,27 +32,14 @@
 </template>
 
 <script>
-	import { mapState } from 'vuex';
+	import { mapState, mapMutations } from 'vuex';
 	export default {
 		data() {
 			return {
-				devices:[{
-					id:1,
-					name:'空气净化器',
-					share:false,
-					quality:'优',
-					img:'/static/images/v2.png'
-				}, {
-					id:2,
-					name:'空气净化器',
-					share:true,
-					quality:'优',
-					img:'/static/images/v3.png'
-				}]
 			}
 		},
 		computed:{
-			...mapState(["currentAddress"])
+			...mapState(["currentAddress", "devices"])
 		},
 		onLoad() {
 			uni.setNavigationBarTitle({
@@ -60,6 +50,7 @@
 			
 		},
 		methods: {
+			...mapMutations(["setSelectDevice"]),
 			switchAddress(){
 				uni.navigateTo({
 					url:'../address/addressList'
@@ -68,6 +59,18 @@
 			addDevice(){
 				uni.navigateTo({
 					url:'./addDevice'
+				})
+			},
+			selectDevice(device){
+				this.$store.commit("setSelectDevice", device);
+				uni.navigateTo({
+					url:'./deviceDetail'
+				})
+			},
+			configDevice(device){
+				this.$store.commit("setSelectDevice", device);
+				uni.navigateTo({
+					url:'./configDevice'
 				})
 			}
 		}
@@ -154,6 +157,7 @@
 		padding-left:5px;
 		font-size:14px;
 		margin-top:10px;
+		margin-bottom:10px;
 	}
 	
 	.device .devices{
@@ -161,14 +165,37 @@
 	}
 	
 	.device .device-item{
-		width:calc(50% - 10px);
+		width:calc(50% - 20px);
 		margin:5px;
 		background-color:#fff;
 		font-size:14px;
+		display:inline-block;
+		box-shadow:0 0 5px #8F8F8F;
+		padding:5px;
+		border-radius:5px;
 	}
 	
 	.device .device-item .title-right{
 		float:right;
-		margin-left:10px;
+		margin-right:10px;
+		color:#C0C0C0;
+		font-size:12px;
 	}
+	
+	.device .device-item .title-right.fa{
+		color:rgba(22, 155, 213, 1);
+	}
+	
+	.device .device-item cover-image{
+		width:35px;
+		height:70px
+	}
+	
+	.device .device-item .quality{
+		color:#c0c0c0;
+		margin-top:5px;
+		margin-bottom:10px;
+		font-size:12px;
+	}
+	
 </style>

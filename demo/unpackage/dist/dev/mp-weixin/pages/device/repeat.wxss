@@ -1,0 +1,27 @@
+
+.repeat .repeat-item{
+	height:50px;
+	line-height:50px;
+	vertical-align:middle;
+	width:calc(90% - 20px);
+	margin:20px auto;
+	padding:0px 10px;
+	border:1px solid #000000;
+	border-radius:10px;
+}
+.repeat .repeat-item radio{
+	float:right;
+	margin-right:20px;
+}
+.repeat .btn{
+	background-color:rgba(22, 155, 213, 1);
+	height:40px;
+	line-height:40px;
+	vertical-align:middle;
+	text-align:center;
+	width:60%;
+	margin:30px auto;
+	color:#fff;
+	border-radius:5px;
+}
+

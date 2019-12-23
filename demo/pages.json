@@ -28,7 +28,19 @@
 		    "path" : "pages/device/settingWifi"
 		},
 		{
+		    "path" : "pages/device/deviceDetail"
+		},
+		{
+		    "path" : "pages/device/setTimer"
+		},
+		{
 			"path": "pages/device/connectStatus"
+		},
+		{
+			"path": "pages/device/configDevice"
+		},
+		{
+			"path": "pages/device/repeat"
 		},
 		{
 			"path": "pages/my/my"

@@ -734,7 +734,7 @@ function initData(vueOptions, context) {
     try {
       data = data.call(context); // 支持 Vue.prototype 上挂的数据
     } catch (e) {
-      if (Object({"VUE_APP_PLATFORM":"mp-weixin","NODE_ENV":"development","BASE_URL":"/"}).VUE_APP_DEBUG) {
+      if (Object({"NODE_ENV":"development","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG) {
         console.warn('根据 Vue 的 data 函数初始化小程序 data 失败，请尽量确保 data 函数中不访问 vm 对象，否则可能影响首次数据渲染速度。', data);
       }
     }
@@ -7009,7 +7009,7 @@ function type(obj) {
 
 function flushCallbacks$1(vm) {
     if (vm.__next_tick_callbacks && vm.__next_tick_callbacks.length) {
-        if (Object({"VUE_APP_PLATFORM":"mp-weixin","NODE_ENV":"development","BASE_URL":"/"}).VUE_APP_DEBUG) {
+        if (Object({"NODE_ENV":"development","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG) {
             var mpInstance = vm.$scope;
             console.log('[' + (+new Date) + '][' + (mpInstance.is || mpInstance.route) + '][' + vm._uid +
                 ']:flushCallbacks[' + vm.__next_tick_callbacks.length + ']');
@@ -7030,14 +7030,14 @@ function nextTick$1(vm, cb) {
     //1.nextTick 之前 已 setData 且 setData 还未回调完成
     //2.nextTick 之前存在 render watcher
     if (!vm.__next_tick_pending && !hasRenderWatcher(vm)) {
-        if(Object({"VUE_APP_PLATFORM":"mp-weixin","NODE_ENV":"development","BASE_URL":"/"}).VUE_APP_DEBUG){
+        if(Object({"NODE_ENV":"development","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG){
             var mpInstance = vm.$scope;
             console.log('[' + (+new Date) + '][' + (mpInstance.is || mpInstance.route) + '][' + vm._uid +
                 ']:nextVueTick');
         }
         return nextTick(cb, vm)
     }else{
-        if(Object({"VUE_APP_PLATFORM":"mp-weixin","NODE_ENV":"development","BASE_URL":"/"}).VUE_APP_DEBUG){
+        if(Object({"NODE_ENV":"development","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG){
             var mpInstance$1 = vm.$scope;
             console.log('[' + (+new Date) + '][' + (mpInstance$1.is || mpInstance$1.route) + '][' + vm._uid +
                 ']:nextMPTick');
@@ -7113,7 +7113,7 @@ var patch = function(oldVnode, vnode) {
     });
     var diffData = diff(data, mpData);
     if (Object.keys(diffData).length) {
-      if (Object({"VUE_APP_PLATFORM":"mp-weixin","NODE_ENV":"development","BASE_URL":"/"}).VUE_APP_DEBUG) {
+      if (Object({"NODE_ENV":"development","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG) {
         console.log('[' + (+new Date) + '][' + (mpInstance.is || mpInstance.route) + '][' + this._uid +
           ']差量更新',
           JSON.stringify(diffData));
@@ -7520,9 +7520,9 @@ module.exports = g;
 
 /***/ }),
 /* 4 */
-/*!************************************************************!*\
-  !*** C:/Users/lvniao/Desktop/projects/iot/demo/pages.json ***!
-  \************************************************************/
+/*!*********************************************************************!*\
+  !*** C:/Users/v-yojiao/Desktop/projects/uniapp/iot/demo/pages.json ***!
+  \*********************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -8427,20 +8427,20 @@ module.exports = {"_from":"@dcloudio/uni-stat@^2.0.0-alpha-24420191128001","_id"
 
 /***/ }),
 /* 7 */
-/*!*****************************************************************************!*\
-  !*** C:/Users/lvniao/Desktop/projects/iot/demo/pages.json?{"type":"style"} ***!
-  \*****************************************************************************/
+/*!**************************************************************************************!*\
+  !*** C:/Users/v-yojiao/Desktop/projects/uniapp/iot/demo/pages.json?{"type":"style"} ***!
+  \**************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _default = { "pages": { "pages/device/device": {}, "pages/index/index": {}, "pages/login/login": {}, "pages/login/phoneLogin": {}, "pages/login/clause": {}, "pages/device/addDevice": {}, "pages/device/searchDevice": {}, "pages/device/settingDevice": {}, "pages/device/settingWifi": {}, "pages/device/connectStatus": {}, "pages/my/my": {}, "pages/address/addressList": {}, "pages/address/managerAddress": {}, "pages/address/modifyAddress": {}, "pages/address/createAddress": {}, "components/CitySelect": {} }, "globalStyle": { "navigationBarTextStyle": "black", "navigationBarTitleText": "uni-app", "navigationBarBackgroundColor": "#F8F8F8", "backgroundColor": "#F8F8F8" } };exports.default = _default;
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _default = { "pages": { "pages/device/device": { "usingComponents": {} }, "pages/index/index": { "usingComponents": {} }, "pages/login/login": { "usingComponents": {} }, "pages/login/phoneLogin": { "usingComponents": {} }, "pages/login/clause": { "usingComponents": {} }, "pages/device/addDevice": { "usingComponents": {} }, "pages/device/searchDevice": { "usingComponents": {} }, "pages/device/settingDevice": { "usingComponents": {} }, "pages/device/settingWifi": { "usingComponents": {} }, "pages/device/deviceDetail": { "usingComponents": {} }, "pages/device/connectStatus": { "usingComponents": {} }, "pages/my/my": { "usingComponents": {} }, "pages/address/addressList": { "usingComponents": {} }, "pages/address/managerAddress": { "usingComponents": {} }, "pages/address/modifyAddress": { "usingComponents": {} }, "pages/address/createAddress": { "usingComponents": {} }, "components/CitySelect": { "usingComponents": {} }, "pages/device/setTimer": { "usingComponents": {} }, "pages/device/repeat": { "usingComponents": {} }, "pages/device/configDevice": {} }, "globalStyle": { "navigationBarTextStyle": "black", "navigationBarTitleText": "uni-app", "navigationBarBackgroundColor": "#F8F8F8", "backgroundColor": "#F8F8F8" } };exports.default = _default;
 
 /***/ }),
 /* 8 */
-/*!****************************************************************************!*\
-  !*** C:/Users/lvniao/Desktop/projects/iot/demo/pages.json?{"type":"stat"} ***!
-  \****************************************************************************/
+/*!*************************************************************************************!*\
+  !*** C:/Users/v-yojiao/Desktop/projects/uniapp/iot/demo/pages.json?{"type":"stat"} ***!
+  \*************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -8560,9 +8560,9 @@ function normalizeComponent (
 
 /***/ }),
 /* 15 */
-/*!****************************************************************!*\
-  !*** C:/Users/lvniao/Desktop/projects/iot/demo/store/index.js ***!
-  \****************************************************************/
+/*!*************************************************************************!*\
+  !*** C:/Users/v-yojiao/Desktop/projects/uniapp/iot/demo/store/index.js ***!
+  \*************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -8617,9 +8617,114 @@ var store = new _vuex.default.Store({
 
 
     selectBrand: null,
-    selectProduct: null },
+    selectProduct: null,
+    devices: [
+    {
+      id: 1,
+      name: '空气净化器',
+      share: false,
+      quality: '优',
+      img: '/static/images/v2.png',
+      aufo: false,
+      speed: 1,
+      sleep: false,
+      clock: false,
+      turnOn: true,
+      turnOff: false,
+      turnOnRepeat: null,
+      turnOffRepeat: null,
+      turnOnTime: '',
+      turnOffTime: '',
+      start: true },
+    {
+      id: 2,
+      name: '空气净化器',
+      share: true,
+      quality: '优',
+      img: '/static/images/v3.png',
+      aufo: false,
+      speed: 1,
+      sleep: false,
+      clock: false,
+      turnOn: false,
+      turnOff: false,
+      turnOnRepeat: null,
+      turnOffRepeat: null,
+      turnOnTime: '',
+      turnOffTime: '',
+      start: true }],
+
+
+    selectDevice: null },
 
   mutations: {
+    setSelectDeviceStart: function setSelectDeviceStart(state, flag) {
+      state.selectDevice.start = flag;
+      var device = state.selectDevice;
+      state.selectDevice = null;
+      state.selectDevice = device;
+    },
+    setSelectDeviceTurnOnTime: function setSelectDeviceTurnOnTime(state, time) {
+      state.selectDevice.turnOnTime = time;
+      var device = state.selectDevice;
+      state.selectDevice = null;
+      state.selectDevice = device;
+    },
+    setSelectDeviceTurnOffTime: function setSelectDeviceTurnOffTime(state, time) {
+      state.selectDevice.turnOffTime = time;
+      var device = state.selectDevice;
+      state.selectDevice = null;
+      state.selectDevice = device;
+    },
+    setSelectDeviceRepeat: function setSelectDeviceRepeat(state, value) {
+      if (value.type == 1) {
+        state.selectDevice.turnOnRepeat = value.value;
+      } else {
+        state.selectDevice.turnOffRepeat = value.value;
+      }
+      var device = state.selectDevice;
+      state.selectDevice = null;
+      state.selectDevice = device;
+    },
+    setSelectDeviceTurnOn: function setSelectDeviceTurnOn(state, flag) {
+      state.selectDevice.turnOn = flag;
+      var device = state.selectDevice;
+      state.selectDevice = null;
+      state.selectDevice = device;
+    },
+    setSelectDeviceTurnOff: function setSelectDeviceTurnOff(state, flag) {
+      state.selectDevice.turnOff = flag;
+      var device = state.selectDevice;
+      state.selectDevice = null;
+      state.selectDevice = device;
+    },
+    setSelectDeviceClock: function setSelectDeviceClock(state, flag) {
+      state.selectDevice.clock = flag;
+      var device = state.selectDevice;
+      state.selectDevice = null;
+      state.selectDevice = device;
+    },
+    setSelectDeviceSpeed: function setSelectDeviceSpeed(state, speed) {
+      state.selectDevice.speed = speed;
+      var device = state.selectDevice;
+      state.selectDevice = null;
+      state.selectDevice = device;
+    },
+    setSelectDeviceAuto: function setSelectDeviceAuto(state, flag) {
+      state.selectDevice.auto = flag;
+      var device = state.selectDevice;
+      state.selectDevice = null;
+      state.selectDevice = device;
+    },
+    setSelectDeviceSleep: function setSelectDeviceSleep(state, flag) {
+      state.selectDevice.sleep = flag;
+      var device = state.selectDevice;
+      state.selectDevice = null;
+      state.selectDevice = device;
+    },
+    setSelectDevice: function setSelectDevice(state, device) {
+      state.selectDevice = device;
+    },
     setSelectProduct: function setSelectProduct(state, product) {
       state.selectProduct = product;
     },
@@ -9610,9 +9715,9 @@ var index_esm = {
 
 /***/ }),
 /* 17 */
-/*!******************************************************************!*\
-  !*** C:/Users/lvniao/Desktop/projects/iot/demo/font-awesome.css ***!
-  \******************************************************************/
+/*!***************************************************************************!*\
+  !*** C:/Users/v-yojiao/Desktop/projects/uniapp/iot/demo/font-awesome.css ***!
+  \***************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -9620,9 +9725,9 @@ var index_esm = {
 
 /***/ }),
 /* 18 */
-/*!**********************************************************!*\
-  !*** C:/Users/lvniao/Desktop/projects/iot/demo/base.css ***!
-  \**********************************************************/
+/*!*******************************************************************!*\
+  !*** C:/Users/v-yojiao/Desktop/projects/uniapp/iot/demo/base.css ***!
+  \*******************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
