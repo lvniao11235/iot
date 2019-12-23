@@ -184,6 +184,9 @@
 	
 	.device .device-item .title-right.fa{
 		color:rgba(22, 155, 213, 1);
+		width:30px;
+		text-align:center;
+		margin-right:0px;
 	}
 	
 	.device .device-item cover-image{

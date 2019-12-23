@@ -66,7 +66,8 @@ const store = new Vuex.Store({
 				turnOffRepeat:null,
 				turnOnTime:'',
 				turnOffTime:'',
-				start:true
+				start:true,
+				subscribe:false
 			}, {
 				id:2,
 				name:'空气净化器',
@@ -83,7 +84,8 @@ const store = new Vuex.Store({
 				turnOffRepeat:null,
 				turnOnTime:'',
 				turnOffTime:'',
-				start:true
+				start:true,
+				subscribe:false
 			}
 		],
 		selectDevice:null

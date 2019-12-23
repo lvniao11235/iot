@@ -7520,9 +7520,9 @@ module.exports = g;
 
 /***/ }),
 /* 4 */
-/*!*********************************************************************!*\
-  !*** C:/Users/v-yojiao/Desktop/projects/uniapp/iot/demo/pages.json ***!
-  \*********************************************************************/
+/*!************************************************************!*\
+  !*** C:/Users/lvniao/Desktop/projects/iot/demo/pages.json ***!
+  \************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -8427,20 +8427,20 @@ module.exports = {"_from":"@dcloudio/uni-stat@^2.0.0-alpha-24420191128001","_id"
 
 /***/ }),
 /* 7 */
-/*!**************************************************************************************!*\
-  !*** C:/Users/v-yojiao/Desktop/projects/uniapp/iot/demo/pages.json?{"type":"style"} ***!
-  \**************************************************************************************/
+/*!*****************************************************************************!*\
+  !*** C:/Users/lvniao/Desktop/projects/iot/demo/pages.json?{"type":"style"} ***!
+  \*****************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _default = { "pages": { "pages/device/device": { "usingComponents": {} }, "pages/index/index": { "usingComponents": {} }, "pages/login/login": { "usingComponents": {} }, "pages/login/phoneLogin": { "usingComponents": {} }, "pages/login/clause": { "usingComponents": {} }, "pages/device/addDevice": { "usingComponents": {} }, "pages/device/searchDevice": { "usingComponents": {} }, "pages/device/settingDevice": { "usingComponents": {} }, "pages/device/settingWifi": { "usingComponents": {} }, "pages/device/deviceDetail": { "usingComponents": {} }, "pages/device/connectStatus": { "usingComponents": {} }, "pages/my/my": { "usingComponents": {} }, "pages/address/addressList": { "usingComponents": {} }, "pages/address/managerAddress": { "usingComponents": {} }, "pages/address/modifyAddress": { "usingComponents": {} }, "pages/address/createAddress": { "usingComponents": {} }, "components/CitySelect": { "usingComponents": {} }, "pages/device/setTimer": { "usingComponents": {} }, "pages/device/repeat": { "usingComponents": {} }, "pages/device/configDevice": {} }, "globalStyle": { "navigationBarTextStyle": "black", "navigationBarTitleText": "uni-app", "navigationBarBackgroundColor": "#F8F8F8", "backgroundColor": "#F8F8F8" } };exports.default = _default;
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _default = { "pages": { "pages/device/device": { "usingComponents": {} }, "pages/index/index": { "usingComponents": {} }, "pages/login/login": { "usingComponents": {} }, "pages/login/phoneLogin": { "usingComponents": {} }, "pages/login/clause": { "usingComponents": {} }, "pages/device/addDevice": { "usingComponents": {} }, "pages/device/searchDevice": { "usingComponents": {} }, "pages/device/settingDevice": { "usingComponents": {} }, "pages/device/settingWifi": { "usingComponents": {} }, "pages/device/deviceDetail": { "usingComponents": {} }, "pages/device/setTimer": { "usingComponents": {} }, "pages/device/connectStatus": { "usingComponents": {} }, "pages/device/configDevice": { "usingComponents": {} }, "pages/device/repeat": { "usingComponents": {} }, "pages/my/my": { "usingComponents": {} }, "pages/address/addressList": { "usingComponents": {} }, "pages/address/managerAddress": { "usingComponents": {} }, "pages/address/modifyAddress": { "usingComponents": {} }, "pages/address/createAddress": { "usingComponents": {} }, "components/CitySelect": { "usingComponents": {} } }, "globalStyle": { "navigationBarTextStyle": "black", "navigationBarTitleText": "uni-app", "navigationBarBackgroundColor": "#F8F8F8", "backgroundColor": "#F8F8F8" } };exports.default = _default;
 
 /***/ }),
 /* 8 */
-/*!*************************************************************************************!*\
-  !*** C:/Users/v-yojiao/Desktop/projects/uniapp/iot/demo/pages.json?{"type":"stat"} ***!
-  \*************************************************************************************/
+/*!****************************************************************************!*\
+  !*** C:/Users/lvniao/Desktop/projects/iot/demo/pages.json?{"type":"stat"} ***!
+  \****************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -8560,9 +8560,9 @@ function normalizeComponent (
 
 /***/ }),
 /* 15 */
-/*!*************************************************************************!*\
-  !*** C:/Users/v-yojiao/Desktop/projects/uniapp/iot/demo/store/index.js ***!
-  \*************************************************************************/
+/*!****************************************************************!*\
+  !*** C:/Users/lvniao/Desktop/projects/iot/demo/store/index.js ***!
+  \****************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -8635,7 +8635,8 @@ var store = new _vuex.default.Store({
       turnOffRepeat: null,
       turnOnTime: '',
       turnOffTime: '',
-      start: true },
+      start: true,
+      subscribe: false },
     {
       id: 2,
       name: '空气净化器',
@@ -8652,7 +8653,8 @@ var store = new _vuex.default.Store({
       turnOffRepeat: null,
       turnOnTime: '',
       turnOffTime: '',
-      start: true }],
+      start: true,
+      subscribe: false }],
 
 
     selectDevice: null },
@@ -9715,9 +9717,9 @@ var index_esm = {
 
 /***/ }),
 /* 17 */
-/*!***************************************************************************!*\
-  !*** C:/Users/v-yojiao/Desktop/projects/uniapp/iot/demo/font-awesome.css ***!
-  \***************************************************************************/
+/*!******************************************************************!*\
+  !*** C:/Users/lvniao/Desktop/projects/iot/demo/font-awesome.css ***!
+  \******************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -9725,9 +9727,9 @@ var index_esm = {
 
 /***/ }),
 /* 18 */
-/*!*******************************************************************!*\
-  !*** C:/Users/v-yojiao/Desktop/projects/uniapp/iot/demo/base.css ***!
-  \*******************************************************************/
+/*!**********************************************************!*\
+  !*** C:/Users/lvniao/Desktop/projects/iot/demo/base.css ***!
+  \**********************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 

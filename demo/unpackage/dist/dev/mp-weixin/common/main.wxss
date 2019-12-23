@@ -3781,11 +3781,22 @@
 	vertical-align:middle;
 }
 
+.icon-list-item.border{
+	border-bottom:1px solid #B1B1B1;
+}
+
+.icon-list-item .value-icon{
+	display:inline-block;
+	margin-left:5px;
+}
+
+.icon-list-item > .icon,
 .icon-list-item > .icon > image{
 	height:23px;
 	width:20px;
 	top:6px;
 	position:relative;
+	display:inline-block;
 }
 
 .icon-list-item > .btns{
@@ -3795,6 +3806,13 @@
 
 .icon-list-item > .btns > label{
 	margin-left:10px;
+}
+
+.icon-list-item > .value{
+	float:right;
+	margin-right:10px;
+	color:#B1B1B1;
+	font-size:12px;
 }
 
 .address-switch{
