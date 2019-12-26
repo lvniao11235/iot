@@ -42,12 +42,31 @@
 			...mapState(["currentAddress", "devices"])
 		},
 		onLoad() {
+			console.log("onLoad")
 			uni.setNavigationBarTitle({
 			　　title:'智能硬件'
 			})
 		},
+		onHide(){
+			console.log("onHide")
+		},
+		onShow(){
+			console.log("onShow")
+		},
 		mounted(){
-			
+			console.log("mounted")
+		},
+		created(){
+			console.log("created")
+		},
+		beforeCreate(){
+			console.log("beforeCreate")
+		},
+		beforeMount(){
+			console.log("beforeMount")
+		},
+		destroyed(){
+			console.log("destroyed")
 		},
 		methods: {
 			...mapMutations(["setSelectDevice"]),

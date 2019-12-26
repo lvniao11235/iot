@@ -88,9 +88,13 @@ const store = new Vuex.Store({
 				subscribe:false
 			}
 		],
-		selectDevice:null
+		selectDevice:null,
+		currentUser:null
 	},
 	mutations:{
+		setCurrentUser(state, user){
+			state.currentUser = user;
+		},
 		setSelectDeviceStart(state, flag){
 			state.selectDevice.start = flag;
 			let device = state.selectDevice;

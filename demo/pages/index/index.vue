@@ -3,6 +3,7 @@
 		<view class="address-switch" @click="switchAddress">
 			{{currentAddress.addr}}<label class="fa fa-angle-right"></label>
 		</view>
+		{{currentUser.Name}}
 	</view>
 </template>
 
@@ -15,7 +16,7 @@
 			}
 		},
 		computed:{
-			...mapState(["currentAddress"])
+			...mapState(["currentAddress", "currentUser"])
 		},
 		onLoad() {
 			// uni.login({

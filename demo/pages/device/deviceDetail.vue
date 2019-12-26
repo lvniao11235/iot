@@ -2,9 +2,14 @@
 	<view class="device-detail">
 		<view class="title">
 			<view class="title-left">
-				<view>23μg/m³</view>
-				<view>空气质量：{{selectDevice.quality}}</view>
-				<view><label>温度：24°C</label><label>湿度：32%</label></view>
+				<view>{{currentDevice.PM25}}μg/m³</view>
+				<view>空气质量：{{quality[currentDevice.PM25Level-1]}}</view>
+				<view><label>温度：{{currentDevice.CurrentTemperature}}°C</label><label>湿度：{{currentDevice.CurrentHumidity}}%</label></view>
+				<view>
+					<label style="position:relative;margin-left:0;">CO
+					<label style="position:relative;font-size:8px;">2</label>：{{currentDevice.CO2}}</label>
+					<label>甲醛浓度：{{currentDevice.HCHO}}%</label>
+				</view>
 			</view>
 			<view class="title-right">
 				<cover-image :src="selectDevice.img"></cover-image>
@@ -14,9 +19,9 @@
 			<view>
 				<view class="title">滤芯剩余</view>
 				<view class="params">
-					<label>--</label>
-					<label>82%</label>
-					<label>--</label>
+					<label>{{currentDevice.FilterLifeTimePercent_1}}%</label>
+					<label>{{currentDevice.FilterLifeTimePercent_2}}%</label>
+					<label>{{currentDevice.FilterLifeTimePercent_3}}%</label>
 				</view>
 				<view class="remarks">
 					<label>活性炭</label>
@@ -37,42 +42,69 @@
 			<label>去订阅</label>
 		</view>
 		<view class="btns">
-			<view class="btn auto" @click="switchAuto" 
-				:class="{'selected':selectDevice.auto}">
+			<view class="btn auto" @click="switchWorkMode" 
+				:class="{'selected':currentDevice.WorkMode}">
 				<view class="btn-name">自动模式</view>
 				<view class="btn-icon">
 					<cover-image 
-						:src="!selectDevice.auto ? '/static/images/auto.png':'/static/images/whiteauto.png'"></cover-image>
+						:src="!currentDevice.WorkMode ? '/static/images/auto.png':'/static/images/whiteauto.png'"></cover-image>
 				</view>
-				<view class="btn-state">{{selectDevice.auto ? '已启用':'未启用'}}</view>
+				<view class="btn-state">{{currentDevice.auto ? '已启用':'未启用'}}</view>
 			</view>
 			<view class="btn" @click="switchSpeed">
 				<view class="btn-name">风速</view>
 				<view class="btn-icon">
 					<cover-image src="/static/images/fan.png"></cover-image>
 				</view>
-				<view class="btn-state">{{selectDevice.speed}}档</view>
+				<view class="btn-state">{{currentDevice.WindSpeed}}档</view>
 			</view>
 			<view class="btn sleep" @click="switchSleep" 
-				:class="{'selected':selectDevice.sleep}">
+				:class="{'selected':currentDevice.sleep}">
 				<view class="btn-name">睡眠模式</view>
 				<view class="btn-icon">
 					<cover-image 
-						:src="!selectDevice.sleep ? '/static/images/sleep.png':'/static/images/whitesleep.png'"></cover-image>
+						:src="!currentDevice.sleep ? '/static/images/sleep.png':'/static/images/whitesleep.png'"></cover-image>
 				</view>
-				<view class="btn-state">{{selectDevice.sleep ? '已启用':'未启用'}}</view>
+				<view class="btn-state">{{currentDevice.sleep ? '已启用':'未启用'}}</view>
 			</view>
 			<view class="btn" @click="switchClock">
 				<view class="btn-name">定时</view>
 				<view class="btn-icon">
 					<cover-image src="/static/images/clock.png"></cover-image>
 				</view>
-				<view class="btn-state">{{selectDevice.clock ? '已启用':'未启用'}}</view>
+				<view class="btn-state">{{currentDevice.clock ? '已启用':'未启用'}}</view>
+			</view>
+			<view class="btn sleep" @click="switchChildLock"
+				:class="{'selected':currentDevice.ChildLockSwitch}">
+				<view class="btn-name">童锁</view>
+				<view class="btn-icon">
+					<cover-image 
+						:src="!currentDevice.ChildLockSwitch ? '/static/images/sleep.png':'/static/images/whitesleep.png'"></cover-image>
+				</view>
+				<view class="btn-state">{{currentDevice.ChildLockSwitch ? '打开':'关闭'}}</view>
+			</view>
+			<view class="btn sleep" @click="switchHumidified"
+				:class="{'selected':currentDevice.Humidified}">
+				<view class="btn-name">加湿</view>
+				<view class="btn-icon">
+					<cover-image 
+						:src="!currentDevice.Humidified ? '/static/images/sleep.png':'/static/images/whitesleep.png'"></cover-image>
+				</view>
+				<view class="btn-state">{{currentDevice.Humidified ? '打开':'关闭'}}</view>
+			</view>
+			<view class="btn sleep" @click="switchIonsSwitch"
+				:class="{'selected':currentDevice.IonsSwitch}">
+				<view class="btn-name">离子团</view>
+				<view class="btn-icon">
+					<cover-image 
+						:src="!currentDevice.IonsSwitch ? '/static/images/sleep.png':'/static/images/whitesleep.png'"></cover-image>
+				</view>
+				<view class="btn-state">{{currentDevice.IonsSwitch ? '打开':'关闭'}}</view>
 			</view>
 		</view>
 		<view @click="shutdown" class="close-btn">
 			<cover-image 
-				:src="selectDevice.start ? '/static/images/start.png':'/static/images/shut-down.png'"></cover-image>
+				:src="currentDevice.PowerSwitch ? '/static/images/start.png':'/static/images/shut-down.png'"></cover-image>
 			</view>
 	</view>
 </template>
@@ -82,6 +114,10 @@
 	export default {
 		data() {
 			return {
+				currentDevice:null,
+				quality:[
+					"优","良","轻度污染","中度污染","重度污染","严重污染"
+				]
 			}
 		},
 		computed:{
@@ -91,24 +127,59 @@
 			uni.setNavigationBarTitle({
 			　　title:this.selectDevice.name
 			})
+			uni.request({
+				url:'http://39.98.107.68:8000/Api/AirPurifierDetails',
+				dataType:'json',
+				success:res=>{
+					if(res.data && res.data.length > 0){
+						this.currentDevice = res.data[0]
+					}
+				}
+			})
 		},
 		mounted(){
 			
 		},
+		onUnload(){
+			console.log("onUnload")
+		},
 		methods: {
+			saveDevice(){
+				uni.request({
+					url:'http://39.98.107.68:8000/Api/AirPurifierDetails',
+					dataType:'json',
+					method:'PUT',
+					data:this.currentDevice,
+					success:res=>{
+					}
+				})
+			},
 			...mapMutations([
 				"setSelectDeviceAuto", 
 				"setSelectDeviceSleep", 
 				"setSelectDeviceSpeed",
 				"setSelectDeviceStart"
 			]),
-			switchAuto(){
-				this.$store.commit("setSelectDeviceAuto", !this.selectDevice.auto)
+			switchWorkMode(){
+				this.currentDevice.WorkMode = !this.currentDevice.WorkMode
+				this.saveDevice();
+				//this.$store.commit("setSelectDeviceAuto", !this.selectDevice.auto)
 			},
 			switchSpeed(){
-				let speed = this.selectDevice.speed;
-				speed = (speed) % 3 + 1;
-				this.$store.commit("setSelectDeviceSpeed", speed)
+				let speed = this.currentDevice.WindSpeed;
+				this.currentDevice.WindSpeed = (speed+1) % 6;
+				this.saveDevice();
+				//this.$store.commit("setSelectDeviceSpeed", speed)
+			},
+			switchIonsSwitch(){
+				this.currentDevice.IonsSwitch = !this.currentDevice.IonsSwitch
+				this.saveDevice();
+			},
+			switchHumidified(){
+				this.currentDevice.Humidified = !this.currentDevice.Humidified
+			},
+			switchChildLock(){
+				this.currentDevice.ChildLockSwitch = !this.currentDevice.ChildLockSwitch
 			},
 			switchSleep(){
 				this.$store.commit("setSelectDeviceSleep", !this.selectDevice.sleep)
@@ -133,7 +204,7 @@
 	
 	.device-detail > .title .title-left{
 		width:calc(100% - 100px);
-		height:100px;
+		height:130px;
 		display:inline-block;
 		
 	}
@@ -155,7 +226,7 @@
 		line-height:40px;
 	}
 	
-	.device-detail > .title .title-left > view:last-child > label:last-child{
+	.device-detail > .title .title-left > view > label:last-child{
 		display:inline-block;
 		margin-left:20px;
 	}
