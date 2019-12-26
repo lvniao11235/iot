@@ -1,10 +1,13 @@
 <template>
 	<view class="setting-wifi">
-		<view class="tip">选择设备工作的Wi-Fi</view>
+		<view class="tip"><label class="fa fa-exclamation-circle" style="color:#26b37a;"></label>选择设备工作的Wi-Fi</view>
+		<view style="margin-left:10px;">SSID</view>
 		<picker @change="bindPickerChange" :value="index" :range="wifis" range-key="SSID">
 			<view class="uni-input">{{wifis[index].SSID}}</view>
 		</picker>
-		<view class="next">下一步</view>
+		<view style="margin-left:10px;">密码</view>
+		<input password="true"></input>
+		<view class="next" @click="next">下一步</view>
 	</view>
 </template>
 
@@ -40,13 +43,22 @@
 			
 		},
 		methods: {
-			
+			bindPickerChange(e){
+				this.index = parseInt(e.detail.value);
+			},
+			next(){
+				uni.navigateTo({
+					url:'./connectStatus'
+				})
+			}
 		}
 	}
 </script>
 
 <style>
-	
+	.setting-wifi .tip{
+		margin:16px;
+	}
 	
 	.setting-wifi .next{
 		width:80%;
@@ -62,5 +74,16 @@
 		height:30px;
 		line-height:30px;
 		vertical-align:middle;
+	}
+	
+	.setting-wifi picker,
+	.setting-wifi input{
+		border:1px solid #000000;
+		width:calc(100% - 40px);
+		height:30px;
+		line-height:30px;
+		vertical-align:middle;
+		margin:auto;
+		padding:0 10px;
 	}
 </style>

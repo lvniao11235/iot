@@ -7,7 +7,7 @@
 			<view>· 请把手机和设备放到靠近路由器的地方</view>
 			<view>· 请确认密码是否正确</view>
 		</view>
-		<view class="next">确定</view>
+		<view class="next" @click="next">确定</view>
 	</view>
 </template>
 
@@ -15,11 +15,15 @@
 	export default {
 		data:function(){
 			return {
-				connected:false
+				connected:true
 			}
 		},
 		methods:{
-			
+			next(){
+				uni.switchTab({
+					url:'./device'
+				})
+			}
 		}
 	}
 </script>

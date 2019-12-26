@@ -4,7 +4,7 @@
 }
 .device-detail > .title .title-left{
 	width:calc(100% - 100px);
-	height:100px;
+	height:130px;
 	display:inline-block;
 }
 .device-detail > .title .title-left > view{
@@ -22,7 +22,7 @@
 	height:40px;
 	line-height:40px;
 }
-.device-detail > .title .title-left > view:last-child > label:last-child{
+.device-detail > .title .title-left > view > label:last-child{
 	display:inline-block;
 	margin-left:20px;
 }

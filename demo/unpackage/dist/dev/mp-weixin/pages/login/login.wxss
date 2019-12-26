@@ -23,7 +23,8 @@ page{
 	height:110px;
 	text-align:center;
 }
-.login-btns > view{
+.login-btns > view,
+.login-btns > button{
 	height:45px;
 	line-height:45px;
 	box-sizing:border-box;
@@ -32,7 +33,7 @@ page{
 	width:60%;
 	margin:auto;
 }
-.login-btns > view:first-child{
+.login-btns > button:first-child{
 	background-color:rgba(102, 204, 51, 1);
 	color:#fff;
 }

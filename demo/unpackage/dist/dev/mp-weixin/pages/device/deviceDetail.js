@@ -202,37 +202,108 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 var _vuex = __webpack_require__(/*! vuex */ 16);function _objectSpread(target) {for (var i = 1; i < arguments.length; i++) {var source = arguments[i] != null ? arguments[i] : {};var ownKeys = Object.keys(source);if (typeof Object.getOwnPropertySymbols === 'function') {ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) {return Object.getOwnPropertyDescriptor(source, sym).enumerable;}));}ownKeys.forEach(function (key) {_defineProperty(target, key, source[key]);});}return target;}function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;}var _default =
 {
   data: function data() {
-    return {};
+    return {
+      currentDevice: null,
+      quality: [
+      "优", "良", "轻度污染", "中度污染", "重度污染", "严重污染"] };
+
 
   },
   computed: _objectSpread({},
   (0, _vuex.mapState)(["selectDevice"])),
 
-  onLoad: function onLoad() {
+  onLoad: function onLoad() {var _this = this;
     uni.setNavigationBarTitle({
       title: this.selectDevice.name });
+
+    uni.request({
+      url: 'http://39.98.107.68:8000/Api/AirPurifierDetails',
+      dataType: 'json',
+      success: function success(res) {
+        if (res.data && res.data.length > 0) {
+          _this.currentDevice = res.data[0];
+        }
+      } });
 
   },
   mounted: function mounted() {
 
   },
-  methods: _objectSpread({},
+  onUnload: function onUnload() {
+    console.log("onUnload");
+  },
+  methods: _objectSpread({
+    saveDevice: function saveDevice() {
+      uni.request({
+        url: 'http://39.98.107.68:8000/Api/AirPurifierDetails',
+        dataType: 'json',
+        method: 'PUT',
+        data: this.currentDevice,
+        success: function success(res) {
+        } });
+
+    } },
   (0, _vuex.mapMutations)([
   "setSelectDeviceAuto",
   "setSelectDeviceSleep",
   "setSelectDeviceSpeed",
   "setSelectDeviceStart"]), {
 
-    switchAuto: function switchAuto() {
-      this.$store.commit("setSelectDeviceAuto", !this.selectDevice.auto);
+    switchWorkMode: function switchWorkMode() {
+      this.currentDevice.WorkMode = !this.currentDevice.WorkMode;
+      this.saveDevice();
+      //this.$store.commit("setSelectDeviceAuto", !this.selectDevice.auto)
     },
     switchSpeed: function switchSpeed() {
-      var speed = this.selectDevice.speed;
-      speed = speed % 3 + 1;
-      this.$store.commit("setSelectDeviceSpeed", speed);
+      var speed = this.currentDevice.WindSpeed;
+      this.currentDevice.WindSpeed = (speed + 1) % 6;
+      this.saveDevice();
+      //this.$store.commit("setSelectDeviceSpeed", speed)
+    },
+    switchIonsSwitch: function switchIonsSwitch() {
+      this.currentDevice.IonsSwitch = !this.currentDevice.IonsSwitch;
+      this.saveDevice();
+    },
+    switchHumidified: function switchHumidified() {
+      this.currentDevice.Humidified = !this.currentDevice.Humidified;
+    },
+    switchChildLock: function switchChildLock() {
+      this.currentDevice.ChildLockSwitch = !this.currentDevice.ChildLockSwitch;
     },
     switchSleep: function switchSleep() {
       this.$store.commit("setSelectDeviceSleep", !this.selectDevice.sleep);

@@ -8434,7 +8434,7 @@ module.exports = {"_from":"@dcloudio/uni-stat@^2.0.0-alpha-24420191128001","_id"
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _default = { "pages": { "pages/device/device": { "usingComponents": {} }, "pages/index/index": { "usingComponents": {} }, "pages/login/login": { "usingComponents": {} }, "pages/login/phoneLogin": { "usingComponents": {} }, "pages/login/clause": { "usingComponents": {} }, "pages/device/addDevice": { "usingComponents": {} }, "pages/device/searchDevice": { "usingComponents": {} }, "pages/device/settingDevice": { "usingComponents": {} }, "pages/device/settingWifi": { "usingComponents": {} }, "pages/device/deviceDetail": { "usingComponents": {} }, "pages/device/setTimer": { "usingComponents": {} }, "pages/device/connectStatus": { "usingComponents": {} }, "pages/device/configDevice": { "usingComponents": {} }, "pages/device/repeat": { "usingComponents": {} }, "pages/my/my": { "usingComponents": {} }, "pages/address/addressList": { "usingComponents": {} }, "pages/address/managerAddress": { "usingComponents": {} }, "pages/address/modifyAddress": { "usingComponents": {} }, "pages/address/createAddress": { "usingComponents": {} }, "components/CitySelect": { "usingComponents": {} } }, "globalStyle": { "navigationBarTextStyle": "black", "navigationBarTitleText": "uni-app", "navigationBarBackgroundColor": "#F8F8F8", "backgroundColor": "#F8F8F8" } };exports.default = _default;
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _default = { "pages": { "pages/index/index": { "navigationBarBackgroundColor": "#26b37a", "navigationBarTextStyle": "white", "usingComponents": {} }, "pages/device/device": { "usingComponents": {} }, "pages/login/login": { "usingComponents": {} }, "pages/login/phoneLogin": { "usingComponents": {} }, "pages/login/clause": { "usingComponents": {} }, "pages/device/addDevice": { "usingComponents": {} }, "pages/device/searchDevice": { "usingComponents": {} }, "pages/device/settingDevice": { "usingComponents": {} }, "pages/device/settingWifi": { "usingComponents": {} }, "pages/device/deviceDetail": { "usingComponents": {} }, "pages/device/setTimer": { "usingComponents": {} }, "pages/device/connectStatus": { "usingComponents": {} }, "pages/device/configDevice": { "usingComponents": {} }, "pages/device/repeat": { "usingComponents": {} }, "pages/my/my": { "usingComponents": {} }, "pages/address/addressList": { "usingComponents": {} }, "pages/address/managerAddress": { "usingComponents": {} }, "pages/address/modifyAddress": { "usingComponents": {} }, "pages/address/createAddress": { "usingComponents": {} }, "components/CitySelect": { "usingComponents": {} }, "pages/device/connectWifi": { "usingComponents": {} } }, "globalStyle": { "navigationBarTextStyle": "black", "navigationBarTitleText": "uni-app", "navigationBarBackgroundColor": "#F8F8F8", "backgroundColor": "#F8F8F8" } };exports.default = _default;
 
 /***/ }),
 /* 8 */
@@ -8657,9 +8657,13 @@ var store = new _vuex.default.Store({
       subscribe: false }],
 
 
-    selectDevice: null },
+    selectDevice: null,
+    currentUser: null },
 
   mutations: {
+    setCurrentUser: function setCurrentUser(state, user) {
+      state.currentUser = user;
+    },
     setSelectDeviceStart: function setSelectDeviceStart(state, flag) {
       state.selectDevice.start = flag;
       var device = state.selectDevice;

@@ -134,6 +134,10 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
+
+
+
 var _vuex = __webpack_require__(/*! vuex */ 16);function _objectSpread(target) {for (var i = 1; i < arguments.length; i++) {var source = arguments[i] != null ? arguments[i] : {};var ownKeys = Object.keys(source);if (typeof Object.getOwnPropertySymbols === 'function') {ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) {return Object.getOwnPropertyDescriptor(source, sym).enumerable;}));}ownKeys.forEach(function (key) {_defineProperty(target, key, source[key]);});}return target;}function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;}var _default =
 {
   computed: _objectSpread({},
@@ -144,16 +148,126 @@ var _vuex = __webpack_require__(/*! vuex */ 16);function _objectSpread(target) {
       title: '健康生活' });
 
   },
+  onLoad: function onLoad() {
+    uni.$on('Wechat_login', this.login);
+    uni.$on('Wechat_GetOpenId', this.getOpenId);
+    uni.$on('Wechat_CheckUser', this.checkUser);
+    uni.$on('Wechat_RegisterUser', this.registerUser);
+  },
+  data: function data() {
+    return {
+      currentUser: null };
+
+  },
   methods: _objectSpread({},
-  (0, _vuex.mapMutations)(["setCode"]), {
-    wechat_login: function wechat_login() {
-      var _this = this;
+  (0, _vuex.mapMutations)(["setCode", "setCurrentUser"]), {
+    onGetUserInfo: function onGetUserInfo(res) {
+      if (res.detail && res.detail.userInfo) {
+        this.$store.commit("setCurrentUser", res.detail.userInfo);
+        this.currentUser = res.detail.userInfo;
+        uni.$emit('Wechat_login');
+      }
+    },
+    login: function login() {var _this2 = this;
       uni.login({
         provider: "weixin",
         success: function success(res) {
-          if (res.errMsg == "login:ok") {
-            _this.$state.commit("setCode", res.code);
+          _this2.currentUser.code = res.code;
+          uni.$emit('Wechat_GetOpenId');
+        } });
+
+    },
+    getOpenId: function getOpenId() {
+      wx.request({
+        url: 'http://qingyun.kiwihealthcare123.com/getopenid.py?code=' + this.currentUser.code,
+        method: 'GET',
+        success: function success(res) {
+          if (res.statusCode == 200) {
+            var data = JSON.parse(res.data.replace(/\'/g, '\"'));
+            uni.$emit('Wechat_CheckUser', { openid: data.openid });
           }
+        },
+        fail: function fail(res) {
+          console.log(res);
+        } });
+
+    },
+    checkUser: function checkUser(openid) {var _this3 = this;
+      this.currentUser.OpenId = openid.openid;
+      wx.request({
+        url: 'http://39.98.107.68:8000/api/endusers/' + this.currentUser.OpenId,
+        method: "GET",
+        dataType: 'json',
+        success: function success(res) {
+          if (res.data && res.data !== "") {
+            _this3.currentUser = res.data;
+            _this3.$store.commit('setCurrentUser', _this3.currentUser);
+            uni.switchTab({
+              url: '../index/index' });
+
+          } else {
+            uni.$emit('Wechat_RegisterUser');
+          }
+        },
+        fail: function fail(res) {
+          console.log(res);
+        },
+        complete: function complete() {
+          console.log("complete");
+        } });
+
+    },
+    registerUser: function registerUser() {var _this4 = this;
+      wx.request({
+        url: 'http://39.98.107.68:8000/api/endusers/',
+        dataType: 'json',
+        method: 'POST',
+        data: {
+          "OpenId": this.currentUser.OpenId,
+          "Name": this.currentUser.nickName,
+          "PSW": "123",
+          "PhoneNumber": "123456" },
+
+        success: function success(res) {
+          _this4.currentUser = res.data;
+          _this4.$store.commit('setCurrentUser', _this4.currentUser);
+          uni.switchTab({
+            url: '../index/index' });
+
+        },
+        fail: function fail(res) {
+          console.log(res);
+        } });
+
+    },
+    getPhoneNumber: function getPhoneNumber(res) {
+      console.log(res);
+    },
+    wechat_login: function wechat_login() {
+      var _this = this;
+
+      uni.login({
+        provider: "weixin",
+        success: function success(res) {
+          console.log(res);
+          // if(res.errMsg == "login:ok"){
+          // 	_this.$state.commit("setCode", res.code);
+          // }
+          uni.getUserInfo({
+            provider: "weixin",
+            success: function success(res) {
+              console.log(res);
+              // if(res.errMsg == "login:ok"){
+              // 	_this.$state.commit("setCode", res.code);
+              // }
+            },
+            fail: function fail(res) {
+              console.log(res);
+            } });
+
+        },
+        fail: function fail(res) {
+          console.log(res);
         } });
 
     },
@@ -161,11 +275,13 @@ var _vuex = __webpack_require__(/*! vuex */ 16);function _objectSpread(target) {
       console.log(e);
     },
     phone_login: function phone_login() {
+
       uni.navigateTo({
         url: "./phoneLogin" });
 
     },
     goToClause: function goToClause() {
+
       uni.navigateTo({
         url: "./clause" });
 

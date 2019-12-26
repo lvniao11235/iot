@@ -135,8 +135,8 @@ __webpack_require__.r(__webpack_exports__);
 var _vuex = __webpack_require__(/*! vuex */ 16);function _objectSpread(target) {for (var i = 1; i < arguments.length; i++) {var source = arguments[i] != null ? arguments[i] : {};var ownKeys = Object.keys(source);if (typeof Object.getOwnPropertySymbols === 'function') {ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) {return Object.getOwnPropertyDescriptor(source, sym).enumerable;}));}ownKeys.forEach(function (key) {_defineProperty(target, key, source[key]);});}return target;}function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;}var _default =
 {
   data: function data() {
-    return {};
-
+    return {
+      confirm: false };
 
   },
   computed: _objectSpread({},
@@ -148,10 +148,15 @@ var _vuex = __webpack_require__(/*! vuex */ 16);function _objectSpread(target) {
 
   },
   methods: {
+    change: function change() {
+      this.confirm = true;
+    },
     next: function next() {
-      uni.navigateTo({
-        url: './settingWifi' });
+      if (this.confirm) {
+        uni.navigateTo({
+          url: './connectWifi' });
 
+      }
     } } };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 

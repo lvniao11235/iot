@@ -1,0 +1,1 @@
+<view class="connect-wifi"><view><view class="fa fa-exclamation-circle"></view><view>请将手机连接到名称为Airpurfier-xxx的Wi-Fi，连接成功后，返回小程序当中</view></view><view data-event-opts="{{[['tap',[['next',['$event']]]]]}}" bindtap="__e">已设置wifi</view></view>

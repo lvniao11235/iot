@@ -27,11 +27,17 @@
 	bottom:40px;
 	left:0;
 	right:0;
-	background-color:rgba(22, 155, 213, 1);
+	
 	color:#fff;
 	border-radius:5px;
 	height:30px;
 	line-height:30px;
 	vertical-align:middle;
+}
+.setting-device .next.enable{
+	background-color:rgba(22, 155, 213, 1);
+}
+.setting-device .next.disable{
+	background-color:#8F8F8F;
 }
 

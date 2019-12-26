@@ -15,7 +15,6 @@
 
 <script>
 	import { mapState, mapMutations } from 'vuex';
-	import {uuid} from '../../utils/common.js'
 	export default {
 		computed:{
 			...mapState(["code"])

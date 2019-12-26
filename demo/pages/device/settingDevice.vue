@@ -2,8 +2,8 @@
 	<view class="setting-device">
 		<view class="tip">按照下图的提示，长按配置按钮 10s 以上，确认 LED 灯变成闪烁状态</view>
 		<cover-image class="product" :src="selectProduct.img"></cover-image>
-		<view class="confirm"><radio>已确认上述操作</radio></view>
-		<view class="next" @click="next">下一步</view>
+		<view class="confirm"><radio-group @change="change"><radio>已确认上述操作</radio></radio-group></view>
+		<view class="next" :class="{'enable':confirm, 'disable':!confirm}"  @click="next">下一步</view>
 	</view>
 </template>
 
@@ -12,7 +12,7 @@
 	export default {
 		data() {
 			return {
-				
+				confirm:false
 			}
 		},
 		computed:{
@@ -24,10 +24,15 @@
 			})
 		},
 		methods: {
+			change(){
+				this.confirm = true;
+			},
 			next(){
-				uni.navigateTo({
-					url:'./settingWifi'
-				})
+				if(this.confirm){
+					uni.navigateTo({
+						url:'./connectWifi'
+					})
+				}
 			}
 		}
 	}
@@ -67,11 +72,19 @@
 		bottom:40px;
 		left:0;
 		right:0;
-		background-color:rgba(22, 155, 213, 1);
+		
 		color:#fff;
 		border-radius:5px;
 		height:30px;
 		line-height:30px;
 		vertical-align:middle;
+	}
+	
+	.setting-device .next.enable{
+		background-color:rgba(22, 155, 213, 1);
+	}
+	
+	.setting-device .next.disable{
+		background-color:#8F8F8F;
 	}
 </style>

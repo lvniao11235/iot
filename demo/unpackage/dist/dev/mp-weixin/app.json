@@ -1,8 +1,9 @@
 {
   "pages": [
-    "pages/device/device",
-    "pages/index/index",
     "pages/login/login",
+    "pages/device/connectWifi",
+    "pages/index/index",
+    "pages/device/device",
     "pages/login/phoneLogin",
     "pages/login/clause",
     "pages/device/addDevice",

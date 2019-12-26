@@ -1,4 +1,7 @@
 
+.setting-wifi .tip{
+	margin:16px;
+}
 .setting-wifi .next{
 	width:80%;
 	margin:auto;
@@ -13,5 +16,15 @@
 	height:30px;
 	line-height:30px;
 	vertical-align:middle;
+}
+.setting-wifi picker,
+.setting-wifi input{
+	border:1px solid #000000;
+	width:calc(100% - 40px);
+	height:30px;
+	line-height:30px;
+	vertical-align:middle;
+	margin:auto;
+	padding:0 10px;
 }
 
