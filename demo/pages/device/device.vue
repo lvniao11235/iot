@@ -9,15 +9,15 @@
 		<view class="has-device" v-if="devices && devices.length > 0">
 			<view class="mydevice">我的设备</view>
 			<view class="devices">
-				<view class="device-item" v-for="device in devices"
-				 :key="device.id" @click="selectDevice(device)">
+				<view class="device-item" v-for="(device, index) in devices"
+				 :key="device.id" @click="selectDevice(index)">
 					<view>
-						<label>{{device.name}}</label>
-						<label @click.stop="configDevice(device)" v-if="!device.share" class="title-right fa fa-ellipsis-v"></label>
+						<label>空气净化器</label>
+						<label @click.stop="configDevice(index)" v-if="true" class="title-right fa fa-ellipsis-v"></label>
 						<label v-else class="title-right">共享</label>
 					</view>
-					<view class="quality">空气质量：{{device.quality}}</view>
-					<cover-image :src="device.img"></cover-image>
+					<view class="quality">空气质量：{{quality[device.PM25Level-1]}}</view>
+					<cover-image src="/static/images/v2.png"></cover-image>
 				</view>
 			</view>
 		</view>
@@ -36,6 +36,9 @@
 	export default {
 		data() {
 			return {
+				quality:[
+					"优","良","轻度污染","中度污染","重度污染","严重污染"
+				]
 			}
 		},
 		computed:{
@@ -45,6 +48,15 @@
 			console.log("onLoad")
 			uni.setNavigationBarTitle({
 			　　title:'智能硬件'
+			})
+			uni.request({
+				url:'http://39.98.107.68:8000/Api/AirPurifierDetails',
+				dataType:'json',
+				success:res=>{
+					if(res.data && res.data.length > 0){
+						this.$store.commit("setDevices", res.data)
+					}
+				}
 			})
 		},
 		onHide(){
@@ -69,7 +81,7 @@
 			console.log("destroyed")
 		},
 		methods: {
-			...mapMutations(["setSelectDevice"]),
+			...mapMutations(["setSelectDevice", "setDevices"]),
 			switchAddress(){
 				uni.navigateTo({
 					url:'../address/addressList'
@@ -80,14 +92,14 @@
 					url:'./addDevice'
 				})
 			},
-			selectDevice(device){
-				this.$store.commit("setSelectDevice", device);
+			selectDevice(index){
+				this.$store.commit("setSelectDevice", this.devices[index]);
 				uni.navigateTo({
 					url:'./deviceDetail'
 				})
 			},
-			configDevice(device){
-				this.$store.commit("setSelectDevice", device);
+			configDevice(index){
+				this.$store.commit("setSelectDevice", this.devices[index]);
 				uni.navigateTo({
 					url:'./configDevice'
 				})

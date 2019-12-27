@@ -4,6 +4,9 @@
 			"path": "pages/login/login"
 		},
 		{
+			"path": "pages/device/device"
+		},
+		{
 			"path": "pages/device/connectWifi"
 		},
 		{
@@ -12,9 +15,6 @@
 				"navigationBarBackgroundColor":"#26b37a",
 				"navigationBarTextStyle":"white"
 			}
-		},
-		{
-			"path": "pages/device/device"
 		},
 		{
 			"path": "pages/login/phoneLogin"

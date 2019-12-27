@@ -734,7 +734,7 @@ function initData(vueOptions, context) {
     try {
       data = data.call(context); // 支持 Vue.prototype 上挂的数据
     } catch (e) {
-      if (Object({"NODE_ENV":"development","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG) {
+      if (Object({"VUE_APP_PLATFORM":"mp-weixin","NODE_ENV":"development","BASE_URL":"/"}).VUE_APP_DEBUG) {
         console.warn('根据 Vue 的 data 函数初始化小程序 data 失败，请尽量确保 data 函数中不访问 vm 对象，否则可能影响首次数据渲染速度。', data);
       }
     }
@@ -7009,7 +7009,7 @@ function type(obj) {
 
 function flushCallbacks$1(vm) {
     if (vm.__next_tick_callbacks && vm.__next_tick_callbacks.length) {
-        if (Object({"NODE_ENV":"development","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG) {
+        if (Object({"VUE_APP_PLATFORM":"mp-weixin","NODE_ENV":"development","BASE_URL":"/"}).VUE_APP_DEBUG) {
             var mpInstance = vm.$scope;
             console.log('[' + (+new Date) + '][' + (mpInstance.is || mpInstance.route) + '][' + vm._uid +
                 ']:flushCallbacks[' + vm.__next_tick_callbacks.length + ']');
@@ -7030,14 +7030,14 @@ function nextTick$1(vm, cb) {
     //1.nextTick 之前 已 setData 且 setData 还未回调完成
     //2.nextTick 之前存在 render watcher
     if (!vm.__next_tick_pending && !hasRenderWatcher(vm)) {
-        if(Object({"NODE_ENV":"development","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG){
+        if(Object({"VUE_APP_PLATFORM":"mp-weixin","NODE_ENV":"development","BASE_URL":"/"}).VUE_APP_DEBUG){
             var mpInstance = vm.$scope;
             console.log('[' + (+new Date) + '][' + (mpInstance.is || mpInstance.route) + '][' + vm._uid +
                 ']:nextVueTick');
         }
         return nextTick(cb, vm)
     }else{
-        if(Object({"NODE_ENV":"development","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG){
+        if(Object({"VUE_APP_PLATFORM":"mp-weixin","NODE_ENV":"development","BASE_URL":"/"}).VUE_APP_DEBUG){
             var mpInstance$1 = vm.$scope;
             console.log('[' + (+new Date) + '][' + (mpInstance$1.is || mpInstance$1.route) + '][' + vm._uid +
                 ']:nextMPTick');
@@ -7113,7 +7113,7 @@ var patch = function(oldVnode, vnode) {
     });
     var diffData = diff(data, mpData);
     if (Object.keys(diffData).length) {
-      if (Object({"NODE_ENV":"development","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG) {
+      if (Object({"VUE_APP_PLATFORM":"mp-weixin","NODE_ENV":"development","BASE_URL":"/"}).VUE_APP_DEBUG) {
         console.log('[' + (+new Date) + '][' + (mpInstance.is || mpInstance.route) + '][' + this._uid +
           ']差量更新',
           JSON.stringify(diffData));
@@ -7520,9 +7520,9 @@ module.exports = g;
 
 /***/ }),
 /* 4 */
-/*!************************************************************!*\
-  !*** C:/Users/lvniao/Desktop/projects/iot/demo/pages.json ***!
-  \************************************************************/
+/*!*********************************************************************!*\
+  !*** C:/Users/v-yojiao/Desktop/projects/uniapp/iot/demo/pages.json ***!
+  \*********************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -8427,20 +8427,20 @@ module.exports = {"_from":"@dcloudio/uni-stat@^2.0.0-alpha-24420191128001","_id"
 
 /***/ }),
 /* 7 */
-/*!*****************************************************************************!*\
-  !*** C:/Users/lvniao/Desktop/projects/iot/demo/pages.json?{"type":"style"} ***!
-  \*****************************************************************************/
+/*!**************************************************************************************!*\
+  !*** C:/Users/v-yojiao/Desktop/projects/uniapp/iot/demo/pages.json?{"type":"style"} ***!
+  \**************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _default = { "pages": { "pages/index/index": { "navigationBarBackgroundColor": "#26b37a", "navigationBarTextStyle": "white", "usingComponents": {} }, "pages/device/device": { "usingComponents": {} }, "pages/login/login": { "usingComponents": {} }, "pages/login/phoneLogin": { "usingComponents": {} }, "pages/login/clause": { "usingComponents": {} }, "pages/device/addDevice": { "usingComponents": {} }, "pages/device/searchDevice": { "usingComponents": {} }, "pages/device/settingDevice": { "usingComponents": {} }, "pages/device/settingWifi": { "usingComponents": {} }, "pages/device/deviceDetail": { "usingComponents": {} }, "pages/device/setTimer": { "usingComponents": {} }, "pages/device/connectStatus": { "usingComponents": {} }, "pages/device/configDevice": { "usingComponents": {} }, "pages/device/repeat": { "usingComponents": {} }, "pages/my/my": { "usingComponents": {} }, "pages/address/addressList": { "usingComponents": {} }, "pages/address/managerAddress": { "usingComponents": {} }, "pages/address/modifyAddress": { "usingComponents": {} }, "pages/address/createAddress": { "usingComponents": {} }, "components/CitySelect": { "usingComponents": {} }, "pages/device/connectWifi": { "usingComponents": {} } }, "globalStyle": { "navigationBarTextStyle": "black", "navigationBarTitleText": "uni-app", "navigationBarBackgroundColor": "#F8F8F8", "backgroundColor": "#F8F8F8" } };exports.default = _default;
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _default = { "pages": { "pages/device/device": { "usingComponents": {} }, "pages/login/login": { "usingComponents": {} }, "pages/device/connectWifi": { "usingComponents": {} }, "pages/index/index": { "navigationBarBackgroundColor": "#26b37a", "navigationBarTextStyle": "white", "usingComponents": {} }, "pages/login/phoneLogin": { "usingComponents": {} }, "pages/login/clause": { "usingComponents": {} }, "pages/device/addDevice": { "usingComponents": {} }, "pages/device/searchDevice": { "usingComponents": {} }, "pages/device/settingDevice": { "usingComponents": {} }, "pages/device/settingWifi": { "usingComponents": {} }, "pages/device/deviceDetail": { "usingComponents": {} }, "pages/device/setTimer": { "usingComponents": {} }, "pages/device/connectStatus": { "usingComponents": {} }, "pages/device/configDevice": { "usingComponents": {} }, "pages/device/repeat": { "usingComponents": {} }, "pages/my/my": { "usingComponents": {} }, "pages/address/addressList": { "usingComponents": {} }, "pages/address/managerAddress": { "usingComponents": {} }, "pages/address/modifyAddress": { "usingComponents": {} }, "pages/address/createAddress": { "usingComponents": {} }, "components/CitySelect": { "usingComponents": {} } }, "globalStyle": { "navigationBarTextStyle": "black", "navigationBarTitleText": "uni-app", "navigationBarBackgroundColor": "#F8F8F8", "backgroundColor": "#F8F8F8" } };exports.default = _default;
 
 /***/ }),
 /* 8 */
-/*!****************************************************************************!*\
-  !*** C:/Users/lvniao/Desktop/projects/iot/demo/pages.json?{"type":"stat"} ***!
-  \****************************************************************************/
+/*!*************************************************************************************!*\
+  !*** C:/Users/v-yojiao/Desktop/projects/uniapp/iot/demo/pages.json?{"type":"stat"} ***!
+  \*************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -8560,9 +8560,9 @@ function normalizeComponent (
 
 /***/ }),
 /* 15 */
-/*!****************************************************************!*\
-  !*** C:/Users/lvniao/Desktop/projects/iot/demo/store/index.js ***!
-  \****************************************************************/
+/*!*************************************************************************!*\
+  !*** C:/Users/v-yojiao/Desktop/projects/uniapp/iot/demo/store/index.js ***!
+  \*************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -8620,47 +8620,89 @@ var store = new _vuex.default.Store({
     selectProduct: null,
     devices: [
     {
-      id: 1,
-      name: '空气净化器',
-      share: false,
-      quality: '优',
-      img: '/static/images/v2.png',
-      aufo: false,
-      speed: 1,
-      sleep: false,
-      clock: false,
-      turnOn: true,
-      turnOff: false,
-      turnOnRepeat: null,
-      turnOffRepeat: null,
-      turnOnTime: '',
-      turnOffTime: '',
-      start: true,
-      subscribe: false },
+      CO2: 8.2,
+      ChildLockSwitch: false,
+      CurrentHumidity: 4,
+      CurrentTemperature: 10.1,
+      FilterLifeTimeDays_1: 17.1,
+      FilterLifeTimeDays_2: 18.1,
+      FilterLifeTimeDays_3: 19.1,
+      FilterLifeTimeDays_4: 20.1,
+      FilterLifeTimePercent_1: 21,
+      FilterLifeTimePercent_2: 22,
+      FilterLifeTimePercent_3: 23,
+      FilterLifeTimePercent_4: 24,
+      FilterStatus_1: 11,
+      FilterStatus_2: 12,
+      FilterStatus_3: 13,
+      FilterStatus_4: 14,
+      HCHO: 15.1,
+      Humidified: false,
+      Id: "C9Ayx5tBofxtroZlF" + Math.random() * 100,
+      IonsSwitch: false,
+      LocalTimerOffId: 0,
+      LocalTimerOnId: 0,
+      PM25: 2,
+      PM25Level: 3,
+      PowerSwitch: false,
+      Runtime_1: 25.1,
+      Runtime_2: 26.1,
+      Runtime_3: 27.1,
+      Runtime_4: 28.1,
+      TVOC: 30.1,
+      WaterShortageStatus: false,
+      WindSpeed: 5,
+      WorkMode: false },
+
     {
-      id: 2,
-      name: '空气净化器',
-      share: true,
-      quality: '优',
-      img: '/static/images/v3.png',
-      aufo: false,
-      speed: 1,
-      sleep: false,
-      clock: false,
-      turnOn: false,
-      turnOff: false,
-      turnOnRepeat: null,
-      turnOffRepeat: null,
-      turnOnTime: '',
-      turnOffTime: '',
-      start: true,
-      subscribe: false }],
+      CO2: 8.2,
+      ChildLockSwitch: false,
+      CurrentHumidity: 4,
+      CurrentTemperature: 10.1,
+      FilterLifeTimeDays_1: 17.1,
+      FilterLifeTimeDays_2: 18.1,
+      FilterLifeTimeDays_3: 19.1,
+      FilterLifeTimeDays_4: 20.1,
+      FilterLifeTimePercent_1: 21,
+      FilterLifeTimePercent_2: 22,
+      FilterLifeTimePercent_3: 23,
+      FilterLifeTimePercent_4: 24,
+      FilterStatus_1: 11,
+      FilterStatus_2: 12,
+      FilterStatus_3: 13,
+      FilterStatus_4: 14,
+      HCHO: 15.1,
+      Humidified: false,
+      Id: "C9Ayx5tBofxtroZlF" + Math.random() * 100,
+      IonsSwitch: false,
+      LocalTimerOffId: 0,
+      LocalTimerOnId: 0,
+      PM25: 2,
+      PM25Level: 3,
+      PowerSwitch: false,
+      Runtime_1: 25.1,
+      Runtime_2: 26.1,
+      Runtime_3: 27.1,
+      Runtime_4: 28.1,
+      TVOC: 30.1,
+      WaterShortageStatus: false,
+      WindSpeed: 5,
+      WorkMode: false }],
 
 
     selectDevice: null,
     currentUser: null },
 
   mutations: {
+    setSelectDeviceProperty: function setSelectDeviceProperty(state, data) {
+      state.selectDevice[data.property] = data.value;
+      var device = state.selectDevice;
+      state.selectDevice = null;
+      state.selectDevice = device;
+    },
+    setDevices: function setDevices(state, devices) {
+      state.devices = devices;
+    },
     setCurrentUser: function setCurrentUser(state, user) {
       state.currentUser = user;
     },
@@ -9721,9 +9763,9 @@ var index_esm = {
 
 /***/ }),
 /* 17 */
-/*!******************************************************************!*\
-  !*** C:/Users/lvniao/Desktop/projects/iot/demo/font-awesome.css ***!
-  \******************************************************************/
+/*!***************************************************************************!*\
+  !*** C:/Users/v-yojiao/Desktop/projects/uniapp/iot/demo/font-awesome.css ***!
+  \***************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -9731,9 +9773,9 @@ var index_esm = {
 
 /***/ }),
 /* 18 */
-/*!**********************************************************!*\
-  !*** C:/Users/lvniao/Desktop/projects/iot/demo/base.css ***!
-  \**********************************************************/
+/*!*******************************************************************!*\
+  !*** C:/Users/v-yojiao/Desktop/projects/uniapp/iot/demo/base.css ***!
+  \*******************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
