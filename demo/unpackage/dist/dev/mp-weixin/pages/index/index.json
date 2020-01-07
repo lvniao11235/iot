@@ -1,5 +1,7 @@
 {
   "navigationBarBackgroundColor": "#26b37a",
   "navigationBarTextStyle": "white",
-  "usingComponents": {}
+  "usingComponents": {
+    "mpvue-echarts": "/mpvue-echarts/src/echarts"
+  }
 }

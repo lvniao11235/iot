@@ -60,7 +60,6 @@
         "setting" : {
             "urlCheck" : false
         },
-        "usingComponents" : true,
         "permission" : {
             "scope.userLocation" : {
                 "desc" : "获取位置信息"

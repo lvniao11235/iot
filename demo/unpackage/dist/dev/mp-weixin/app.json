@@ -1,9 +1,9 @@
 {
   "pages": [
+    "pages/index/index",
     "pages/login/login",
     "pages/device/device",
     "pages/device/connectWifi",
-    "pages/index/index",
     "pages/login/phoneLogin",
     "pages/login/clause",
     "pages/device/addDevice",
@@ -58,5 +58,6 @@
       "desc": "获取位置信息"
     }
   },
-  "usingComponents": {}
+  "usingComponents": {},
+  "sitemapLocation": "sitemap51.json"
 }
