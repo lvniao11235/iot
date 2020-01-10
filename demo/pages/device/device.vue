@@ -54,7 +54,7 @@
 				dataType:'json',
 				success:res=>{
 					if(res.data && res.data.length > 0){
-						this.$store.commit("setDevices", res.data)
+						//this.$store.commit("setDevices", res.data)
 					}
 				}
 			})

@@ -1,12 +1,12 @@
 {
   "pages": [
     "pages/index/index",
+    "pages/device/addDevice",
     "pages/login/login",
     "pages/device/device",
     "pages/device/connectWifi",
     "pages/login/phoneLogin",
     "pages/login/clause",
-    "pages/device/addDevice",
     "pages/device/searchDevice",
     "pages/device/settingDevice",
     "pages/device/settingWifi",
@@ -15,6 +15,8 @@
     "pages/device/connectStatus",
     "pages/device/configDevice",
     "pages/device/repeat",
+    "pages/device/subscribe",
+    "pages/device/serviceDetail",
     "pages/my/my",
     "pages/address/addressList",
     "pages/address/managerAddress",
@@ -58,6 +60,5 @@
       "desc": "获取位置信息"
     }
   },
-  "usingComponents": {},
-  "sitemapLocation": "sitemap51.json"
+  "usingComponents": {}
 }

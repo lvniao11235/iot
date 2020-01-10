@@ -19,15 +19,22 @@
 
 <script>
 	import { mapState, mapMutations } from 'vuex';
+	import {product} from '@/api/device';
 	export default {
 		data() {
 			return {
+				product:null
 			}
 		},
 		computed:{
 			...mapState(["selectBrand"])
 		},
-		onLoad() {
+		onLoad(e) {
+			if(e.id){
+				product(e.id).then(res=>{
+					this.product = res.data;
+				})
+			}
 		},
 		methods: {
 			...mapMutations(["setSelectProduct"]),

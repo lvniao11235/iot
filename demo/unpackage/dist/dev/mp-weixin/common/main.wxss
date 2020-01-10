@@ -3773,6 +3773,40 @@
   overflow: visible;
   clip: auto;
 }
+.page-bottom{
+	position:fixed;
+	bottom:0px;
+	border-top:1px solid #CFCFCF;
+	height:50px;
+	line-height:50px;
+	vertical-align: middle;
+	font-size:16px;
+	width:100%;
+}
+
+.page-bottom > .info{
+	color:#333333;
+	display:inline-block;
+	width:calc(60% - 10px);
+	float:left;
+	margin-left:10px;
+}
+
+.page-bottom > .btn{
+	height:30px;
+	display:inline-block;
+	width:calc(40% - 20px);
+	height:30px;
+	float:right;
+	margin-top:10px;
+	margin-right:15px;
+	background-color:#26B37A;
+	border-radius: 15px;
+	line-height:30px;
+	text-align:center;
+	color:#fff;
+}
+
 .icon-list-item{
 	padding:0 16px;
 	position:relative;

@@ -1,8 +1,6 @@
 <template>
-	<view class="content">
-		<view class="text-area">
-			<text class="title">{{appName}}</text>
-		</view>
+	<view class="my-page">
+		
 	</view>
 </template>
 

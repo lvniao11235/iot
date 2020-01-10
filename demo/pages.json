@@ -8,6 +8,9 @@
 			}
 		},
 		{
+			"path": "pages/device/addDevice"
+		},
+		{
 			"path": "pages/login/login"
 		},
 		{
@@ -21,9 +24,6 @@
 		}, 
 		{
 			"path": "pages/login/clause"
-		},
-		{
-			"path": "pages/device/addDevice"
 		},
 		{
 			"path": "pages/device/searchDevice"
@@ -48,6 +48,12 @@
 		},
 		{
 			"path": "pages/device/repeat"
+		},
+		{
+			"path": "pages/device/subscribe"
+		},
+		{
+			"path": "pages/device/serviceDetail"
 		},
 		{
 			"path": "pages/my/my"

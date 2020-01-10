@@ -7,17 +7,17 @@
 		<view class="brands">
 			<view class="brand-item" 
 				v-for="brand in brands"
-				:class="{'selected':brand.id == currentBrand.id}"
-				:key="brand.id" @click="selectItem(brand)">{{brand.name}}</view>
+				:class="{'selected':brand.Id == currentBrand.Id}"
+				:key="brand.Id" @click="selectItem(brand)">{{brand.Name}}</view>
 		</view>
 		<view class="products">
-			<view class="product-item"
-				v-for="product in currentBrand.products"
-				:key="product.id">
+			<view class="product-item" @click="selectProduct(product.Id)"
+				v-for="product in products"
+				:key="product.Id">
 				<view class="image-container">
-					<cover-image :src="product.img"></cover-image>
+					<cover-image :src="product.DeviceImageBase64String"></cover-image>
 				</view>
-				<view>{{product.name}}</view>
+				<view>{{product.Name}}</view>
 			</view>
 		</view>
 	</view>
@@ -28,15 +28,37 @@
 	export default {
 		data() {
 			return {
-				currentBrand:null
+				currentBrand:null,
+				brands:[],
+				products:[]
 			}
 		},
-		computed:{
-			...mapState(["brands"])
-		},
 		onLoad() {
-			this.currentBrand = this.brands[0];
-			this.$store.commit("setSelectBrand", this.currentBrand);
+			
+			uni.request({
+				url:'http://39.98.107.68:8000/Api/M_Brand',
+				dataType:'json',
+				success:res=>{
+					if(res.data && res.data.length > 0){
+						this.brands = res.data;
+						this.currentBrand = this.brands[0];
+						this.$store.commit("setSelectBrand", this.brands[0]);
+					}
+				}
+			})
+		},
+		watch:{
+			currentBrand(value){
+				uni.request({
+					url:'http://39.98.107.68:8000/Api/M_DeviceModel',
+					dataType:'json',
+					success:res=>{
+						if(res.data && res.data.length > 0){
+							this.products = res.data;
+						}
+					}
+				})
+			}
 		},
 		methods: {
 			...mapMutations(["setSelectBrand"]),
@@ -47,6 +69,11 @@
 			search(){
 				uni.navigateTo({
 					url:"./searchDevice"
+				})
+			},
+			selectProduct(id){
+				uni.navigateTo({
+					url:"./searchDevice?id=" + id
 				})
 			}
 		}
@@ -122,7 +149,7 @@
 	
 	.add-device .product-item .image-container{
 		width:100%;
-		height:150px;
+		height:100px;
 		position:relative;
 		
 	}
@@ -136,5 +163,10 @@
 		bottom:0;
 		left:0;
 		margin:auto;
+	}
+	
+	.add-device .product-item > view:last-child{
+		text-align:center;
+		font-size:14px;
 	}
 </style>

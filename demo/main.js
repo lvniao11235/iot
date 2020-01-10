@@ -10,7 +10,8 @@ Vue.prototype.$store = store
 
 import 'font-awesome.css'
 import 'base.css'
-
+import moment from './utils/moment.js';
+Vue.prototype.$moment = moment;
 const app = new Vue({
     ...App
 })

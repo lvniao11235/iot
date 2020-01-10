@@ -19,7 +19,7 @@
 		<view class="icon-list-item border">
 			<label class="icon"></label>
 			<label class="label">服务订阅</label>
-			<view class="value">
+			<view class="value" @click="goToSubscribe">
 				<label>{{selectDevice.subscribe ? "已订阅":"去订阅"}}</label>
 				<label class="value-icon fa fa-angle-right"></label>
 			</view>
@@ -55,6 +55,11 @@
 		},
 		methods: {
 			...mapMutations(["setSelectDevice"]),
+			goToSubscribe(){
+				uni.navigateTo({
+					url:'./subscribe'
+				})
+			}
 		},
 	}
 </script>

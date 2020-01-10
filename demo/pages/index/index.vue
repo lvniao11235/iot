@@ -17,8 +17,14 @@
 			<view class="info"><label>温度：22°C</label><label>湿度：23%</label></view>
 			<view class="info"><label>PM2.5：3μg/m³</label></view>
 		</view>
-		<view class="box1">
-			<mpvue-echarts ref="pieChart" :echarts="echarts" :onInit="onInit" />
+		<view class="qiun-charts">
+			<view>统计数据</view>
+			<view class="switch-btns">
+				<view class="selected">日</view>
+				<view>月</view>
+				<view>年</view>
+			</view>
+			<canvas canvas-id="canvasLineA" id="canvasLineA" class="charts" disable-scroll=true @touchstart="touchLineA" @touchmove="moveLineA" @touchend="touchEndLineA"></canvas>
 		</view>
 	</view>
 </template>
@@ -27,112 +33,149 @@
 	import {
 		mapState
 	} from 'vuex';
-	import * as echarts from 'echarts'
-	import mpvueEcharts from 'mpvue-echarts'
-
-	    function initChart(canvas, width, height) {
-	        debugger
-	        const chart = echarts.init(canvas, null, {
-	            width: width,
-	            height: height
-	        })
-	        canvas.setChart(chart)
-	
-	        var option = {
-	        title: {
-	            text: '某站点用户访问来源',
-	            subtext: '纯属虚构',
-	            x: 'center'
-	        },
-	        tooltip: {
-	            trigger: 'item',
-	            formatter: "{a} {b} : {c} ({d}%)"
-	        },
-	        legend: {
-	            orient: 'vertical',
-	            bottom: '10%',
-	            data: ['直接访问', '邮件营销', '联盟广告', '视频广告', '搜索引擎']
-	        },
-	        series: [{
-	            name: '访问来源',
-	            type: 'pie',
-	            radius: '55%',
-	            center: ['50%', '40%'],
-	            data: [{
-	                    value: 335,
-	                    name: '直接访问'
-	                },
-	                {
-	                    value: 310,
-	                    name: '邮件营销'
-	                },
-	                {
-	                    value: 234,
-	                    name: '联盟广告'
-	                },
-	                {
-	                    value: 135,
-	                    name: '视频广告'
-	                },
-	                {
-	                    value: 1548,
-	                    name: '搜索引擎'
-	                }
-	            ],
-	            itemStyle: {
-	                emphasis: {
-	                    shadowBlur: 10,
-	                    shadowOffsetX: 0,
-	                    shadowColor: 'rgba(0, 0, 0, 0.5)'
-	                }
-	            }
-	        }]
-	    };
+	import uCharts from '@/u-charts/u-charts.js';
+	var _self;
+	var canvasObj = {};
 	    
-	    
-	        chart.setOption(option)
-	        return chart
-	    }
 	export default {
-		components: {
-			mpvueEcharts
-		},
 		data() {
 			return {
-				title: 'Hello',
-				echarts,
-				onInit: initChart
+				cWidth: '',
+				cHeight: '',
+				tips: '',
+				pixelRatio: 1,
+				serverData: '',
+				itemCount: 10,
+				sliderMax: 50
 			}
 		},
-		computed: {
-			...mapState(["currentAddress", "currentUser"])
-		},
 		onLoad() {
-			// uni.login({
-			// 	provider:"weixin",
-			// 	success:res=>{
-			// 		console.log(res)
-			// 	}
-			// })
-			// uni.getUserInfo({
-			// 	provider:"weixin",
-			// 	success:res=>{
-			// 		console.log(res)
-			// 	}
-			// })
+			_self = this;
+			this.cWidth = uni.upx2px(750);
+			this.cHeight = uni.upx2px(500);
 		},
-		mounted() {
-			uni.setNavigationBarTitle({
-				title: '首页'
-			})
+		onReady() {
+			this.fillData();
 		},
 		methods: {
 			switchAddress() {
 				uni.navigateTo({
 					url: '../address/addressList'
 				})
-			}
-		}
+			},
+			fillData() {
+				
+				let LineA = {
+					categories: [],
+					series: []
+				};
+				LineA.categories = [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23];
+				LineA.series = [{
+					name:'mine',
+					data:[20, 25, 25, 30, 20, 25, 25, 30, 20, 25, 25, 30, 20, 25, 25, 30, 20, 25, 25, 30, 20, 25, 25, 30],
+					color:'#1890ff',
+					type:'line',
+					show:true,
+					pointShape:'circle',
+					legendShape:'line'
+				}, {
+					name:'average',
+					data:[15, 20, 21, 19, 15, 20, 21, 19, 15, 20, 21, 19, 15, 20, 21, 19, 15, 20, 21, 19, 15, 20, 21, 19],
+					color:'#2fc25b',
+					type:'line',
+					show:true,
+					pointShape:'circle',
+					legendShape:'line'
+				}, {
+					name:'out_door',
+					data:[10, 15, 17, 8, 10, 15, 17, 8, 10, 15, 17, 8, 10, 15, 17, 8, 10, 15, 17, 8, 10, 15, 17, 8],
+					color:'#facc14',
+					type:'line',
+					show:true,
+					pointShape:'circle',
+					legendShape:'line'
+				}];
+				this.showLineA("canvasLineA", LineA);
+			},
+					
+			showLineA(canvasId, chartData) {
+				canvasObj[canvasId] = new uCharts({
+					$this: _self,
+					canvasId: canvasId,
+					type: 'line',
+					fontSize: 11,
+					padding:[15,15,0,15],
+					legend:{
+						show:true,
+						padding:5,
+						lineHeight:11,
+						margin:5,
+						format:val=>{
+							return val+'μg/m³';
+						}
+					},
+					dataLabel: false,
+					dataPointShape: false,
+					background: '#FFFFFF',
+					pixelRatio: _self.pixelRatio,
+					categories: chartData.categories,
+					series: chartData.series,
+					animation: false,
+					enableScroll: true, //开启图表拖拽功能
+					xAxis: {
+						disableGrid: false,
+						type: 'grid',
+						gridType: 'dash',
+						itemCount: 4, 
+						scrollShow: true, 
+						scrollAlign: 'left',
+						//scrollBackgroundColor:'#F7F7FF',//可不填写，配合enableScroll图表拖拽功能使用，X轴滚动条背景颜色,默认为 #EFEBEF
+						//scrollColor:'#DEE7F7',//可不填写，配合enableScroll图表拖拽功能使用，X轴滚动条颜色,默认为 #A6A6A6
+					},
+					yAxis: {
+						//disabled:true
+						gridType: 'dash',
+						splitNumber: 8,
+						min: 10,
+						max: 60,
+						format: (val) => {
+							return Math.floor(val);
+						}
+					},
+					width: _self.cWidth * _self.pixelRatio,
+					height: _self.cHeight * _self.pixelRatio,
+					dataLabel: true,
+					dataPointShape: true,
+					extra: {
+						lineStyle: 'straight'
+					},
+				});
+			},	
+			touchLineA(e) {
+				canvasObj['canvasLineA'].scrollStart(e);
+			},
+			moveLineA(e) {
+				canvasObj['canvasLineA'].scroll(e);
+			},
+			touchEndLineA(e) {
+				canvasObj['canvasLineA'].scrollEnd(e);
+				//下面是toolTip事件，如果滚动后不需要显示，可不填写
+				canvasObj['canvasLineA'].showToolTip(e, {
+					format: function(item, category) {
+						return category + ' ' + item.name + ':' + item.data
+					}
+				});
+			},
+			
+		},
+		computed: {
+			...mapState(["currentAddress", "currentUser"])
+		},
+		mounted() {
+			uni.setNavigationBarTitle({
+				title: '首页'
+			})
+		},
 	}
 </script>
 
@@ -142,6 +185,31 @@
 		flex-direction: column;
 		align-items: left;
 		justify-content: left;
+	}
+	.qiun-charts{
+		padding-top:5px;
+	}
+	.qiun-charts .switch-btns{
+		text-align:right;
+		padding-right:16px;
+		font-size:14px;
+	}
+	.qiun-charts .switch-btns > view{
+		display:inline-block;
+		width:30px;
+		text-align:center;
+	}
+	
+	.qiun-charts .switch-btns > view.selected{
+		color:#26B37A;
+	}
+	
+	.qiun-charts > view:first-child{
+		margin-left:10px;
+		border-left:3px solid #26B37A;
+		padding-left:5px;
+		font-size:20px;
+		font-weight:bold;
 	}
 
 	.logo {
@@ -233,4 +301,110 @@
 		width:100%;
 		height:300px;
 	}
+	
+	page {
+			background: #F2F2F2;
+			width: 750upx;
+			overflow-x: hidden;
+		}
+	
+		.qiun-padding {
+			padding: 2%;
+			width: 96%;
+		}
+	
+		.qiun-wrap {
+			display: flex;
+			flex-wrap: wrap;
+		}
+	
+		.qiun-rows {
+			display: flex;
+			flex-direction: row !important;
+		}
+	
+		.qiun-columns {
+			display: flex;
+			flex-direction: column !important;
+		}
+	
+		.qiun-common-mt {
+			margin-top: 10upx;
+		}
+	
+		.qiun-bg-white {
+			background: #FFFFFF;
+		}
+	
+		.qiun-title-bar {
+			width: 96%;
+			padding: 10upx 2%;
+			flex-wrap: nowrap;
+		}
+	
+		.qiun-title-dot-light {
+			border-left: 10upx solid #0ea391;
+			padding-left: 10upx;
+			font-size: 32upx;
+			color: #000000
+		}
+	
+		/* 通用样式 */
+		.qiun-charts {
+			width: 750upx;
+			height: 500upx;
+			background-color: #FFFFFF;
+		}
+	
+		.charts {
+			width: 750upx;
+			height: 500upx;
+			background-color: #FFFFFF;
+		}
+	
+		/* 横屏样式 */
+		.qiun-charts-rotate {
+			width: 700upx;
+			height: 1100upx;
+			background-color: #FFFFFF;
+			padding: 25upx;
+		}
+	
+		.charts-rotate {
+			width: 700upx;
+			height: 1100upx;
+			background-color: #FFFFFF;
+		}
+	
+		/* 圆弧进度样式 */
+		.qiun-charts3 {
+			width: 750upx;
+			height: 250upx;
+			background-color: #FFFFFF;
+			position: relative;
+		}
+	
+		.charts3 {
+			position: absolute;
+			width: 250upx;
+			height: 250upx;
+			background-color: #FFFFFF;
+		}
+	
+		.qiun-tip {
+			display: block;
+			width: auto;
+			overflow: hidden;
+			padding: 15upx;
+			height: 30upx;
+			line-height: 30upx;
+			margin: 10upx;
+			background: #ff9933;
+			font-size: 30upx;
+			border-radius: 8upx;
+			justify-content: center;
+			text-align: center;
+			border: 1px solid #dc7004;
+			color: #FFFFFF;
+		}
 </style>
