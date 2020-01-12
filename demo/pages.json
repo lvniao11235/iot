@@ -1,6 +1,9 @@
 {
 	"pages": [
 		{
+			"path": "pages/login/login"
+		},
+		{
 			"path": "pages/index/index",
 			"style": {
 				"navigationBarBackgroundColor":"#26b37a",
@@ -9,9 +12,6 @@
 		},
 		{
 			"path": "pages/device/addDevice"
-		},
-		{
-			"path": "pages/login/login"
 		},
 		{
 			"path": "pages/device/device"
@@ -54,6 +54,9 @@
 		},
 		{
 			"path": "pages/device/serviceDetail"
+		},
+		{
+			"path": "pages/device/buy"
 		},
 		{
 			"path": "pages/my/my"

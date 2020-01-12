@@ -13410,78 +13410,41 @@ module.exports = function(module) {
 
 /***/ }),
 
-/***/ 226:
-/*!************************************************************!*\
-  !*** C:/Users/dev/Desktop/projects/iot/demo/api/device.js ***!
-  \************************************************************/
+/***/ 237:
+/*!**********************************************************!*\
+  !*** C:/Users/dev/Desktop/projects/iot/demo/api/user.js ***!
+  \**********************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.product = void 0;var _request = _interopRequireDefault(__webpack_require__(/*! ./request */ 227));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
+Object.defineProperty(exports, "__esModule", { value: true });exports.registerUser = exports.getUser = exports.getOpenId = void 0;var _request = __webpack_require__(/*! ./request */ 53);
 
-var product = function product(id) {
-  console.log(id);
-  return uni.request({
-    url: 'http://39.98.107.68:8000/Api/M_DeviceModel/' + id,
+var getOpenId = function getOpenId(code) {
+  return (0, _request.request)({
+    url: "http://qingyun.kiwihealthcare123.com/getopenid.py?code=".concat(code),
     method: 'GET' });
 
-};exports.product = product;
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
+};exports.getOpenId = getOpenId;
+
+var getUser = function getUser(openid) {
+  return (0, _request.request)({
+    url: "endusers/".concat(openid),
+    method: "GET" });
+
+};exports.getUser = getUser;
+
+var registerUser = function registerUser(user) {
+  return (0, _request.request)({
+    url: "endusers",
+    method: "POST",
+    data: user });
+
+};exports.registerUser = registerUser;
 
 /***/ }),
 
-/***/ 227:
-/*!*************************************************************!*\
-  !*** C:/Users/dev/Desktop/projects/iot/demo/api/request.js ***!
-  \*************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;function _toConsumableArray(arr) {return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread();}function _nonIterableSpread() {throw new TypeError("Invalid attempt to spread non-iterable instance");}function _iterableToArray(iter) {if (Symbol.iterator in Object(iter) || Object.prototype.toString.call(iter) === "[object Arguments]") return Array.from(iter);}function _arrayWithoutHoles(arr) {if (Array.isArray(arr)) {for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) {arr2[i] = arr[i];}return arr2;}}var request = function request(options) {var _uni;
-  console.log(JSON.stringify(options));
-  options.url = 'http://39.98.107.68:8000/Api/' + options.url;
-  return (_uni = uni).request.apply(_uni, _toConsumableArray(options));
-};var _default =
-
-request;exports.default = _default;
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
-
-/***/ }),
-
-/***/ 3:
-/*!***********************************!*\
-  !*** (webpack)/buildin/global.js ***!
-  \***********************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-var g;
-
-// This works in non-strict mode
-g = (function() {
-	return this;
-})();
-
-try {
-	// This works if eval is allowed (see CSP)
-	g = g || new Function("return this")();
-} catch (e) {
-	// This works if the window reference is available
-	if (typeof window === "object") g = window;
-}
-
-// g can still be undefined, but nothing to do about it...
-// We return undefined, instead of nothing here, so it's
-// easier to handle this case. if(!global) { ...}
-
-module.exports = g;
-
-
-/***/ }),
-
-/***/ 35:
+/***/ 27:
 /*!*******************************************************************!*\
   !*** C:/Users/dev/Desktop/projects/iot/demo/u-charts/u-charts.js ***!
   \*******************************************************************/
@@ -18539,6 +18502,37 @@ if ( true && typeof module.exports === "object") {
 
 /***/ }),
 
+/***/ 3:
+/*!***********************************!*\
+  !*** (webpack)/buildin/global.js ***!
+  \***********************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+var g;
+
+// This works in non-strict mode
+g = (function() {
+	return this;
+})();
+
+try {
+	// This works if eval is allowed (see CSP)
+	g = g || new Function("return this")();
+} catch (e) {
+	// This works if the window reference is available
+	if (typeof window === "object") g = window;
+}
+
+// g can still be undefined, but nothing to do about it...
+// We return undefined, instead of nothing here, so it's
+// easier to handle this case. if(!global) { ...}
+
+module.exports = g;
+
+
+/***/ }),
+
 /***/ 4:
 /*!*********************************************************!*\
   !*** C:/Users/dev/Desktop/projects/iot/demo/pages.json ***!
@@ -19438,6 +19432,96 @@ main();
 
 /***/ }),
 
+/***/ 52:
+/*!************************************************************!*\
+  !*** C:/Users/dev/Desktop/projects/iot/demo/api/device.js ***!
+  \************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.buyService = exports.addDevice = exports.removeDevice = exports.getDevice = exports.devices = exports.product = void 0;var _request = __webpack_require__(/*! ./request */ 53);
+
+var product = function product(id) {
+  console.log(id);
+  return uni.request({
+    url: "".concat(_request.baseUrl, "M_DeviceModel/").concat(id),
+    method: 'GET' });
+
+};exports.product = product;
+
+var devices = function devices(openid) {
+  return (0, _request.request)({
+    url: "Devices?endUserId=".concat(openid),
+    method: 'GET' });
+
+};exports.devices = devices;
+
+var getDevice = function getDevice(id) {
+  return (0, _request.request)({
+    url: "DeviceDetails/".concat(id),
+    method: 'GET' });
+
+};exports.getDevice = getDevice;
+
+var removeDevice = function removeDevice(id) {
+  return (0, _request.request)({
+    url: "Devices/".concat(id),
+    method: 'DELETE' });
+
+};exports.removeDevice = removeDevice;
+
+var addDevice = function addDevice(data) {
+  return (0, _request.request)({
+    url: "Devices",
+    method: 'POST',
+    data: data });
+
+};exports.addDevice = addDevice;
+
+
+var buyService = function buyService(data) {
+  return (0, _request.request)({
+    url: "Orders",
+    method: 'POST',
+    data: data });
+
+};exports.buyService = buyService;
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
+
+/***/ }),
+
+/***/ 53:
+/*!*************************************************************!*\
+  !*** C:/Users/dev/Desktop/projects/iot/demo/api/request.js ***!
+  \*************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.request = exports.baseUrl = void 0;function _objectSpread(target) {for (var i = 1; i < arguments.length; i++) {var source = arguments[i] != null ? arguments[i] : {};var ownKeys = Object.keys(source);if (typeof Object.getOwnPropertySymbols === 'function') {ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) {return Object.getOwnPropertyDescriptor(source, sym).enumerable;}));}ownKeys.forEach(function (key) {_defineProperty(target, key, source[key]);});}return target;}function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;}var baseUrl = 'http://39.98.107.68:8000/Api/';exports.baseUrl = baseUrl;
+
+var request = function request(options) {
+  var _options = _objectSpread({}, options);
+  if (!(_options.url.startsWith('http') || _options.url.startsWith('https'))) {
+    _options.url = "".concat(baseUrl).concat(_options.url);
+  }
+  return new Promise(function (resolve, reject) {
+    uni.request(_objectSpread({},
+    _options, {
+      success: function success(res) {
+        resolve(res);
+      },
+      fail: function fail(res) {
+        reject(res);
+      } }));
+
+  });
+};exports.request = request;
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
+
+/***/ }),
+
 /***/ 6:
 /*!******************************************************!*\
   !*** ./node_modules/@dcloudio/uni-stat/package.json ***!
@@ -19457,7 +19541,7 @@ module.exports = {"_from":"@dcloudio/uni-stat@^2.0.0-alpha-24420191128001","_id"
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _default = { "pages": { "pages/login/login": { "usingComponents": {} }, "pages/index/index": { "navigationBarBackgroundColor": "#26b37a", "navigationBarTextStyle": "white", "usingComponents": {} }, "pages/device/device": { "usingComponents": {} }, "pages/device/connectWifi": { "usingComponents": {} }, "pages/login/phoneLogin": { "usingComponents": {} }, "pages/login/clause": { "usingComponents": {} }, "pages/device/addDevice": { "usingComponents": {} }, "pages/device/searchDevice": { "usingComponents": {} }, "pages/device/settingDevice": { "usingComponents": {} }, "pages/device/settingWifi": { "usingComponents": {} }, "pages/device/deviceDetail": { "usingComponents": {} }, "pages/device/setTimer": { "usingComponents": {} }, "pages/device/connectStatus": { "usingComponents": {} }, "pages/device/configDevice": { "usingComponents": {} }, "pages/device/repeat": { "usingComponents": {} }, "pages/device/subscribe": { "usingComponents": {} }, "pages/device/serviceDetail": { "usingComponents": {} }, "pages/my/my": { "usingComponents": {} }, "pages/address/addressList": { "usingComponents": {} }, "pages/address/managerAddress": { "usingComponents": {} }, "pages/address/modifyAddress": { "usingComponents": {} }, "pages/address/createAddress": { "usingComponents": {} }, "components/CitySelect": { "usingComponents": {} } }, "globalStyle": { "navigationBarTextStyle": "black", "navigationBarTitleText": "uni-app", "navigationBarBackgroundColor": "#F8F8F8", "backgroundColor": "#F8F8F8" } };exports.default = _default;
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _default = { "pages": { "pages/index/index": { "navigationBarBackgroundColor": "#26b37a", "navigationBarTextStyle": "white", "usingComponents": {} }, "pages/device/addDevice": { "usingComponents": {} }, "pages/login/login": { "usingComponents": {} }, "pages/device/device": { "usingComponents": {} }, "pages/device/connectWifi": { "usingComponents": {} }, "pages/login/phoneLogin": { "usingComponents": {} }, "pages/login/clause": { "usingComponents": {} }, "pages/device/searchDevice": { "usingComponents": {} }, "pages/device/settingDevice": { "usingComponents": {} }, "pages/device/settingWifi": { "usingComponents": {} }, "pages/device/deviceDetail": { "usingComponents": {} }, "pages/device/setTimer": { "usingComponents": {} }, "pages/device/connectStatus": { "usingComponents": {} }, "pages/device/configDevice": { "usingComponents": {} }, "pages/device/repeat": { "usingComponents": {} }, "pages/device/subscribe": { "usingComponents": {} }, "pages/device/serviceDetail": { "usingComponents": {} }, "pages/device/buy": { "usingComponents": {} }, "pages/my/my": { "usingComponents": {} }, "pages/address/addressList": { "usingComponents": {} }, "pages/address/managerAddress": { "usingComponents": {} }, "pages/address/modifyAddress": { "usingComponents": {} }, "pages/address/createAddress": { "usingComponents": {} }, "components/CitySelect": { "usingComponents": {} } }, "globalStyle": { "navigationBarTextStyle": "black", "navigationBarTitleText": "uni-app", "navigationBarBackgroundColor": "#F8F8F8", "backgroundColor": "#F8F8F8" } };exports.default = _default;
 
 /***/ }),
 

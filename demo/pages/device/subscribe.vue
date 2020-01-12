@@ -55,7 +55,7 @@
 			},
 			goToServiceDetail(){
 				uni.navigateTo({
-					url:'./serviceDetail'
+					url:`./buy?price=${this.currentService.price}`
 				})
 			}
 		},
@@ -63,11 +63,7 @@
 </script>
 
 <style>
-	.hscroll{
-		overflow:scroll;
-		width:100%;
-		padding:10px 0px;
-	}
+	
 	.service-item{
 		border:1px solid #B1B1B1;
 		border-radius:5px;

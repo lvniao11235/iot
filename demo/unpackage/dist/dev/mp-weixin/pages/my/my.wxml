@@ -1,1 +1,1 @@
-<view class="my-page"></view>
+<view class="my-page"><view class="head"><cover-image src="{{currentUser.avatarUrl}}"></cover-image><label>{{currentUser.nickName}}</label></view></view>

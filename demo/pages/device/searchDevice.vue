@@ -5,13 +5,11 @@
 			<label>搜索</label>
 		</view>
 		<view class="products">
-			<view class="product-item"
-				v-for="product in selectBrand.products"
-				:key="product.id">
+			<view class="product-item">
 				<view class="image-container">
-					<cover-image :src="product.img" @click="settingDevice(product)"></cover-image>
+					<cover-image src="/static/images/v2.png" @click="settingDevice(selectProduct)"></cover-image>
 				</view>
-				<view>{{product.name}}</view>
+				<view>{{selectProduct.Name}}</view>
 			</view>
 		</view>
 	</view>
@@ -27,14 +25,14 @@
 			}
 		},
 		computed:{
-			...mapState(["selectBrand"])
+			...mapState(["selectProduct"])
 		},
 		onLoad(e) {
-			if(e.id){
-				product(e.id).then(res=>{
-					this.product = res.data;
-				})
-			}
+			// if(e.id){
+			// 	product(e.id).then(res=>{
+			// 		this.product = res.data;
+			// 	})
+			// }
 		},
 		methods: {
 			...mapMutations(["setSelectProduct"]),

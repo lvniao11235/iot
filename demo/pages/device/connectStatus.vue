@@ -12,52 +12,29 @@
 </template>
 
 <script>
+	import {mapState} from 'vuex';
 	export default {
 		data:function(){
 			return {
 				connected:true
 			}
 		},
+		computed:{
+			...mapState(["currentUser", "selectProduct"])
+		},
 		methods:{
 			next(){
 				uni.request({
-					url:'http://39.98.107.68:8000/Api/AirPurifierDetails',
+					url:'http://39.98.107.68:8000/Api/devices',
 					dataType:'json',
 					method:'post',
 					data:{
-						CO2: 8.2,
-						ChildLockSwitch: false,
-						CurrentHumidity: 4,
-						CurrentTemperature: 10.1,
-						FilterLifeTimeDays_1: 17.1,
-						FilterLifeTimeDays_2: 18.1,
-						FilterLifeTimeDays_3: 19.1,
-						FilterLifeTimeDays_4: 20.1,
-						FilterLifeTimePercent_1: 21,
-						FilterLifeTimePercent_2: 22,
-						FilterLifeTimePercent_3: 23,
-						FilterLifeTimePercent_4: 24,
-						FilterStatus_1: 11,
-						FilterStatus_2: 12,
-						FilterStatus_3: 13,
-						FilterStatus_4: 14,
-						HCHO: 15.1,
-						Humidified: false,
-						Id: "C9Ayx5tBofxtroZlF" + (Math.random() * 100),
-						IonsSwitch: false,
-						LocalTimerOffId: 0,
-						LocalTimerOnId: 0,
-						PM25: 2,
-						PM25Level: 3,
-						PowerSwitch: false,
-						Runtime_1: 25.1,
-						Runtime_2: 26.1,
-						Runtime_3: 27.1,
-						Runtime_4: 28.1,
-						TVOC: 30.1,
-						WaterShortageStatus: false,
-						WindSpeed: 5,
-						WorkMode: false,
+						Id:this.$moment().format("YYYYMMDDHHmmss"),
+						NickName:this.selectProduct.Name,
+						OwnerId:this.currentUser.OpenId,
+						DeviceModelId:this.selectProduct.Id,
+						LastOnlineTime:this.$moment().format("YYYY-MM-DD HH:mm:ss"),
+						ActiveTime:this.$moment().format("YYYY-MM-DD HH:mm:ss"),
 					},
 					success:res=>{
 						uni.switchTab({

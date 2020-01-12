@@ -44,6 +44,7 @@
 }
 .device-detail .parameter{
 	width:calc(100% - 20px);
+	height:90px;
 	margin:10px auto;
 	box-shadow:0px 3px 5px #C0C0C0;
 	font-size:0px;
@@ -56,6 +57,12 @@
 	font-size:14px !important;
 	line-height:30px;
 	vertical-align:middle;
+}
+.device-detail .parameter > view:first-child{
+	float:left;
+}
+.device-detail .parameter > view:last-child{
+	float:right;
 }
 .device-detail .parameter .title{
 	text-align:center;
@@ -97,6 +104,7 @@
 .device-detail .ad{
 	font-size:14px;
 	padding:5px 16px;
+	clear:both;
 }
 .device-detail .ad>label:first-child{
 	color:#DD524D;
@@ -137,7 +145,7 @@
 }
 .device-detail .btns .btn.auto.selected,
 .device-detail .btns .btn.sleep.selected{
-	background-color:rgba(74, 144, 226, 1);
+	background-color:#26B37A;
 	color:#fff;
 }
 .device-detail .btns .btn.auto.selected > .btn-state,
@@ -150,5 +158,35 @@
 	margin:30px auto;
 	box-shadow: 0 0 10px #808080;
 	border-radius:25px;
+}
+.param1 > view{
+	display:inline-block;
+	float:left;
+}
+.param1 > .hscroll{
+	width:calc(100% - 40px) !important;
+	overflow:hidden;
+}
+.param1 .hscroll-container{
+	position:relative;
+}
+.param1 > view:first-child,
+.param1 > view:last-child{
+	line-height:40px;
+	vertical-align:bottom;
+	width:20px;
+	text-align:center;
+}
+.param1 > view:first-child{
+	float:left;
+}
+.param1 > view:last-child{
+	float:right;
+}
+.param-item{
+	width:60px;
+	text-align:center;
+	line-height:20px;
+	vertical-align:middle;
 }
 

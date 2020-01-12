@@ -95,3 +95,13 @@
 	display:inline-block;
 	margin-left:5px;
 }
+
+.hscroll{
+		overflow:scroll;
+		width:100%;
+		padding:10px 0px;
+	}
+	
+.hscroll .hscroll-item{
+	display:inline-block;
+}

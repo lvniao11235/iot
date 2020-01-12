@@ -75,7 +75,7 @@ page{
 	vertical-align:middle !important;
 }
 .device .has-device .mydevice{
-	border-left:2px solid rgba(22, 155, 213, 1);
+	border-left:2px solid #26B37A;
 	height:20px;
 	line-height:20px;
 	vertical-align:middle;
@@ -87,6 +87,7 @@ page{
 }
 .device .devices{
 	font-size:0px;
+	padding:0 5px;
 }
 .device .device-item{
 	width:calc(50% - 20px);
@@ -101,12 +102,13 @@ page{
 .device .device-item .title-right{
 	float:right;
 	margin-right:10px;
-	color:#C0C0C0;
+	color:#26B37A;
 	font-size:12px;
 }
-.device .device-item .title-right.fa{
-	color:rgba(22, 155, 213, 1);
-	width:30px;
+.device .device-item .title-right > .fa{
+	color:#B1B1B1;
+	display:inline-block;
+	margin:3px;
 	text-align:center;
 	margin-right:0px;
 }
@@ -120,5 +122,17 @@ page{
 	margin-bottom:10px;
 	font-size:12px;
 }
-
+.devices .add-device{
+	position:absolute;
+	bottom:30px;
+	right:10px;
+	background-color:#26B37A;
+	height:50px;
+	width:50px;
+	border-radius:25px;
+	line-height:50px;
+	text-align:center;
+	color:#fff;
+	font-size:30px;
+}
 

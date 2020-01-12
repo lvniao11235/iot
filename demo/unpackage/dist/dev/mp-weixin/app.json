@@ -1,8 +1,8 @@
 {
   "pages": [
+    "pages/login/login",
     "pages/index/index",
     "pages/device/addDevice",
-    "pages/login/login",
     "pages/device/device",
     "pages/device/connectWifi",
     "pages/login/phoneLogin",
@@ -17,6 +17,7 @@
     "pages/device/repeat",
     "pages/device/subscribe",
     "pages/device/serviceDetail",
+    "pages/device/buy",
     "pages/my/my",
     "pages/address/addressList",
     "pages/address/managerAddress",

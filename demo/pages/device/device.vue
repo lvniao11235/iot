@@ -2,23 +2,21 @@
 	<view class="device">
 		<view class="address-switch">
 			<label @click="switchAddress">{{currentAddress.addr}}<label class="fa fa-angle-right"></label></label>
-			<view @click="addDevice" class="add-device" v-if="devices && devices.length > 0">
-				<label>添加设备</label><label class="fa fa-plus"></label>
-			</view>
 		</view>
 		<view class="has-device" v-if="devices && devices.length > 0">
 			<view class="mydevice">我的设备</view>
 			<view class="devices">
-				<view class="device-item" v-for="(device, index) in devices"
-				 :key="device.id" @click="selectDevice(index)">
+				<view class="device-item" v-for="device in devices"
+				 :key="device.Id" @click="selectDevice(device)">
 					<view>
-						<label>空气净化器</label>
-						<label @click.stop="configDevice(index)" v-if="true" class="title-right fa fa-ellipsis-v"></label>
+						<label>{{device.NickName}}</label>
+						<label @click.stop="configDevice(device)" v-if="true" class="title-right">设置<label class="fa fa-angle-right"></label></label>
 						<label v-else class="title-right">共享</label>
 					</view>
-					<view class="quality">空气质量：{{quality[device.PM25Level-1]}}</view>
+					<view class="quality">空气质量：{{'优'}}</view>
 					<cover-image src="/static/images/v2.png"></cover-image>
 				</view>
+				<view class="add-device" @click="addDevice"><view class="fa fa-plus"></view></view>
 			</view>
 		</view>
 		<view class="no-device" v-else>
@@ -33,6 +31,7 @@
 
 <script>
 	import { mapState, mapMutations } from 'vuex';
+	import {devices} from '@/api/device';
 	export default {
 		data() {
 			return {
@@ -42,28 +41,26 @@
 			}
 		},
 		computed:{
-			...mapState(["currentAddress", "devices"])
+			...mapState(["currentAddress", "devices", "currentUser"])
 		},
 		onLoad() {
 			console.log("onLoad")
 			uni.setNavigationBarTitle({
 			　　title:'智能硬件'
 			})
-			uni.request({
-				url:'http://39.98.107.68:8000/Api/AirPurifierDetails',
-				dataType:'json',
-				success:res=>{
-					if(res.data && res.data.length > 0){
-						//this.$store.commit("setDevices", res.data)
-					}
-				}
-			})
+			
 		},
 		onHide(){
 			console.log("onHide")
 		},
 		onShow(){
-			console.log("onShow")
+			devices(this.currentUser.OpenId).then(res=>{
+				if(res.data && res.data.length > 0){
+					this.$store.commit("setDevices", res.data)
+				} else {
+					this.$store.commit("setDevices", [])
+				}
+			})
 		},
 		mounted(){
 			console.log("mounted")
@@ -92,16 +89,16 @@
 					url:'./addDevice'
 				})
 			},
-			selectDevice(index){
-				this.$store.commit("setSelectDevice", this.devices[index]);
+			selectDevice(device){
+				this.$store.commit("setSelectDevice", device);
 				uni.navigateTo({
 					url:'./deviceDetail'
 				})
 			},
-			configDevice(index){
-				this.$store.commit("setSelectDevice", this.devices[index]);
+			configDevice(device){
+				this.$store.commit("setSelectDevice", device);
 				uni.navigateTo({
-					url:'./configDevice'
+					url:`./configDevice?id=${device.Id}`
 				})
 			}
 		}
@@ -180,7 +177,7 @@
 	}
 	
 	.device .has-device .mydevice{
-		border-left:2px solid rgba(22, 155, 213, 1);
+		border-left:2px solid #26B37A;
 		height:20px;
 		line-height:20px;
 		vertical-align:middle;
@@ -193,6 +190,7 @@
 	
 	.device .devices{
 		font-size:0px;
+		padding:0 5px;
 	}
 	
 	.device .device-item{
@@ -209,13 +207,14 @@
 	.device .device-item .title-right{
 		float:right;
 		margin-right:10px;
-		color:#C0C0C0;
+		color:#26B37A;
 		font-size:12px;
 	}
 	
-	.device .device-item .title-right.fa{
-		color:rgba(22, 155, 213, 1);
-		width:30px;
+	.device .device-item .title-right > .fa{
+		color:#B1B1B1;
+		display:inline-block;
+		margin:3px;
 		text-align:center;
 		margin-right:0px;
 	}
@@ -232,4 +231,17 @@
 		font-size:12px;
 	}
 	
+	.devices .add-device{
+		position:absolute;
+		bottom:30px;
+		right:10px;
+		background-color:#26B37A;
+		height:50px;
+		width:50px;
+		border-radius:25px;
+		line-height:50px;
+		text-align:center;
+		color:#fff;
+		font-size:30px;
+	}
 </style>

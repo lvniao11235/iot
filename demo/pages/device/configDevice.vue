@@ -4,7 +4,7 @@
 			<label class="icon"><image src="/static/images/Dingyue.PNG"></image></label>
 			<label class="label">设备名称</label>
 			<view class="value">
-				<label>{{selectDevice.name}}</label>
+				<label>{{selectDevice.NickName}}</label>
 				<label class="value-icon fa fa-angle-right"></label>
 			</view>
 		</view>
@@ -31,12 +31,14 @@
 				<label class="value-icon fa fa-angle-right"></label>
 			</view>
 		</view>
-		<view class="btn">解除绑定</view>
+		<view class="btn" @click="removeDevice">解除绑定</view>
 	</view>
 </template>
 
 <script>
 	import { mapState, mapMutations } from 'vuex';
+	import {getDevice, removeDevice} from '@/api/device';
+	
 	export default {
 		data() {
 			return {
@@ -45,9 +47,12 @@
 		computed:{
 			...mapState(["selectDevice"])
 		},
-		onLoad() {
+		onLoad(e) {
 			uni.setNavigationBarTitle({
 			　　title:'设备设置'
+			});
+			getDevice(e.id).then(res=>{
+				console.log(res.data)
 			})
 		},
 		mounted(){
@@ -58,6 +63,13 @@
 			goToSubscribe(){
 				uni.navigateTo({
 					url:'./subscribe'
+				})
+			},
+			removeDevice(){
+				removeDevice(this.selectDevice.Id).then(res=>{
+					uni.switchTab({
+						url:'./device'
+					})
 				})
 			}
 		},

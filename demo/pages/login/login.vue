@@ -3,18 +3,20 @@
 		<view class="title-image"><image src="../../static/images/title.png"></image></view>
 		<view class="login-btns">
 			<button open-type="getUserInfo" 
-				@getuserinfo="onGetUserInfo" lang="zh_CN">
+				@getuserinfo="onGetUserInfo" withCredentials="true" lang="zh_CN">
 				
 				微信授权登录
 			</button>
 			<view @click="phone_login">手机号登录</view>
 		</view>
+		<view>1.8</view>
 		<view class="login-agree">登录即代表您同意《<label @click="goToClause">健康生活用户服务条款</label>》</view>
 	</view>
 </template>
 
 <script>
 	import { mapState, mapMutations } from 'vuex';
+	import {getOpenId, getUser, registerUser} from '@/api/user';
 	export default {
 		computed:{
 			...mapState(["code"])
@@ -25,10 +27,6 @@
 			})
 		},
 		onLoad(){
-			uni.$on('Wechat_login', this.login)
-			uni.$on('Wechat_GetOpenId', this.getOpenId)
-			uni.$on('Wechat_CheckUser', this.checkUser)
-			uni.$on('Wechat_RegisterUser', this.registerUser)
 		},
 		data:function(){
 			return {
@@ -41,7 +39,10 @@
 				if(res.detail && res.detail.userInfo){
 					this.$store.commit("setCurrentUser", res.detail.userInfo)
 					this.currentUser = res.detail.userInfo;
-					uni.$emit('Wechat_login')
+					this.login();
+					uni.showLoading({
+						title: '登录中...'
+					});
 				}
 			},
 			login(){
@@ -49,119 +50,45 @@
 					provider:"weixin",
 					success:res=>{
 						this.currentUser.code = res.code;
-						uni.$emit('Wechat_GetOpenId')
-					},
-				});
-			},
-			getOpenId(){
-				wx.request({
-					url:'http://qingyun.kiwihealthcare123.com/getopenid.py?code=' + this.currentUser.code,
-					method:'GET',
-					success:res=>{
-						if(res.statusCode == 200){
+						getOpenId(res.code).then(res=>{
 							let data = JSON.parse(res.data.replace(/\'/g, '\"'))
-							uni.$emit('Wechat_CheckUser', {openid:data.openid})
-						}
-					},
-					fail:res=>{
-						console.log(res)
-					},
-				});
-			},
-			checkUser(openid){
-				this.currentUser.OpenId = openid.openid;
-				wx.request({
-					url:'http://39.98.107.68:8000/api/endusers/'+this.currentUser.OpenId,
-					method:"GET",
-					dataType:'json',
-					success:res=>{
-						if(res.data && res.data !== ""){
-							this.currentUser = res.data;
+							this.currentUser.OpenId = data.openid;
+							return getUser(data.openid);
+						}).then(res=>{
+							if(res.data){
+								this.currentUser = {
+									...this.currentUser,
+									...res.data
+								};
+								this.$store.commit('setCurrentUser', this.currentUser)
+								uni.hideLoading()
+								uni.switchTab({
+									url:'../index/index'
+								})
+							} else {
+								return registerUser({
+									"OpenId":this.currentUser.OpenId,
+									"Name":this.currentUser.nickName,
+									"PSW":"123",
+									"PhoneNumber":"123456"
+								})
+							}
+						}).then(res=>{
+							this.currentUser = {
+								...this.currentUser,
+								...res.data
+							};
 							this.$store.commit('setCurrentUser', this.currentUser)
+							uni.hideLoading()
 							uni.switchTab({
 								url:'../index/index'
 							})
-						} else {
-							uni.$emit('Wechat_RegisterUser')
-						}
-					},
-					fail:res=>{
-						console.log(res)
-					},
-					complete:()=>{
-						console.log("complete")
-					}
-				})
-			},
-			registerUser(){
-				wx.request({
-					url:'http://39.98.107.68:8000/api/endusers/',
-					dataType:'json',
-					method:'POST',
-					data:{
-						"OpenId":this.currentUser.OpenId,
-						"Name":this.currentUser.nickName,
-						"PSW":"123",
-						"PhoneNumber":"123456"
-					},
-					success:res=>{
-						this.currentUser = res.data;
-						this.$store.commit('setCurrentUser', this.currentUser)
-						uni.switchTab({
-							url:'../index/index'
+						}).catch(res=>{
+							uni.hideLoading();
 						})
 					},
-					fail:res=>{
-						console.log(res)
-					}
-				})
+				});
 			},
-			getPhoneNumber(res){
-				console.log(res)
-			},
-			wechat_login(){
-				let _this = this;
-				
-				uni.login({
-					provider:"weixin",
-					success:res=>{
-						console.log(res);
-						// if(res.errMsg == "login:ok"){
-						// 	_this.$state.commit("setCode", res.code);
-						// }
-						uni.getUserInfo({
-							provider:"weixin",
-							success:res=>{
-								console.log(res);
-								// if(res.errMsg == "login:ok"){
-								// 	_this.$state.commit("setCode", res.code);
-								// }
-							},
-							fail:res=>{
-								console.log(res);
-							}
-						})
-					},
-					fail:res=>{
-						console.log(res);
-					}
-				})
-			},
-			getUserInfo(e){
-				console.log(e)
-			},
-			phone_login(){
-				
-				uni.navigateTo({
-					url:"./phoneLogin"
-				})
-			},
-			goToClause(){
-				
-				uni.navigateTo({
-					url:"./clause"
-				})
-			}
 		}
 	}
 </script>

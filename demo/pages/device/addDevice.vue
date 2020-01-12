@@ -11,11 +11,11 @@
 				:key="brand.Id" @click="selectItem(brand)">{{brand.Name}}</view>
 		</view>
 		<view class="products">
-			<view class="product-item" @click="selectProduct(product.Id)"
+			<view class="product-item" @click="selectProduct(product)"
 				v-for="product in products"
 				:key="product.Id">
 				<view class="image-container">
-					<cover-image :src="product.DeviceImageBase64String"></cover-image>
+					<cover-image src="/static/images/v2.png"></cover-image>
 				</view>
 				<view>{{product.Name}}</view>
 			</view>
@@ -61,7 +61,7 @@
 			}
 		},
 		methods: {
-			...mapMutations(["setSelectBrand"]),
+			...mapMutations(["setSelectBrand", "setSelectProduct"]),
 			selectItem(brand){
 				this.currentBrand = brand;
 				this.$store.commit("setSelectBrand", brand);
@@ -71,9 +71,10 @@
 					url:"./searchDevice"
 				})
 			},
-			selectProduct(id){
+			selectProduct(product){
+				this.$store.commit("setSelectProduct", product)
 				uni.navigateTo({
-					url:"./searchDevice?id=" + id
+					url:"./searchDevice"
 				})
 			}
 		}
