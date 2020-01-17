@@ -4,7 +4,7 @@ page, .connect-wifi{
 	height:100%;
 	width:100%;
 }
-.connect-wifi > view:first-child{
+.connect-wifi .tip{
 	position:absolute;
 	top:0;
 	right:0;
@@ -14,13 +14,13 @@ page, .connect-wifi{
 	height:200px;
 	width:100%;
 }
-.connect-wifi > view:first-child > view:first-child{
+.connect-wifi .tip > view:first-child{
 	font-size:60px;
 	text-align:center;
 	width: 100%;
 	color:#26b37a;
 }
-.connect-wifi > view:first-child > view:last-child{
+.connect-wifi .tip > view:last-child{
 	width:80%;
 	word-break: break-all;
 	margin:20px auto;
@@ -38,5 +38,6 @@ page, .connect-wifi{
 	line-height:30px;
 	vertical-align:middle;
 	text-align:center;
+	border-radius:5px;
 }
 

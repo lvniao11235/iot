@@ -5069,7 +5069,8 @@ var _vuex = __webpack_require__(/*! vuex */ 16);function _toConsumableArray(arr)
 
       uni.navigateBack();
     },
-    gotoCategory: function gotoCategory(id) {
+    gotoCategory: function gotoCategory(id, flag) {
+
       var _this = this;
       if (id == '#') {
         _this.scrollTop = 0;
@@ -5081,6 +5082,11 @@ var _vuex = __webpack_require__(/*! vuex */ 16);function _toConsumableArray(arr)
         scrollOffset: true },
       function (res) {
         _this.scrollTop = _this.scrollTop + res.top - 45 - uni.getSystemInfoSync().statusBarHeight;
+        _this.$nextTick(function () {
+          if (!flag) {
+            _this.gotoCategory(id, true);
+          }
+        });
       }).exec();
     },
     search: function search(e) {

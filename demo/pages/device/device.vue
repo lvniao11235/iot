@@ -154,7 +154,7 @@
 		color:rgba(74, 144, 226, 1);
 	}
 	
-	.device .address-switch .add-device{
+	.device .has-device .add-device{
 		float:right;
 		font-size:13px;
 		line-height:20px;
@@ -163,16 +163,6 @@
 		margin-right:16px;
 	}
 	
-	.device .address-switch .add-device .fa{
-		height:20px;
-		width:20px;
-		text-align:center;
-		background-color:rgba(22, 155, 213, 1);
-		color:#fff;
-		border-radius:10px;
-		line-height:20px !important;
-		vertical-align:middle !important;
-	}
 	
 	.device .has-device .mydevice{
 		border-left:2px solid #26B37A;
@@ -230,7 +220,7 @@
 	}
 	
 	.devices .add-device{
-		position:absolute;
+		position:fixed;
 		bottom:30px;
 		right:10px;
 		background-color:#26B37A;
@@ -240,6 +230,13 @@
 		line-height:50px;
 		text-align:center;
 		color:#fff;
+		font-size:30px;
+	}
+	
+	.devices .add-device .fa{
+		height:50px;
+		line-height:50px;
+		vertical-align:middle;
 		font-size:30px;
 	}
 </style>

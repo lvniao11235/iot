@@ -4920,7 +4920,8 @@
 				});
 				uni.navigateBack();
 			},
-			gotoCategory(id){
+			gotoCategory(id, flag){
+				
 				let _this = this;
 				if(id == '#'){
 					_this.scrollTop = 0;
@@ -4932,6 +4933,11 @@
 					scrollOffset: true
 				}, res=>{
 					_this.scrollTop = _this.scrollTop + res.top - 45 - uni.getSystemInfoSync().statusBarHeight;
+					_this.$nextTick(function(){
+						if(!flag){
+							_this.gotoCategory(id, true)
+						}
+					})
 				}).exec();
 			},
 			search(e){
