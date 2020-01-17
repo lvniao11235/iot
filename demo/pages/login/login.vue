@@ -1,15 +1,15 @@
 <template>
 	<view>
-		<view class="title-image"><image src="../../static/images/title.png"></image></view>
+		<navbar></navbar>
+		<view class="title-image">健康生活</view>
 		<view class="login-btns">
 			<button open-type="getUserInfo" 
 				@getuserinfo="onGetUserInfo" withCredentials="true" lang="zh_CN">
-				
 				微信授权登录
 			</button>
 			<view @click="phone_login">手机号登录</view>
 		</view>
-		<view>1.8</view>
+		<view>1.10</view>
 		<view class="login-agree">登录即代表您同意《<label @click="goToClause">健康生活用户服务条款</label>》</view>
 	</view>
 </template>
@@ -27,14 +27,21 @@
 			})
 		},
 		onLoad(){
+			//this.login(true);
 		},
 		data:function(){
 			return {
-				currentUser:null
+				currentUser:{}
 			}
 		},
 		methods:{
 			...mapMutations(["setCode", "setCurrentUser"]),
+			phone_login(){
+				uni.navigateTo({
+					url:'./phoneLogin'
+				})
+				
+			},
 			onGetUserInfo(res){
 				if(res.detail && res.detail.userInfo){
 					this.$store.commit("setCurrentUser", res.detail.userInfo)
@@ -45,13 +52,26 @@
 					});
 				}
 			},
-			login(){
+			login(flag){
+				if(flag){
+					uni.getUserInfo({
+						provider:"weixin",
+						success:res=>{
+							this.currentUser = {
+								...this.currentUser,
+								...res.userInfo
+							}
+						}
+					})
+				}
 				uni.login({
 					provider:"weixin",
 					success:res=>{
 						this.currentUser.code = res.code;
 						getOpenId(res.code).then(res=>{
-							let data = JSON.parse(res.data.replace(/\'/g, '\"'))
+							let str = res.data.replace(/\'/g, '\"');
+							str = str.substr(0, str.indexOf('}')+1)
+							let data = JSON.parse(str)
 							this.currentUser.OpenId = data.openid;
 							return getUser(data.openid);
 						}).then(res=>{
@@ -66,12 +86,14 @@
 									url:'../index/index'
 								})
 							} else {
-								return registerUser({
-									"OpenId":this.currentUser.OpenId,
-									"Name":this.currentUser.nickName,
-									"PSW":"123",
-									"PhoneNumber":"123456"
-								})
+								if(!flag){
+									return registerUser({
+										"OpenId":this.currentUser.OpenId,
+										"Name":this.currentUser.nickName,
+										"PSW":"123",
+										"PhoneNumber":"123456"
+									})
+								}
 							}
 						}).then(res=>{
 							this.currentUser = {
@@ -102,7 +124,10 @@
 	.title-image{
 		text-align:center;
 		position:relative;
-		top:70px;
+		top:100px;
+		color:#26B37A;
+		font-size:30px;
+		font-weight:bold;
 	}
 	.title-image image{
 		width:127px;
@@ -132,15 +157,15 @@
 	}
 	
 	.login-btns > button:first-child{
-		background-color:rgba(102, 204, 51, 1);
+		background-color:#26B37A;
 		color:#fff;
 	}
 	
 	.login-btns > view:last-child{
 		background-color:#fff;
 		margin-top:20px;
-		color:#4A90E2;
-		border:1px solid rgba(74, 144, 226, 1);
+		color:#26B37A;
+		border:1px solid #26B37A;
 	}
 	
 	.login-agree{
@@ -152,6 +177,6 @@
 	}
 	
 	.login-agree label{
-		color:#1890FF;
+		color:#26B37A;
 	}
 </style>

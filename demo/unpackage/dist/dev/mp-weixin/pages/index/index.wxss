@@ -1,4 +1,7 @@
 
+page, .index-page{
+	background-color:#fff;
+}
 .content {
 	display: -webkit-box;
 	display: -webkit-flex;
@@ -71,7 +74,7 @@
 .index-page .header>view {
 	background-color: #26b37a;
 }
-.index-page .header>view:last-child {
+.index-page .header>view.mask {
 	height: 50px;
 	width: 100%;
 	background-color: #26b37a;
@@ -84,6 +87,7 @@
 	vertical-align: middle;
 	font-size: 10px;
 	padding: 0 16px;
+	padding-bottom:20px;
 }
 .index-page .header .info label,
 .index-page .parameters .info label {
@@ -117,11 +121,6 @@
 .index-page .box1{
 	width:100%;
 	height:300px;
-}
-page {
-		background: #F2F2F2;
-		width: 750rpx;
-		overflow-x: hidden;
 }
 .qiun-padding {
 		padding: 2%;
@@ -172,56 +171,37 @@ page {
 }
 /* 通用样式 */
 .qiun-charts {
-		width: 750rpx;
+		width: 100%;
 		height: 500rpx;
 		background-color: #FFFFFF;
 }
 .charts {
-		width: 750rpx;
+		width: 100%;
 		height: 500rpx;
 		background-color: #FFFFFF;
 }
 /* 横屏样式 */
 .qiun-charts-rotate {
-		width: 700rpx;
+		width: 100%;
 		height: 1100rpx;
 		background-color: #FFFFFF;
 		padding: 25rpx;
 }
 .charts-rotate {
-		width: 700rpx;
+		width: 100%;
 		height: 1100rpx;
 		background-color: #FFFFFF;
 }
-/* 圆弧进度样式 */
-.qiun-charts3 {
-		width: 750rpx;
-		height: 250rpx;
-		background-color: #FFFFFF;
-		position: relative;
+.index-page .no-device{
+		text-align:center;
+		margin-top:40px;
 }
-.charts3 {
-		position: absolute;
-		width: 250rpx;
-		height: 250rpx;
-		background-color: #FFFFFF;
+.index-page .no-device cover-image{
+		width:80px;
+		height:100px;
+		margin:10px auto;
 }
-.qiun-tip {
-		display: block;
-		width: auto;
-		overflow: hidden;
-		padding: 15rpx;
-		height: 30rpx;
-		line-height: 30rpx;
-		margin: 10rpx;
-		background: #ff9933;
-		font-size: 30rpx;
-		border-radius: 8rpx;
-		-webkit-box-pack: center;
-		-webkit-justify-content: center;
-		        justify-content: center;
-		text-align: center;
-		border: 1px solid #dc7004;
-		color: #FFFFFF;
+.index-page .no-device > view{
+		margin:5px auto;
 }
 

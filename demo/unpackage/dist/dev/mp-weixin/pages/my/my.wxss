@@ -50,4 +50,20 @@
 	float:left;
 	margin-top:5px;
 }
+.my-page .head .fa{
+	float:right;
+	width:30px;
+	text-align:center;
+	color:#B1B1B1;
+}
+.my-page .icon-list-item{
+	padding:0px 3px 0px 5px;
+}
+.my-page .icon-list-item .value-icon{
+	font-size:16px !important;
+}
+.my-page .icon-list-item > label{
+	display:inline-block;
+	margin-left:5px;
+}
 

@@ -1,5 +1,6 @@
 <template>
 	<view class="connect-status">
+		<navbar :back="true" title="设备配网"></navbar>
 		<view v-if="connected" class="success-tip">恭喜您！配网成功，开始使用您的设备吧！</view>
 		<view v-else class="fail-tip">
 			<view>配网失败，请重新尝试</view>
@@ -53,7 +54,8 @@
 	.connect-status .success-tip,
 	.connect-status .fail-tip{
 		margin:auto;
-		margin-top:100px;
+		position:relative;
+		top:100px;
 		padding:20px;
 		line-height:30px;
 		vertical-align:middle;

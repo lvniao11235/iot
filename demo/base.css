@@ -1,3 +1,9 @@
+page{
+	position:relative;
+	min-height:100%;
+	width:100%;
+	background-color:#fff !important;
+}
 .page-bottom{
 	position:fixed;
 	bottom:0px;
@@ -53,11 +59,17 @@
 	margin-left:5px;
 }
 
-.icon-list-item > .icon,
-.icon-list-item > .icon > image{
+.icon-list-item > .icon{
 	height:23px;
 	width:20px;
 	top:6px;
+	position:relative;
+	display:inline-block;
+}
+
+.icon-list-item > .icon > image{
+	height:23px;
+	width:20px;
 	position:relative;
 	display:inline-block;
 }
@@ -69,6 +81,10 @@
 
 .icon-list-item > .btns > label{
 	margin-left:10px;
+}
+
+.icon-list-item .value-icon{
+	font-size:16px !important;
 }
 
 .icon-list-item > .value{
@@ -83,6 +99,20 @@
 	height:40px;
 	line-height:40px;
 	vertical-align:middle;
+}
+
+.icon-list-item.big-icon .icon,
+.icon-list-item.big-icon .icon > image{
+	height:40px;
+	width:40px;
+	
+}
+
+.icon-list-item.big-icon .label{
+	position:relative;
+	display:inline-block;
+	top:-10px;
+	margin-left:5px;
 }
 
 .address-switch{
@@ -105,3 +135,16 @@
 .hscroll .hscroll-item{
 	display:inline-block;
 }
+
+.empty-btn{
+	width:60%;
+	margin:auto;
+	height:40px;
+	line-height:40px;
+	vertical-align:middle;
+	text-align:center;
+	border:1px solid #26B37A;
+	color:#26B37A;
+}
+
+

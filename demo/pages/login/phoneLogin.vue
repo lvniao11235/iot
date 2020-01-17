@@ -1,6 +1,7 @@
 <template>
 	<view>
-		<view class="title-image"><image src="../../static/images/title.png"></image></view>
+		<navbar :back="true" title="手机号登录"></navbar>
+		<view class="title-image">健康生活</view>
 		<view class="page-center login-form" v-bind:style="{width:'90%', height:'100px'}">
 			<view>
 				<input :class="phoneClass" @focus="phoneFocus" @blur="phoneBlur" placeholder="请输入手机号" focus="true"></input>
@@ -42,9 +43,13 @@
 				this.codeClass=""
 			},
 			login(){
-				uni.switchTab({
-					url:"../index/index"
+				uni.showToast({
+					title:'请输入正确的手机号',
+					duration:2000
 				})
+				// uni.switchTab({
+				// 	url:"../index/index"
+				// })
 			}
 		}
 	}
@@ -59,7 +64,10 @@
 	.title-image{
 		text-align:center;
 		position:relative;
-		top:70px;
+		top:100px;
+		color:#26B37A;
+		font-size:30px;
+		font-weight:bold;
 	}
 	.title-image image{
 		width:127px;
@@ -87,7 +95,7 @@
 		height:40px;
 		line-height:40px;
 		vertical-align:middle;
-		color:#1890FF;
+		color:#26B37A;
 	}
 	
 	.login-form input{
@@ -98,14 +106,14 @@
 	}
 	
 	.login-form input.focus{
-		border-bottom:1px solid rgba(74, 144, 226, 1);
+		border-bottom:1px solid #26B37A;
 	}
 	
 	.login-form > view{
 		margin-bottom:10px;
 	}
 	.login-form > view:last-child{
-		background-color:rgba(74, 144, 226, 1);
+		background-color:#26B37A;
 		height:35px;
 		line-height:35px;
 		vertical-align:middle;
@@ -123,6 +131,6 @@
 	}
 	
 	.login-agree label{
-		color:#1890FF;
+		color:#26B37A;
 	}
 </style>

@@ -12,7 +12,10 @@ import 'font-awesome.css'
 import 'base.css'
 import moment from './utils/moment.js';
 Vue.prototype.$moment = moment;
+import navbar from './components/navbar.vue'
+
+Vue.component('navbar', navbar)
 const app = new Vue({
-    ...App
+    ...App 
 })
 app.$mount()

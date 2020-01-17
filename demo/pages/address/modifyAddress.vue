@@ -1,5 +1,6 @@
 <template>
 	<view class="modify-address" style="padding-top:50px;">
+		<navbar :back="true" title="修改家庭"></navbar>
 		<view class="label-form-item">
 			<label>家庭名称</label>
 			<input v-model="currentAddress.addr" @input="nameChanged"></input>
@@ -25,9 +26,7 @@
 			...mapState(["address", "modifyAddress"]) 
 		},
 		mounted(){
-			uni.setNavigationBarTitle({
-			　　title:'修改家庭'
-			})
+			
 		},
 		onLoad(e){
 			this.currentAddress = this.address.find(x=>x.id == e.id);
@@ -93,7 +92,7 @@
 		right:0;
 		left:0;
 		margin:auto;
-		background-color:rgba(74, 144, 226, 1);
+		background-color:#26B37A;
 		height:35px;
 		line-height:35px;
 		vertical-align:middle;

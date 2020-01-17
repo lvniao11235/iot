@@ -1,5 +1,6 @@
 <template>
 	<view class="set-timer">
+		<navbar :back="true" title="设置定时"></navbar>
 		<view>
 			<view class="title">定时开机<switch @change="switchTurnOn" :checked="selectDevice.turnOn"/></view>
 			<view class="options" v-if="selectDevice.turnOn">

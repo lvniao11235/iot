@@ -7,7 +7,10 @@ page{
 .title-image{
 	text-align:center;
 	position:relative;
-	top:70px;
+	top:100px;
+	color:#26B37A;
+	font-size:30px;
+	font-weight:bold;
 }
 .title-image image{
 	width:127px;
@@ -34,14 +37,14 @@ page{
 	margin:auto;
 }
 .login-btns > button:first-child{
-	background-color:rgba(102, 204, 51, 1);
+	background-color:#26B37A;
 	color:#fff;
 }
 .login-btns > view:last-child{
 	background-color:#fff;
 	margin-top:20px;
-	color:#4A90E2;
-	border:1px solid rgba(74, 144, 226, 1);
+	color:#26B37A;
+	border:1px solid #26B37A;
 }
 .login-agree{
 	width:100%;
@@ -51,6 +54,6 @@ page{
 	font-size:12px;
 }
 .login-agree label{
-	color:#1890FF;
+	color:#26B37A;
 }
 

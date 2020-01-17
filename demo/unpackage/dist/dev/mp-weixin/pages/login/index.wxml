@@ -1,0 +1,1 @@
+<view class="login-index-page"><navbar vue-id="1" bind:__l="__l"></navbar><view><block wx:if="{{registed}}"><view class="registed"><view>您已经注册，页面跳转中...</view></view></block><block wx:else><view class="unregisted"><view>您尚未注册，请跳转到注册页面</view><view data-event-opts="{{[['tap',[['goToRegister',['$event']]]]]}}" class="empty-btn" bindtap="__e">去注册</view></view></block></view></view>

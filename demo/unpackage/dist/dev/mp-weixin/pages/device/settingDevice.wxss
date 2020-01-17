@@ -1,7 +1,10 @@
 
 .setting-device .tip{
 	width:80%;
-	margin:30px auto;
+	position:relative;
+	top:30px;
+	margin:auto;
+	margin-bottom:30px;
 	word-break:break-word;
 }
 .setting-device .product{
@@ -35,7 +38,7 @@
 	vertical-align:middle;
 }
 .setting-device .next.enable{
-	background-color:rgba(22, 155, 213, 1);
+	background-color:#26B37A;
 }
 .setting-device .next.disable{
 	background-color:#8F8F8F;

@@ -1,0 +1,1 @@
+<view class="my-config"><navbar vue-id="1" back="{{true}}" title="设置" bind:__l="__l"></navbar><view class="icon-list-item"><label class="label">新消息通知</label><view class="value"><label><switch></switch></label></view></view></view>

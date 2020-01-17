@@ -1,0 +1,15 @@
+
+.my-share .icon-list-item .label> image{
+	width:20px;
+	height:23px;
+	position:relative;
+	top:6px;
+	display:inline-block;
+	margin-left:5px;
+}
+.my-share .icon-list-item{
+	margin-bottom:20px;
+}
+
+
+

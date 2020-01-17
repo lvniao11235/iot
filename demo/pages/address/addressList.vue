@@ -1,9 +1,11 @@
 <template>
-	<view>
+	<view class="address-list">
+		<navbar :back="true" title="家庭列表"></navbar>
 		<template v-for="addr in address">
-			<view :key="addr.id" class="icon-list-item">
+			<view @click="selectAddress(addr)" :key="addr.id" class="icon-list-item" :class="{'selected':currentAddress.id == addr.id}">
 				<label class="icon"><image src="../../static/images/Dingyue.PNG"></image></label>
 				<label class="label">{{addr.addr}}</label>
+				<label v-if="currentAddress.id == addr.id" class="checked fa fa-check"></label>
 			</view>
 		</template>
 		<view :key="addr.id" class="icon-list-item" @click="gotoManager">
@@ -14,25 +16,34 @@
 </template>
 
 <script>
-	import { mapState } from 'vuex';
+	import { mapState, mapMutations } from 'vuex';
 	export default {
 		computed:{
-			...mapState(["address"]) 
+			...mapState(["address", "currentAddress"]) 
 		},
 		mounted(){
-			uni.setNavigationBarTitle({
-			　　title:'家庭列表'
-			})
 		},
 		methods:{
+			...mapMutations(["setcurrentAddress"]),
 			gotoManager(){
 				uni.navigateTo({
 					url:'./managerAddress'
 				})
+			},
+			selectAddress(addr){
+				this.$store.commit("setcurrentAddress", addr)
 			}
 		}
 	}
 </script>
 
 <style>
+	.address-list .icon-list-item.selected .checked{
+		color:#26B37A;
+		float:right;
+		display:inline-block;
+		height:40px;
+		line-height:40px;
+		vertical-align:middle;
+	}
 </style>

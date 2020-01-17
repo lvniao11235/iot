@@ -1,0 +1,27 @@
+
+.login-index-page .registed,
+.login-index-page .unregisted{
+	position:absolute;
+	top:0;
+	right:0;
+	bottom:0;
+	left:0;
+	margin:auto;
+	width:80%;
+	text-align:center;
+}
+.login-index-page .registed{
+	height:20px;
+	line-height:20px;
+	vertical-align:middle;
+}
+.login-index-page .unregisted{
+	height:70px;
+}
+.login-index-page .unregisted > view:first-child{
+	height:20px;
+	line-height:20px;
+	vertical-align:middle;
+	margin-bottom:10px;
+}
+

@@ -1,8 +1,6 @@
 <template>
 	<view class="device">
-		<view class="address-switch">
-			<label @click="switchAddress">{{currentAddress.addr}}<label class="fa fa-angle-right"></label></label>
-		</view>
+		<navbar :showAddress="true" title="智能设备"></navbar>
 		<view class="has-device" v-if="devices && devices.length > 0">
 			<view class="mydevice">我的设备</view>
 			<view class="devices">
@@ -14,7 +12,7 @@
 						<label v-else class="title-right">共享</label>
 					</view>
 					<view class="quality">空气质量：{{'优'}}</view>
-					<cover-image src="/static/images/v2.png"></cover-image>
+					<cover-image :src="device.DeviceModelImageUrl"></cover-image>
 				</view>
 				<view class="add-device" @click="addDevice"><view class="fa fa-plus"></view></view>
 			</view>

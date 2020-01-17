@@ -1,5 +1,6 @@
 <template>
 	<view class="service-detail">
+		<navbar :back="true" title="服务订阅"></navbar>
 		<view class="head">订阅服务特享</view> 
 		<view class="icon-list-item border" style="border-top:1px solid #B1B1B1;">
 			<label class="label">订单标号</label>

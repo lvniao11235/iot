@@ -1,5 +1,6 @@
 <template>
 	<view class="add-device">
+		<navbar :back="true" title="添加设备"></navbar>
 		<view class="search" @click="search">
 			<cover-image src="/static/images/find.png"></cover-image>
 			<label>搜索</label>
@@ -11,13 +12,19 @@
 				:key="brand.Id" @click="selectItem(brand)">{{brand.Name}}</view>
 		</view>
 		<view class="products">
-			<view class="product-item" @click="selectProduct(product)"
-				v-for="product in products"
-				:key="product.Id">
-				<view class="image-container">
-					<cover-image src="/static/images/v2.png"></cover-image>
+			<view v-if="products && products.length > 0">
+				<view class="product-item" @click="selectProduct(product)"
+					v-for="product in products"
+					:key="product.Id">
+					<view class="image-container">
+						<cover-image :src="product.DeviceImageBase64String"></cover-image>
+					</view>
+					<view>{{product.Name}}</view>
 				</view>
-				<view>{{product.Name}}</view>
+			</view>
+			<view class="empty-products" v-else>
+				<image src="../../static/images/no-data.png"></image>
+				<view>没有对应产品</view>
 			</view>
 		</view>
 	</view>
@@ -49,13 +56,22 @@
 		},
 		watch:{
 			currentBrand(value){
+				uni.showLoading({
+					title:"数据加载中"
+				})
 				uni.request({
 					url:'http://39.98.107.68:8000/Api/M_DeviceModel',
 					dataType:'json',
 					success:res=>{
+						this.products = [];
 						if(res.data && res.data.length > 0){
-							this.products = res.data;
-						}
+							res.data.forEach(x=>{
+								if(x.BrandId == value.Id){
+									this.products.push(x)
+								}
+							})
+							uni.hideLoading()
+						} 
 					}
 				})
 			}
@@ -68,7 +84,7 @@
 			},
 			search(){
 				uni.navigateTo({
-					url:"./searchDevice"
+					url:"./searchDevice?brandid=" + this.currentBrand.Id
 				})
 			},
 			selectProduct(product){
@@ -168,6 +184,21 @@
 	
 	.add-device .product-item > view:last-child{
 		text-align:center;
+		font-size:14px;
+	}
+	
+	.empty-products{
+		padding:20px 0px;
+		color:#B1B1B1;
+		text-align: center;
+	}
+	.empty-products image{
+		width:100px;
+		height:100px;
+		margin:20px auto;
+	}
+	
+	.empty-products view{
 		font-size:14px;
 	}
 </style>

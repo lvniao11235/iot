@@ -1,0 +1,26 @@
+
+.my-opinion{
+	padding:0px 16px;
+}
+.my-opinion textarea{
+	height:100px;
+	width:100%;
+	box-sizing: border-box;
+	border:1px solid #B1B1B1;
+	margin:10px 0px;
+	padding:5px;
+}
+.my-opinion textarea.focus{
+	border-color:#26B37A;
+	box-shadow: 0px 0px 5px #26B37A;
+}
+.confirm-btn{
+	background-color:#26B37A;
+	width:100%;
+	color:#fff;
+	text-align:center;
+	height:40px;
+	line-height:40px;
+	vertical-align:middle;
+}
+

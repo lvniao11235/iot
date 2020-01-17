@@ -45,3 +45,10 @@ export const buyService = data => {
 		data:data
 	});
 }
+
+export const products = ()=>{
+	return request({
+		url:`M_DeviceModel`,
+		method:'GET'
+	});
+}

@@ -1,0 +1,37 @@
+
+.navbar-component, 
+.navbar-component > view{
+	width:100%;
+}
+.navbar-component > view{
+	height:45px;
+	position:fixed;
+	z-index:10000;
+	line-height:45px;
+	vertical-align:middle;
+	text-align:center;
+	color:#fff;
+}
+.navbar-component .address{
+	display:inline-block;
+	width:100px;
+	position:absolute;
+	left:0px;
+	height:45px;
+	z-index:10001;
+}
+.navbar-component .address label{
+	display:inline-block;
+	margin-left:5px;
+}
+.navbar-component .back{
+	display:inline-block;
+	width:50px;
+	position:absolute;
+	left:0px;
+	height:45px;
+	z-index:10001;
+	font-size:30px;
+	font-weight:bold;
+}
+

@@ -1,5 +1,6 @@
 <template>
 	<view class="repeat">
+		<navbar :back="true" title="定时开机"></navbar>
 		<radio-group @change="selected">
 			<view class="repeat-item">执行一次<radio  :checked="value == 0" :value="0"/></view>
 			<view class="repeat-item">每天<radio :checked="value == 1"  :value="1"/></view>

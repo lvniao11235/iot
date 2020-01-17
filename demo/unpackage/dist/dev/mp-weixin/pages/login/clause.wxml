@@ -1,1 +1,1 @@
-<view><view>健康生活用户服务条款</view></view>
+<view><navbar vue-id="1" bind:__l="__l"></navbar><view>健康生活用户服务条款</view></view>

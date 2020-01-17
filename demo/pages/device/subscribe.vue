@@ -1,5 +1,6 @@
 <template>
 	<view class="subscribe-service">
+		<navbar :back="true" title="服务订阅"></navbar>
 		<radio-group @change="selectService">
 			<view class="services hscroll">
 				<view class="hscroll-container" style="width:430px;">

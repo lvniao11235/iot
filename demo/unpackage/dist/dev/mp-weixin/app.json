@@ -1,6 +1,7 @@
 {
   "pages": [
     "pages/login/login",
+    "pages/login/index",
     "pages/index/index",
     "pages/device/addDevice",
     "pages/device/device",
@@ -19,6 +20,13 @@
     "pages/device/serviceDetail",
     "pages/device/buy",
     "pages/my/my",
+    "pages/my/about",
+    "pages/my/config",
+    "pages/my/help",
+    "pages/my/message",
+    "pages/my/service",
+    "pages/my/share",
+    "pages/my/opinion",
     "pages/address/addressList",
     "pages/address/managerAddress",
     "pages/address/modifyAddress",
@@ -28,13 +36,14 @@
   "subPackages": [],
   "window": {
     "navigationBarTextStyle": "black",
-    "navigationBarTitleText": "uni-app",
+    "navigationBarTitleText": "健康生活",
     "navigationBarBackgroundColor": "#F8F8F8",
-    "backgroundColor": "#F8F8F8"
+    "backgroundColor": "#F8F8F8",
+    "navigationStyle": "custom"
   },
   "tabBar": {
     "color": "#b1b1b1",
-    "selectedColor": "#1296db",
+    "selectedColor": "#26B37A",
     "list": [
       {
         "pagePath": "pages/index/index",
@@ -61,5 +70,7 @@
       "desc": "获取位置信息"
     }
   },
-  "usingComponents": {}
+  "usingComponents": {
+    "navbar": "/components/navbar"
+  }
 }

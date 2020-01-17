@@ -1,5 +1,6 @@
 <template>
 	<view class="create-address" style="padding-top:50px;">
+		<navbar :back="true" title="添加家庭"></navbar>
 		<view class="label-form-item">
 			<label>家庭名称</label>
 			<input v-model="currentAddress.addr"></input>
@@ -28,9 +29,6 @@
 			...mapState(["modifyAddress"]) 
 		},
 		mounted(){
-			uni.setNavigationBarTitle({
-			　　title:'添加家庭'
-			})
 		},
 		onLoad(e){
 			this.$store.commit("setModifyAddress", this.currentAddress);
@@ -92,7 +90,7 @@
 		right:0;
 		left:0;
 		margin:auto;
-		background-color:rgba(74, 144, 226, 1);
+		background-color:#26B37A;
 		height:35px;
 		line-height:35px;
 		vertical-align:middle;

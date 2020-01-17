@@ -1,5 +1,6 @@
 <template>
 	<view>
+		<navbar></navbar>
 		<view>健康生活用户服务条款</view>
 	</view>
 </template>

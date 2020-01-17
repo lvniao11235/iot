@@ -1,5 +1,6 @@
 <template>
 	<view class="manager-address">
+		<navbar :back="true" title="管理家庭"></navbar>
 		<template v-for="addr in address">
 			<view :key="addr.id" class="icon-list-item">
 				<label class="icon"><image src="../../static/images/Dingyue.PNG"></image></label>
@@ -21,9 +22,6 @@
 			...mapState(["address"]) 
 		},
 		mounted(){
-			uni.setNavigationBarTitle({
-			　　title:'管理家庭'
-			})
 		},
 		methods:{
 			modify(id){
@@ -51,7 +49,7 @@
 		right:0;
 		left:0;
 		margin:auto;
-		background-color:rgba(74, 144, 226, 1);
+		background-color:#26B37A;
 		height:35px;
 		line-height:35px;
 		vertical-align:middle;

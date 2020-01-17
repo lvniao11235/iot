@@ -1,5 +1,6 @@
 <template>
 	<view>
+		<navbar :back="true" title="服务订阅"></navbar>
 		<cover-image src="/static/images/timg.jpg"></cover-image>
 		<view class="page-bottom">
 			<view class="btn" :class="{'disable':!flag}" @click="goToServiceDetail">确定</view>

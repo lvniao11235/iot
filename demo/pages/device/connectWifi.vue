@@ -1,6 +1,7 @@
 <template>
 	<view class="connect-wifi">
 		<view>
+			<navbar :back="true" title="设备配网"></navbar>
 			<view class="fa fa-exclamation-circle"></view>
 			<view>请将手机连接到名称为Airpurfier-xxx的Wi-Fi，连接成功后，返回小程序当中</view>
 		</view>

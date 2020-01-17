@@ -1,7 +1,10 @@
 {
-	"pages": [
+	"pages": [ 
 		{
 			"path": "pages/login/login"
+		},
+		{
+			"path": "pages/login/index"
 		},
 		{
 			"path": "pages/index/index",
@@ -62,6 +65,27 @@
 			"path": "pages/my/my"
 		},
 		{
+			"path": "pages/my/about"
+		},
+		{
+			"path": "pages/my/config"
+		},
+		{
+			"path": "pages/my/help"
+		},
+		{
+			"path": "pages/my/message"
+		},
+		{
+			"path": "pages/my/service"
+		},
+		{
+			"path": "pages/my/share"
+		},
+		{
+			"path": "pages/my/opinion"
+		},
+		{
 			"path": "pages/address/addressList"
 		},
 		{
@@ -79,7 +103,7 @@
     ],
 	"tabBar":{
 		"color":"#b1b1b1",
-		"selectedColor":"#1296db",
+		"selectedColor":"#26B37A",
 		"list":[
 			{
 				"pagePath":"pages/index/index",
@@ -101,10 +125,12 @@
 			}
 		]
 	},
+	
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
-		"navigationBarTitleText": "uni-app",
+		"navigationBarTitleText": "健康生活",
 		"navigationBarBackgroundColor": "#F8F8F8",
-		"backgroundColor": "#F8F8F8"
+		"backgroundColor": "#F8F8F8",
+		"navigationStyle":"custom"
 	}
 }

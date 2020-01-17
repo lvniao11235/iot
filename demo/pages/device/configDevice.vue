@@ -1,5 +1,6 @@
 <template>
 	<view class="config-device">
+		<navbar :back="true" title="设置设备"></navbar>
 		<view class="icon-list-item border">
 			<label class="icon"><image src="/static/images/Dingyue.PNG"></image></label>
 			<label class="label">设备名称</label>

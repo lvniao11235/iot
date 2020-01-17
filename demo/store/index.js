@@ -4,8 +4,8 @@ import Vuex from 'vuex'
 Vue.use(Vuex)
 
 const store = new Vuex.Store({
-	state:{
-		appName:"demo",
+	state:{ 
+		appName:"健康生活",
 		code:null,
 		address:[
 			{
@@ -61,6 +61,9 @@ const store = new Vuex.Store({
 		currentService:null
 	},
 	mutations:{
+		setcurrentAddress(state, addr){
+			state.currentAddress = addr;
+		},
 		setCurrentService(state, service){
 			state.currentService = service;
 		},

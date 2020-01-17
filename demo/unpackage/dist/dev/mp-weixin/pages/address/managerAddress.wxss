@@ -6,7 +6,7 @@
 	right:0;
 	left:0;
 	margin:auto;
-	background-color:rgba(74, 144, 226, 1);
+	background-color:#26B37A;
 	height:35px;
 	line-height:35px;
 	vertical-align:middle;

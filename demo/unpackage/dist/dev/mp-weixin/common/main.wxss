@@ -3773,6 +3773,12 @@
   overflow: visible;
   clip: auto;
 }
+page{
+	position:relative;
+	min-height:100%;
+	width:100%;
+	background-color:#fff !important;
+}
 .page-bottom{
 	position:fixed;
 	bottom:0px;
@@ -3783,7 +3789,6 @@
 	font-size:16px;
 	width:100%;
 }
-
 .page-bottom > .info{
 	color:#333333;
 	display:inline-block;
@@ -3791,7 +3796,6 @@
 	float:left;
 	margin-left:10px;
 }
-
 .page-bottom > .btn{
 	height:30px;
 	display:inline-block;
@@ -3806,7 +3810,6 @@
 	text-align:center;
 	color:#fff;
 }
-
 .icon-list-item{
 	padding:0 16px;
 	position:relative;
@@ -3814,59 +3817,81 @@
 	line-height:40px;
 	vertical-align:middle;
 }
-
 .icon-list-item.border{
 	border-bottom:1px solid #B1B1B1;
 }
-
 .icon-list-item .value-icon{
 	display:inline-block;
 	margin-left:5px;
 }
-
-.icon-list-item > .icon,
-.icon-list-item > .icon > image{
+.icon-list-item > .icon{
 	height:23px;
 	width:20px;
 	top:6px;
 	position:relative;
 	display:inline-block;
 }
-
+.icon-list-item > .icon > image{
+	height:23px;
+	width:20px;
+	position:relative;
+	display:inline-block;
+}
 .icon-list-item > .btns{
 	float:right;
 	font-size:12px;
 }
-
 .icon-list-item > .btns > label{
 	margin-left:10px;
 }
-
+.icon-list-item .value-icon{
+	font-size:16px !important;
+}
 .icon-list-item > .value{
 	float:right;
 	margin-right:10px;
 	color:#B1B1B1;
 	font-size:12px;
 }
-
+.icon-list-item.big-icon .icon,
+.icon-list-item.big-icon .icon > image{
+	height:40px;
+	width:40px;
+	
+}
+.icon-list-item.big-icon .label{
+	position:relative;
+	display:inline-block;
+	top:-10px;
+	margin-left:5px;
+}
 .address-switch{
 	text-align:left;
 	padding-left:16px;
 	font-size:20px;
 }
-
 .address-switch label{
 	display:inline-block;
 	margin-left:5px;
 }
-
 .hscroll{
 		overflow:scroll;
 		width:100%;
 		padding:10px 0px;
 	}
-
 .hscroll .hscroll-item{
 	display:inline-block;
 }
+.empty-btn{
+	width:60%;
+	margin:auto;
+	height:40px;
+	line-height:40px;
+	vertical-align:middle;
+	text-align:center;
+	border:1px solid #26B37A;
+	color:#26B37A;
+}
+
+
 

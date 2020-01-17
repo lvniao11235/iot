@@ -1,5 +1,6 @@
 <template>
 	<scroll-view :scroll-y="true" :scroll-top="scrollTop" class="city-select">
+		<navbar :back="true" title="选择城市"></navbar>
 		<view class="search">
 			<input placeholder="输入城市名称或拼音查询" @input="search" />
 		</view>
@@ -4930,7 +4931,7 @@
 					size: true,
 					scrollOffset: true
 				}, res=>{
-					_this.scrollTop = _this.scrollTop + res.top;
+					_this.scrollTop = _this.scrollTop + res.top - 45 - uni.getSystemInfoSync().statusBarHeight;
 				}).exec();
 			},
 			search(e){

@@ -1,5 +1,6 @@
 <template>
 	<view class="setting-wifi">
+		<navbar :back="true" title="设备配网"></navbar>
 		<view class="tip"><label class="fa fa-exclamation-circle" style="color:#26b37a;"></label>选择设备工作的Wi-Fi</view>
 		<view style="margin-left:10px;">SSID</view>
 		<picker @change="bindPickerChange" :value="index" :range="wifis" range-key="SSID">

@@ -1,15 +1,24 @@
 <template>
 	<view class="search-device">
+		<navbar :back="true" title="搜索设备"></navbar>
 		<view class="search">
 			<cover-image src="/static/images/find.png"></cover-image>
 			<label>搜索</label>
 		</view>
 		<view class="products">
-			<view class="product-item">
+			<view class="product-item" v-if="!products">
 				<view class="image-container">
-					<cover-image src="/static/images/v2.png" @click="settingDevice(selectProduct)"></cover-image>
+					<cover-image :src="selectProduct.DeviceImageBase64String" @click="settingDevice(selectProduct)"></cover-image>
 				</view>
 				<view>{{selectProduct.Name}}</view>
+			</view>
+			<view v-else>
+				<view class="product-item" v-for="pro in products" :key="pro.Id">
+					<view class="image-container">
+						<cover-image :src="pro.DeviceImageBase64String" @click="settingDevice(pro)"></cover-image>
+					</view>
+					<view>{{pro.Name}}</view>
+				</view>
 			</view>
 		</view>
 	</view>
@@ -17,22 +26,33 @@
 
 <script>
 	import { mapState, mapMutations } from 'vuex';
-	import {product} from '@/api/device';
+	import {product, products} from '@/api/device';
 	export default {
 		data() {
 			return {
-				product:null
+				product:null,
+				products:null
 			}
 		},
 		computed:{
 			...mapState(["selectProduct"])
 		},
 		onLoad(e) {
-			// if(e.id){
-			// 	product(e.id).then(res=>{
-			// 		this.product = res.data;
-			// 	})
-			// }
+			if(e.brandid){
+				this.products = [];
+				products().then(res=>{
+					if(res.data && res.data.length > 0){
+						res.data.forEach(x=>{
+							if(x.BrandId == e.brandid){
+								this.products.push(x)
+							}
+						})
+						uni.hideLoading()
+					} 
+				})
+			} else {
+				this.products = null;
+			}
 		},
 		methods: {
 			...mapMutations(["setSelectProduct"]),

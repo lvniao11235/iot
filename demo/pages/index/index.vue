@@ -1,30 +1,37 @@
 <template>
 	<view class="index-page">
+		<navbar :bgColor="'#26B37A'" :fgColor="'#fff'" :showAddress="true" :title="'首页'"></navbar>
 		<view class="header">
-			<view class="address-switch" @click="switchAddress">
-				{{currentAddress.addr}}<label class="fa fa-angle-right"></label>
-			</view>
 			<view class="info">
 				<view class="location">北京</view>
 				<view><label>空气质量：良</label><label>温度：4°C</label></view>
 				<view><label>湿度：23%</label><label>PM2.5：6μg/m³</label></view>
 			</view>
 			<view class="img"></view>
-			<view></view>
+			<view class="mask" v-if="devices && devices.length > 0"></view>
 		</view>
-		<view class="parameters">
-			<view><label>优</label>室内环境</view>
-			<view class="info"><label>温度：22°C</label><label>湿度：23%</label></view>
-			<view class="info"><label>PM2.5：3μg/m³</label></view>
-		</view>
-		<view class="qiun-charts">
-			<view>统计数据</view>
-			<view class="switch-btns">
-				<view class="selected">日</view>
-				<view>月</view>
-				<view>年</view>
+		<view v-if="devices && devices.length > 0">
+			<view class="parameters">
+				<view><label>优</label>室内环境</view>
+				<view class="info"><label>温度：22°C</label><label>湿度：23%</label></view>
+				<view class="info"><label>PM2.5：3μg/m³</label></view>
 			</view>
-			<canvas canvas-id="canvasLineA" id="canvasLineA" class="charts" disable-scroll=true @touchstart="touchLineA" @touchmove="moveLineA" @touchend="touchEndLineA"></canvas>
+			<view class="qiun-charts">
+				<view>统计数据</view>
+				<view class="switch-btns">
+					<view class="selected">日</view>
+					<view>月</view>
+					<view>年</view>
+				</view>
+				<canvas canvas-id="canvasLineA" id="canvasLineA" class="charts" disable-scroll=true @touchstart="touchLineA" @touchmove="moveLineA" @touchend="touchEndLineA"></canvas>
+			</view>
+		</view>
+		<view v-else>
+			<view class="no-device">
+				<cover-image src="/static/images/phone.png"></cover-image>
+				<view>添加设备，更多服务</view>
+				<view @click="addDevice" class="empty-btn">去添加</view>
+			</view>
 		</view>
 	</view>
 </template>
@@ -36,8 +43,12 @@
 	import uCharts from '@/u-charts/u-charts.js';
 	var _self;
 	var canvasObj = {};
-	    
+	import {devices} from '@/api/device';
+	// import navbar from '../../components/navbar';
 	export default {
+		// components:{
+		// 	navbar
+		// },
 		data() {
 			return {
 				cWidth: '',
@@ -46,21 +57,42 @@
 				pixelRatio: 1,
 				serverData: '',
 				itemCount: 10,
-				sliderMax: 50
+				sliderMax: 50,
+				devices:[]
 			}
 		},
 		onLoad() {
+			uni.setNavigationBarTitle({
+			　　title:'首页'
+			})
 			_self = this;
-			this.cWidth = uni.upx2px(750);
-			this.cHeight = uni.upx2px(500);
+			uni.createSelectorQuery().select(".index-page").boundingClientRect(e=>{
+				this.cWidth = e.width;
+				this.cHeight = 200;
+				this.fillData();
+			}).exec();
+			
+			
+			devices(this.currentUser.OpenId).then(res=>{
+				if(res.data && res.data.length > 0){
+					this.devices.push(...res.data);
+				} else {
+					this.devices = [];
+				}
+			})
 		},
 		onReady() {
-			this.fillData();
+			
 		},
 		methods: {
 			switchAddress() {
 				uni.navigateTo({
 					url: '../address/addressList'
+				})
+			},
+			addDevice(){
+				uni.navigateTo({
+					url:'../device/addDevice'
 				})
 			},
 			fillData() {
@@ -69,10 +101,10 @@
 					categories: [],
 					series: []
 				};
-				LineA.categories = [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23];
+				LineA.categories = [0, 3, 6, 9, 12, 15, 18, 21, 23];
 				LineA.series = [{
 					name:'mine',
-					data:[20, 25, 25, 30, 20, 25, 25, 30, 20, 25, 25, 30, 20, 25, 25, 30, 20, 25, 25, 30, 20, 25, 25, 30],
+					data:[20, 25, 25, 30, 20, 25, 25, 30, 20],
 					color:'#1890ff',
 					type:'line',
 					show:true,
@@ -80,7 +112,7 @@
 					legendShape:'line'
 				}, {
 					name:'average',
-					data:[15, 20, 21, 19, 15, 20, 21, 19, 15, 20, 21, 19, 15, 20, 21, 19, 15, 20, 21, 19, 15, 20, 21, 19],
+					data:[15, 20, 21, 19, 15, 20, 21, 19, 15],
 					color:'#2fc25b',
 					type:'line',
 					show:true,
@@ -88,7 +120,7 @@
 					legendShape:'line'
 				}, {
 					name:'out_door',
-					data:[10, 15, 17, 8, 10, 15, 17, 8, 10, 15, 17, 8, 10, 15, 17, 8, 10, 15, 17, 8, 10, 15, 17, 8],
+					data:[10, 15, 17, 8, 10, 15, 17, 8, 10],
 					color:'#facc14',
 					type:'line',
 					show:true,
@@ -104,7 +136,7 @@
 					canvasId: canvasId,
 					type: 'line',
 					fontSize: 11,
-					padding:[15,15,0,15],
+					padding:[15,15,15,15],
 					legend:{
 						show:true,
 						padding:5,
@@ -123,19 +155,10 @@
 					animation: false,
 					enableScroll: true, //开启图表拖拽功能
 					xAxis: {
-						disableGrid: false,
-						type: 'grid',
-						gridType: 'dash',
-						itemCount: 4, 
-						scrollShow: true, 
+						itemCount: 30,
 						scrollAlign: 'left',
-						//scrollBackgroundColor:'#F7F7FF',//可不填写，配合enableScroll图表拖拽功能使用，X轴滚动条背景颜色,默认为 #EFEBEF
-						//scrollColor:'#DEE7F7',//可不填写，配合enableScroll图表拖拽功能使用，X轴滚动条颜色,默认为 #A6A6A6
 					},
 					yAxis: {
-						//disabled:true
-						gridType: 'dash',
-						splitNumber: 8,
 						min: 10,
 						max: 60,
 						format: (val) => {
@@ -145,10 +168,7 @@
 					width: _self.cWidth * _self.pixelRatio,
 					height: _self.cHeight * _self.pixelRatio,
 					dataLabel: true,
-					dataPointShape: true,
-					extra: {
-						lineStyle: 'straight'
-					},
+					dataPointShape: true
 				});
 			},	
 			touchLineA(e) {
@@ -180,6 +200,9 @@
 </script>
 
 <style>
+	page, .index-page{
+		background-color:#fff;
+	}
 	.content {
 		display: flex;
 		flex-direction: column;
@@ -248,7 +271,7 @@
 		background-color: #26b37a;
 	}
 
-	.index-page .header>view:last-child {
+	.index-page .header>view.mask {
 		height: 50px;
 		width: 100%;
 		background-color: #26b37a;
@@ -262,6 +285,7 @@
 		vertical-align: middle;
 		font-size: 10px;
 		padding: 0 16px;
+		padding-bottom:20px;
 	}
 
 	.index-page .header .info label,
@@ -302,11 +326,6 @@
 		height:300px;
 	}
 	
-	page {
-			background: #F2F2F2;
-			width: 750upx;
-			overflow-x: hidden;
-		}
 	
 		.qiun-padding {
 			padding: 2%;
@@ -351,60 +370,43 @@
 	
 		/* 通用样式 */
 		.qiun-charts {
-			width: 750upx;
+			width: 100%;
 			height: 500upx;
 			background-color: #FFFFFF;
 		}
 	
 		.charts {
-			width: 750upx;
+			width: 100%;
 			height: 500upx;
 			background-color: #FFFFFF;
 		}
 	
 		/* 横屏样式 */
 		.qiun-charts-rotate {
-			width: 700upx;
+			width: 100%;
 			height: 1100upx;
 			background-color: #FFFFFF;
 			padding: 25upx;
 		}
 	
 		.charts-rotate {
-			width: 700upx;
+			width: 100%;
 			height: 1100upx;
 			background-color: #FFFFFF;
 		}
 	
-		/* 圆弧进度样式 */
-		.qiun-charts3 {
-			width: 750upx;
-			height: 250upx;
-			background-color: #FFFFFF;
-			position: relative;
+		.index-page .no-device{
+			text-align:center;
+			margin-top:40px;
 		}
-	
-		.charts3 {
-			position: absolute;
-			width: 250upx;
-			height: 250upx;
-			background-color: #FFFFFF;
+		
+		.index-page .no-device cover-image{
+			width:80px;
+			height:100px;
+			margin:10px auto;
 		}
-	
-		.qiun-tip {
-			display: block;
-			width: auto;
-			overflow: hidden;
-			padding: 15upx;
-			height: 30upx;
-			line-height: 30upx;
-			margin: 10upx;
-			background: #ff9933;
-			font-size: 30upx;
-			border-radius: 8upx;
-			justify-content: center;
-			text-align: center;
-			border: 1px solid #dc7004;
-			color: #FFFFFF;
+		
+		.index-page .no-device > view{
+			margin:5px auto;
 		}
 </style>

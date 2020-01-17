@@ -75,4 +75,17 @@ page, .add-device{
 	text-align:center;
 	font-size:14px;
 }
+.empty-products{
+	padding:20px 0px;
+	color:#B1B1B1;
+	text-align: center;
+}
+.empty-products image{
+	width:100px;
+	height:100px;
+	margin:20px auto;
+}
+.empty-products view{
+	font-size:14px;
+}
 
