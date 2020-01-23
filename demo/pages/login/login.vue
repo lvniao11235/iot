@@ -69,11 +69,8 @@
 					success:res=>{
 						this.currentUser.code = res.code;
 						getOpenId(res.code).then(res=>{
-							let str = res.data.replace(/\'/g, '\"');
-							str = str.substr(0, str.indexOf('}')+1)
-							let data = JSON.parse(str)
-							this.currentUser.OpenId = data.openid;
-							return getUser(data.openid);
+							this.currentUser.OpenId = res.data.unionid;
+							return getUser(res.data.unionid);
 						}).then(res=>{
 							if(res.data){
 								this.currentUser = {

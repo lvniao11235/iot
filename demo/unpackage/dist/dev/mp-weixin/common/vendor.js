@@ -7520,9 +7520,9 @@ module.exports = g;
 
 /***/ }),
 /* 4 */
-/*!*********************************************************************!*\
-  !*** C:/Users/v-yojiao/Desktop/projects/uniapp/iot/demo/pages.json ***!
-  \*********************************************************************/
+/*!*********************************************************!*\
+  !*** C:/Users/dev/Desktop/projects/iot/demo/pages.json ***!
+  \*********************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -8427,20 +8427,20 @@ module.exports = {"_from":"@dcloudio/uni-stat@^2.0.0-alpha-24420191128001","_id"
 
 /***/ }),
 /* 7 */
-/*!**************************************************************************************!*\
-  !*** C:/Users/v-yojiao/Desktop/projects/uniapp/iot/demo/pages.json?{"type":"style"} ***!
-  \**************************************************************************************/
+/*!**************************************************************************!*\
+  !*** C:/Users/dev/Desktop/projects/iot/demo/pages.json?{"type":"style"} ***!
+  \**************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _default = { "pages": { "pages/login/index": { "usingComponents": {} }, "pages/login/login": { "usingComponents": {} }, "pages/index/index": { "navigationBarBackgroundColor": "#26b37a", "navigationBarTextStyle": "white", "usingComponents": {} }, "pages/device/addDevice": { "usingComponents": {} }, "pages/device/device": { "usingComponents": {} }, "pages/device/connectWifi": { "usingComponents": {} }, "pages/login/phoneLogin": { "usingComponents": {} }, "pages/login/clause": { "usingComponents": {} }, "pages/device/searchDevice": { "usingComponents": {} }, "pages/device/settingDevice": { "usingComponents": {} }, "pages/device/settingWifi": { "usingComponents": {} }, "pages/device/deviceDetail": { "usingComponents": {} }, "pages/device/setTimer": { "usingComponents": {} }, "pages/device/connectStatus": { "usingComponents": {} }, "pages/device/configDevice": { "usingComponents": {} }, "pages/device/repeat": { "usingComponents": {} }, "pages/device/subscribe": { "usingComponents": {} }, "pages/device/serviceDetail": { "usingComponents": {} }, "pages/device/buy": { "usingComponents": {} }, "pages/my/my": { "usingComponents": {} }, "pages/my/about": { "usingComponents": {} }, "pages/my/config": { "usingComponents": {} }, "pages/my/help": { "usingComponents": {} }, "pages/my/message": { "usingComponents": {} }, "pages/my/service": { "usingComponents": {} }, "pages/my/share": { "usingComponents": {} }, "pages/my/opinion": { "usingComponents": {} }, "pages/address/addressList": { "usingComponents": {} }, "pages/address/managerAddress": { "usingComponents": {} }, "pages/address/modifyAddress": { "usingComponents": {} }, "pages/address/createAddress": { "usingComponents": {} }, "components/CitySelect": { "usingComponents": {} } }, "globalStyle": { "navigationBarTextStyle": "black", "navigationBarTitleText": "健康生活", "navigationBarBackgroundColor": "#F8F8F8", "backgroundColor": "#F8F8F8", "navigationStyle": "custom" } };exports.default = _default;
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _default = { "pages": { "pages/login/login": {}, "pages/login/index": {}, "pages/index/index": { "navigationBarBackgroundColor": "#26b37a", "navigationBarTextStyle": "white" }, "pages/device/addDevice": {}, "pages/device/device": {}, "pages/device/connectWifi": {}, "pages/login/phoneLogin": {}, "pages/login/clause": {}, "pages/device/searchDevice": {}, "pages/device/settingDevice": {}, "pages/device/settingWifi": {}, "pages/device/deviceDetail": {}, "pages/device/setTimer": {}, "pages/device/connectStatus": {}, "pages/device/configDevice": {}, "pages/device/repeat": {}, "pages/device/subscribe": {}, "pages/device/serviceDetail": {}, "pages/device/buy": {}, "pages/my/my": {}, "pages/my/about": {}, "pages/my/config": {}, "pages/my/help": {}, "pages/my/message": {}, "pages/my/service": {}, "pages/my/share": {}, "pages/my/opinion": {}, "pages/address/addressList": {}, "pages/address/managerAddress": {}, "pages/address/modifyAddress": {}, "pages/address/createAddress": {}, "components/CitySelect": {} }, "globalStyle": { "navigationBarTextStyle": "black", "navigationBarTitleText": "健康生活", "navigationBarBackgroundColor": "#F8F8F8", "backgroundColor": "#F8F8F8", "navigationStyle": "custom" } };exports.default = _default;
 
 /***/ }),
 /* 8 */
-/*!*************************************************************************************!*\
-  !*** C:/Users/v-yojiao/Desktop/projects/uniapp/iot/demo/pages.json?{"type":"stat"} ***!
-  \*************************************************************************************/
+/*!*************************************************************************!*\
+  !*** C:/Users/dev/Desktop/projects/iot/demo/pages.json?{"type":"stat"} ***!
+  \*************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -8560,9 +8560,9 @@ function normalizeComponent (
 
 /***/ }),
 /* 15 */
-/*!*************************************************************************!*\
-  !*** C:/Users/v-yojiao/Desktop/projects/uniapp/iot/demo/store/index.js ***!
-  \*************************************************************************/
+/*!*************************************************************!*\
+  !*** C:/Users/dev/Desktop/projects/iot/demo/store/index.js ***!
+  \*************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -9705,9 +9705,9 @@ var index_esm = {
 
 /***/ }),
 /* 17 */
-/*!***************************************************************************!*\
-  !*** C:/Users/v-yojiao/Desktop/projects/uniapp/iot/demo/font-awesome.css ***!
-  \***************************************************************************/
+/*!***************************************************************!*\
+  !*** C:/Users/dev/Desktop/projects/iot/demo/font-awesome.css ***!
+  \***************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -9715,9 +9715,9 @@ var index_esm = {
 
 /***/ }),
 /* 18 */
-/*!*******************************************************************!*\
-  !*** C:/Users/v-yojiao/Desktop/projects/uniapp/iot/demo/base.css ***!
-  \*******************************************************************/
+/*!*******************************************************!*\
+  !*** C:/Users/dev/Desktop/projects/iot/demo/base.css ***!
+  \*******************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -9725,9 +9725,9 @@ var index_esm = {
 
 /***/ }),
 /* 19 */
-/*!**************************************************************************!*\
-  !*** C:/Users/v-yojiao/Desktop/projects/uniapp/iot/demo/utils/moment.js ***!
-  \**************************************************************************/
+/*!**************************************************************!*\
+  !*** C:/Users/dev/Desktop/projects/iot/demo/utils/moment.js ***!
+  \**************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -14375,9 +14375,9 @@ module.exports = function(module) {
 /* 25 */,
 /* 26 */,
 /* 27 */
-/*!**********************************************************************!*\
-  !*** C:/Users/v-yojiao/Desktop/projects/uniapp/iot/demo/api/user.js ***!
-  \**********************************************************************/
+/*!**********************************************************!*\
+  !*** C:/Users/dev/Desktop/projects/iot/demo/api/user.js ***!
+  \**********************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -14386,7 +14386,7 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.registerUs
 
 var getOpenId = function getOpenId(code) {
   return (0, _request.request)({
-    url: "http://qingyun.kiwihealthcare123.com/getopenid.py?code=".concat(code),
+    url: "http://qingyun.kiwihealthcare123.com/mini/getunionid?code=".concat(code),
     method: 'GET' });
 
 };exports.getOpenId = getOpenId;
@@ -14408,9 +14408,9 @@ var registerUser = function registerUser(user) {
 
 /***/ }),
 /* 28 */
-/*!*************************************************************************!*\
-  !*** C:/Users/v-yojiao/Desktop/projects/uniapp/iot/demo/api/request.js ***!
-  \*************************************************************************/
+/*!*************************************************************!*\
+  !*** C:/Users/dev/Desktop/projects/iot/demo/api/request.js ***!
+  \*************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -14454,9 +14454,9 @@ var request = function request(options) {
 /* 43 */,
 /* 44 */,
 /* 45 */
-/*!*******************************************************************************!*\
-  !*** C:/Users/v-yojiao/Desktop/projects/uniapp/iot/demo/u-charts/u-charts.js ***!
-  \*******************************************************************************/
+/*!*******************************************************************!*\
+  !*** C:/Users/dev/Desktop/projects/iot/demo/u-charts/u-charts.js ***!
+  \*******************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -19511,9 +19511,9 @@ if ( true && typeof module.exports === "object") {
 
 /***/ }),
 /* 46 */
-/*!************************************************************************!*\
-  !*** C:/Users/v-yojiao/Desktop/projects/uniapp/iot/demo/api/device.js ***!
-  \************************************************************************/
+/*!************************************************************!*\
+  !*** C:/Users/dev/Desktop/projects/iot/demo/api/device.js ***!
+  \************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 

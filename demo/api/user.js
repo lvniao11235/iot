@@ -2,7 +2,7 @@ import {request} from './request';
 
 export const getOpenId = code => {
 	return request({
-		url:`http://qingyun.kiwihealthcare123.com/getopenid.py?code=${code}`,
+		url:`http://qingyun.kiwihealthcare123.com/mini/getunionid?code=${code}`,
 		method:'GET'
 	});
 }

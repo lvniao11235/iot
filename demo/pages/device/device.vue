@@ -149,9 +149,9 @@
 		line-height:30px;
 		vertical-align:middle;
 		text-align:center;
-		border:1px solid rgba(74, 144, 226, 1);
+		border:1px solid #26B37A;
 		margin:20px auto;
-		color:rgba(74, 144, 226, 1);
+		color:#26B37A;
 	}
 	
 	.device .has-device .add-device{

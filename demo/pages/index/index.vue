@@ -409,4 +409,15 @@
 		.index-page .no-device > view{
 			margin:5px auto;
 		}
+		
+		.index-page .no-device > view:last-child{
+			width:150px;
+			height:30px;
+			line-height:30px;
+			vertical-align:middle;
+			text-align:center;
+			border:1px solid #26B37A;
+			margin:20px auto;
+			color:#26B37A;
+		}
 </style>
