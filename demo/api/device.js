@@ -52,3 +52,10 @@ export const products = ()=>{
 		method:'GET'
 	});
 }
+
+export const services = ()=>{
+	return request({
+		url:`ServiceConfigs`,
+		method:'GET'
+	})
+}

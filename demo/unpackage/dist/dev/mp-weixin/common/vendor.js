@@ -19518,7 +19518,7 @@ if ( true && typeof module.exports === "object") {
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.products = exports.buyService = exports.addDevice = exports.removeDevice = exports.getDevice = exports.devices = exports.product = void 0;var _request = __webpack_require__(/*! ./request */ 28);
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.services = exports.products = exports.buyService = exports.addDevice = exports.removeDevice = exports.getDevice = exports.devices = exports.product = void 0;var _request = __webpack_require__(/*! ./request */ 28);
 
 var product = function product(id) {
   console.log(id);
@@ -19572,6 +19572,13 @@ var products = function products() {
     method: 'GET' });
 
 };exports.products = products;
+
+var services = function services() {
+  return (0, _request.request)({
+    url: "ServiceConfigs",
+    method: 'GET' });
+
+};exports.services = services;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 
 /***/ })

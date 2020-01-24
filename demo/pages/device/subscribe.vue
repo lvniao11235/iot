@@ -5,10 +5,10 @@
 			<view class="services hscroll">
 				<view class="hscroll-container" style="width:430px;">
 					<view class="service-item hscroll-item" v-for="service in services" :key="service.type">
-						<view><radio :value="service.type"></radio></view>
-						<view>{{service.type}}</view>
-						<view>原价：￥{{service.oldprice}}.00</view>
-						<view>现价：￥{{service.price}}.00</view>
+						<view><radio :value="service.Id"></radio></view>
+						<view>{{service.ServiceTime}}年期服务</view>
+						<view>原价：￥{{service.OrignalCost}}.00</view>
+						<view>现价：￥{{service.CurrentCost}}.00</view>
 					</view>
 				</view>
 			</view>
@@ -19,7 +19,7 @@
 			<view class="service">2.同品牌产品<span>98折</span>优惠特享</view>
 		</view>
 		<view class="page-bottom">
-			<view class="info">需付金额：￥{{currentService ? currentService.price:0}}.00</view>
+			<view class="info">需付金额：￥{{currentService ? currentService.CurrentCost:0}}.00</view>
 			<view class="btn" @click="goToServiceDetail">开通</view>
 		</view>
 	</view>
@@ -27,19 +27,29 @@
 
 <script>
 	import { mapState, mapMutations } from 'vuex';
+	import {services} from '@/api/device';
 	export default {
 		data() {
 			return {
-				
+				services:[],
 				price:0
 			}
 		},
 		computed:{
-			...mapState(["services", "currentService"])
+			...mapState(["currentService"]),
 		},
 		onLoad() {
+			this.$store.commit("setCurrentService", null)
 			uni.setNavigationBarTitle({
 			　　title:'服务订阅'
+			})
+			services().then(res=>{
+				this.services = [];
+				if(res.data && res.data.length > 0){
+					this.services.push(...res.data)
+				}
+			}).catch(res=>{
+				console.log(res)
 			})
 		},
 		mounted(){
@@ -48,16 +58,18 @@
 		methods: {
 			...mapMutations(["setSelectDevice", "setCurrentService"]),
 			selectService(e){
-				let service = this.services.find(x=>x.type == e.detail.value);
+				let service = this.services.find(x=>x.Id == e.detail.value);
 				if(service){
 					this.$store.commit("setCurrentService", service)
 				}
-				
 			},
 			goToServiceDetail(){
-				uni.navigateTo({
-					url:`./buy?price=${this.currentService.price}`
-				})
+				if(this.currentService){
+					uni.navigateTo({
+						url:`./buy`
+					})
+				}
+				
 			}
 		},
 	}

@@ -150,21 +150,31 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-var _vuex = __webpack_require__(/*! vuex */ 16);function _objectSpread(target) {for (var i = 1; i < arguments.length; i++) {var source = arguments[i] != null ? arguments[i] : {};var ownKeys = Object.keys(source);if (typeof Object.getOwnPropertySymbols === 'function') {ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) {return Object.getOwnPropertyDescriptor(source, sym).enumerable;}));}ownKeys.forEach(function (key) {_defineProperty(target, key, source[key]);});}return target;}function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;}var _default =
+var _vuex = __webpack_require__(/*! vuex */ 16);
+var _device = __webpack_require__(/*! @/api/device */ 46);function _toConsumableArray(arr) {return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread();}function _nonIterableSpread() {throw new TypeError("Invalid attempt to spread non-iterable instance");}function _iterableToArray(iter) {if (Symbol.iterator in Object(iter) || Object.prototype.toString.call(iter) === "[object Arguments]") return Array.from(iter);}function _arrayWithoutHoles(arr) {if (Array.isArray(arr)) {for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) {arr2[i] = arr[i];}return arr2;}}function _objectSpread(target) {for (var i = 1; i < arguments.length; i++) {var source = arguments[i] != null ? arguments[i] : {};var ownKeys = Object.keys(source);if (typeof Object.getOwnPropertySymbols === 'function') {ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) {return Object.getOwnPropertyDescriptor(source, sym).enumerable;}));}ownKeys.forEach(function (key) {_defineProperty(target, key, source[key]);});}return target;}function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;}var _default =
 {
   data: function data() {
     return {
-
+      services: [],
       price: 0 };
 
   },
   computed: _objectSpread({},
-  (0, _vuex.mapState)(["services", "currentService"])),
+  (0, _vuex.mapState)(["currentService"])),
 
-  onLoad: function onLoad() {
+  onLoad: function onLoad() {var _this = this;
+    this.$store.commit("setCurrentService", null);
     uni.setNavigationBarTitle({
       title: '服务订阅' });
 
+    (0, _device.services)().then(function (res) {
+      _this.services = [];
+      if (res.data && res.data.length > 0) {var _this$services;
+        (_this$services = _this.services).push.apply(_this$services, _toConsumableArray(res.data));
+      }
+    }).catch(function (res) {
+      console.log(res);
+    });
   },
   mounted: function mounted() {
 
@@ -172,15 +182,17 @@ var _vuex = __webpack_require__(/*! vuex */ 16);function _objectSpread(target) {
   methods: _objectSpread({},
   (0, _vuex.mapMutations)(["setSelectDevice", "setCurrentService"]), {
     selectService: function selectService(e) {
-      var service = this.services.find(function (x) {return x.type == e.detail.value;});
+      var service = this.services.find(function (x) {return x.Id == e.detail.value;});
       if (service) {
         this.$store.commit("setCurrentService", service);
       }
-
     },
     goToServiceDetail: function goToServiceDetail() {
-      uni.navigateTo({
-        url: "./buy?price=".concat(this.currentService.price) });
+      if (this.currentService) {
+        uni.navigateTo({
+          url: "./buy" });
+
+      }
 
     } }) };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))

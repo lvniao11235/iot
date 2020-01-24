@@ -17,7 +17,7 @@
 		<view class="icon-list-item border">
 			<label class="label">服务类型</label>
 			<view class="value">
-				<label>{{currentService.type}}</label>
+				<label>{{currentService.ServiceType}}</label>
 			</view>
 		</view>
 		<view class="icon-list-item border">
@@ -35,7 +35,7 @@
 		<view class="icon-list-item border">
 			<label class="label">实付金额</label>
 			<view class="value">
-				<label>￥{{currentService.price}}.00</label>
+				<label>￥{{currentService.CurrentCost}}.00</label>
 			</view>
 		</view>
 		<view class="info">

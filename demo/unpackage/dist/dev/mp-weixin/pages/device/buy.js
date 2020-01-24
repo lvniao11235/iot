@@ -148,28 +148,41 @@ var _device = __webpack_require__(/*! @/api/device */ 46);function _objectSpread
     (0, _device.buyService)({
       Creation: this.$moment().format("YYYY-MM-DD HH:mm:ss"),
       Status: ' 未开始',
-      Amount: e.price,
+      Amount: this.currentService.CurrentCost,
       EndUserName: this.currentUser.Name,
       EndUserId: this.currentUser.OpenId,
       ShippingAddress: '锦业路',
       ServiceContent1: '订阅服务器，一年内最多免费更换一次滤芯',
       DeviceModelId: this.selectDevice.DeviceModelId,
-      EstimatedServiceTime: this.$moment().add(30, "days").format("YYYY-MM-DD HH:mm:ss") }).
-
+      EstimatedServiceTime: this.$moment().add(30, "days").format("YYYY-MM-DD HH:mm:ss"),
+      ServiceConfigId: this.currentService.Id }).
     then(function (res) {
       console.log(res);
       _this.flag = true;
     }).catch(function (res) {
       console.log(res);
     });
+
   },
   methods: {
-    goToServiceDetail: function goToServiceDetail() {
-      if (this.flag) {
-        uni.navigateTo({
-          url: './serviceDetail' });
+    goToServiceDetail: function goToServiceDetail() {var _this2 = this;
+      uni.request({
+        url: 'http://qingyun.kiwihealthcare123.com/mp/SendMessage',
+        method: "POST",
+        data: {
+          unionid: this.currentUser.OpenId,
+          cost: this.currentService.CurrentCost,
+          name: this.currentService.ServiceType },
 
-      }
+        success: function success(res) {
+          if (_this2.flag) {
+            uni.navigateTo({
+              url: './serviceDetail' });
+
+          }
+        } });
+
+
 
     } } };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))

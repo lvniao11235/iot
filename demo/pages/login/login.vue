@@ -9,7 +9,7 @@
 			</button>
 			<view @click="phone_login">手机号登录</view>
 		</view>
-		<view>1.16</view>
+		<view>1.17</view>
 		<view class="login-agree">登录即代表您同意《<label @click="goToClause">健康生活用户服务条款</label>》</view>
 	</view>
 </template>
