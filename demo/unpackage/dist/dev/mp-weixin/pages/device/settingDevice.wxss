@@ -38,7 +38,7 @@
 	vertical-align:middle;
 }
 .setting-device .next.enable{
-	background-color:#26B37A;
+	background-color:#10AB6C;
 }
 .setting-device .next.disable{
 	background-color:#8F8F8F;

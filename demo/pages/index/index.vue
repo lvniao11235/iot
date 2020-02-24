@@ -1,13 +1,13 @@
 <template>
 	<view class="index-page">
-		<navbar :bgColor="'#26B37A'" :fgColor="'#fff'" :showAddress="true" :title="'首页'"></navbar>
+		<navbar :isHome="true" :bgColor="'#10AB6C'" :fgColor="'#fff'" :showAddress="true" :title="'首页'"></navbar>
 		<view class="header">
 			<view class="info">
 				<view class="location">北京</view>
 				<view><label>空气质量：良</label><label>温度：4°C</label></view>
 				<view><label>湿度：23%</label><label>PM2.5：6μg/m³</label></view>
 			</view>
-			<view class="img"></view>
+			<view class="img"><cover-image src="/static/images/sun.png"></cover-image></view>
 			<view class="mask" v-if="devices && devices.length > 0"></view>
 		</view>
 		<view v-if="devices && devices.length > 0">
@@ -77,6 +77,18 @@
 				if(res.data && res.data.length > 0){
 					this.devices.push(...res.data);
 				} else {
+					this.devices = [];
+				}
+			})
+		},
+		onShow(){
+			devices(this.currentUser.OpenId).then(res=>{
+				if(res.data && res.data.length > 0){
+					this.$store.commit("setDevices", res.data)
+					this.devices = [];
+					this.devices.push(...res.data);
+				} else {
+					this.$store.commit("setDevices", [])
 					this.devices = [];
 				}
 			})
@@ -203,6 +215,10 @@
 	page, .index-page{
 		background-color:#fff;
 	}
+	
+	.index-page .location{
+		font-size:14px;
+	}
 	.content {
 		display: flex;
 		flex-direction: column;
@@ -224,12 +240,12 @@
 	}
 	
 	.qiun-charts .switch-btns > view.selected{
-		color:#26B37A;
+		color:#10AB6C;
 	}
 	
 	.qiun-charts > view:first-child{
 		margin-left:10px;
-		border-left:3px solid #26B37A;
+		border-left:3px solid #10AB6C;
 		padding-left:5px;
 		font-size:20px;
 		font-weight:bold;
@@ -262,63 +278,70 @@
 		position: absolute;
 		top: 10px;
 		right: 16px;
-		background-color: #fff;
 		height: 50px;
 		width: 50px;
 	}
 
 	.index-page .header>view {
-		background-color: #26b37a;
+		background-color: #10AB6C;
 	}
 
 	.index-page .header>view.mask {
 		height: 50px;
 		width: 100%;
-		background-color: #26b37a;
+		background-color: #10AB6C;
 		border-bottom-left-radius: 200px;
 		border-bottom-right-radius: 200px;
 	}
 
-	.index-page .header .info {
+	.index-page .header > .info {
 		color: #fff;
 		line-height: 20px;
 		vertical-align: middle;
-		font-size: 10px;
+		font-size: 16px;
 		padding: 0 16px;
-		padding-bottom:20px;
+		padding-bottom:10px;
 	}
 
 	.index-page .header .info label,
 	.index-page .parameters .info label {
 		display: inline-block;
-		width: 100px;
+		width: 110px;
 		height: 20px;
-		font-size: 12px;
+		font-size: 14px;
+	}
+	
+	.index-page .parameters .info label{
+		width:130px;
+		font-size:16px;
 	}
 
 	.index-page .parameters {
 		width: calc(90% - 20px);
-		height: 80px;
+		height: 100px;
 		margin: auto;
 		background-color: #fff;
 		box-shadow: 0 5px 10px #C0C0C0;
 		position: relative;
 		top: -40px;
-		border-radius: 10px;
+		border-radius: 12px;
 		padding: 10px;
+		color:#585858;
+		font-size:16px;
 	}
 
 	.index-page .parameters>view:first-child {
 		font-size: 14px;
-		color: #8F8F8F;
+		color: #6E6E6E;
 	}
 
 	.index-page .parameters>view:first-child label {
-		font-size: 30px;
+		font-size: 42px;
 		display: inline-block;
 		width: 40px;
+		margin-right:5px;
 		text-align: center;
-		color: #26b37a;
+		color: #10AB6C !important;
 	}
 	
 	.index-page .box1{
@@ -374,6 +397,11 @@
 			height: 500upx;
 			background-color: #FFFFFF;
 		}
+		
+		.qiun-charts > view:first-child{
+			color:#585858;
+			font-size:18px;
+		}
 	
 		.charts {
 			width: 100%;
@@ -416,8 +444,8 @@
 			line-height:30px;
 			vertical-align:middle;
 			text-align:center;
-			border:1px solid #26B37A;
+			border:1px solid #10AB6C;
 			margin:20px auto;
-			color:#26B37A;
+			color:#10AB6C;
 		}
 </style>

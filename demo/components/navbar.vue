@@ -6,7 +6,7 @@
 			:style="{Top:0, paddingTop:paddingTop+'px', 
 				backgroundColor:background,
 				color:color}">
-			<view @click="switchAddress" v-if="showAddress" class="address">{{currentAddress.addr}}<label class="fa fa-angle-right"></label></view>
+			<view @click="switchAddress" :style="{color:addressColor}" v-if="showAddress" class="address">{{currentAddress.addr}}<label class="fa fa-angle-right"></label></view>
 			<view @click="navigateBack" class="back" v-if="back"><label class="fa fa-angle-left"></label></view>
 			<label class="navbar-title">{{dispTitle}}</label>
 		</view>
@@ -21,7 +21,7 @@
 		components:{
 			address
 		},
-		props:["bgColor", "fgColor", "showAddress", "title", "back"],
+		props:["bgColor", "fgColor", "showAddress", "title", "back", "isHome"],
 		data:function(){
 			return {
 				paddingTop:uni.getSystemInfoSync().statusBarHeight,
@@ -39,6 +39,9 @@
 			},
 			dispTitle(){
 				return this.title? this.title:this.appName
+			},
+			addressColor(){
+				return this.isHome ? "#fff" : "#585858"
 			}
 		},
 		methods:{
@@ -69,6 +72,10 @@
 		
 	}
 	
+	.navbar-component .navbar-title{
+		font-size:18px;
+	}
+	
 	.navbar-component > view{
 		height:45px;
 		position:fixed;
@@ -86,6 +93,7 @@
 		left:0px;
 		height:45px;
 		z-index:10001;
+		font-size:15px;
 	}
 	
 	.navbar-component .address label{

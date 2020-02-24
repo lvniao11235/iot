@@ -42,7 +42,7 @@
 		font-size:60px;
 		text-align:center;
 		width: 100%;
-		color:#26b37a;
+		color:#10AB6C;
 	}
 	
 	.connect-wifi .tip > view:last-child{
@@ -59,7 +59,7 @@
 		margin:auto;
 		height:30px;
 		width:200px;
-		background-color:#26b37a;
+		background-color:#10AB6C;
 		color:#fff;
 		line-height:30px;
 		vertical-align:middle;

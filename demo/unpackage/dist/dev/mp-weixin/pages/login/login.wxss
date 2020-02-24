@@ -8,7 +8,7 @@ page{
 	text-align:center;
 	position:relative;
 	top:100px;
-	color:#26B37A;
+	color:#10AB6C;
 	font-size:30px;
 	font-weight:bold;
 }
@@ -31,20 +31,20 @@ page{
 	height:45px;
 	line-height:45px;
 	box-sizing:border-box;
-	font-size:13px;
-	border-radius:22.5px;
-	width:60%;
+	font-size:16px;
+	border-radius:2px;
+	width:80%;
 	margin:auto;
 }
 .login-btns > button:first-child{
-	background-color:#26B37A;
+	background-color:#10AB6C;
 	color:#fff;
 }
-.login-btns > view:last-child{
+.login-btns > button:last-child{
 	background-color:#fff;
 	margin-top:20px;
-	color:#26B37A;
-	border:1px solid #26B37A;
+	color:#10AB6C;
+	border:1px solid #10AB6C;
 }
 .login-agree{
 	width:100%;
@@ -54,6 +54,6 @@ page{
 	font-size:12px;
 }
 .login-agree label{
-	color:#26B37A;
+	color:#10AB6C;
 }
 

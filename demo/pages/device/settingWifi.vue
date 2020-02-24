@@ -1,7 +1,7 @@
 <template>
 	<view class="setting-wifi">
 		<navbar :back="true" title="设备配网"></navbar>
-		<view class="tip"><label class="fa fa-exclamation-circle" style="color:#26b37a;"></label>选择设备工作的Wi-Fi</view>
+		<view class="tip"><label class="fa fa-exclamation-circle" style="color:#10AB6C;"></label>选择设备工作的Wi-Fi</view>
 		<view style="margin-left:10px;">SSID</view>
 		<picker @change="bindPickerChange" :value="index" :range="wifis" range-key="SSID">
 			<view class="uni-input">{{wifis[index].SSID}}</view>
@@ -69,7 +69,7 @@
 		bottom:80px;
 		left:0;
 		right:0;
-		background-color:#26B37A;
+		background-color:#10AB6C;
 		color:#fff;
 		border-radius:5px;
 		height:30px;

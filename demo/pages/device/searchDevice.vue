@@ -8,16 +8,16 @@
 		<view class="products">
 			<view class="product-item" v-if="!products">
 				<view class="image-container">
-					<cover-image :src="selectProduct.DeviceImageBase64String" @click="settingDevice(selectProduct)"></cover-image>
+					<cover-image :src="selectProduct.imageUrl" @click="settingDevice(selectProduct)"></cover-image>
 				</view>
-				<view>{{selectProduct.Name}}</view>
+				<view>{{selectProduct.deviceTypeName}}</view>
 			</view>
 			<view v-else>
-				<view class="product-item" v-for="pro in products" :key="pro.Id">
+				<view class="product-item" v-for="pro in products" :key="pro.productKey">
 					<view class="image-container">
-						<cover-image :src="pro.DeviceImageBase64String" @click="settingDevice(pro)"></cover-image>
+						<cover-image :src="pro.imageUrl" @click="settingDevice(pro)"></cover-image>
 					</view>
-					<view>{{pro.Name}}</view>
+					<view>{{pro.deviceTypeName}}</view>
 				</view>
 			</view>
 		</view>
@@ -40,15 +40,16 @@
 		onLoad(e) {
 			if(e.brandid){
 				this.products = [];
-				products().then(res=>{
-					if(res.data && res.data.length > 0){
-						res.data.forEach(x=>{
-							if(x.BrandId == e.brandid){
-								this.products.push(x)
-							}
+				product(e.brandid).then(res=>{
+					this.products = [];
+					if(res.data.data && res.data.data.length > 0){
+						res.data.data.forEach(x=>{
+							this.products.push(x)
 						})
 						uni.hideLoading()
-					} 
+					} else {
+						uni.hideLoading()
+					}
 				})
 			} else {
 				this.products = null;

@@ -135,7 +135,7 @@
 		line-height:20px;
 		vertical-align:middle;
 		font-size:14px;
-		color:#26B37A;
+		color:#10AB6C;
 		font-weight:bold;
 	}
 	
@@ -144,7 +144,7 @@
 	}
 	.service-detail > .info .head,
 	.service-detail > .head{
-		border-left:3px solid #26B37A;
+		border-left:3px solid #10AB6C;
 		color:#333333;
 		font-size:20px;
 		font-weight:bold;

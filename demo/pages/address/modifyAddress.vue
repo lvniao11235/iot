@@ -2,11 +2,11 @@
 	<view class="modify-address" style="padding-top:50px;">
 		<navbar :back="true" title="修改家庭"></navbar>
 		<view class="label-form-item">
-			<label>家庭名称</label>
+			<view>家庭名称</view>
 			<input v-model="currentAddress.addr" @input="nameChanged"></input>
 		</view>
 		<view class="label-form-item">
-			<label :class="{'hasvalue':currentAddress && currentAddress.city.length > 0}">家庭所在城市</label>
+			<view :class="{'hasvalue':currentAddress && currentAddress.city.length > 0}">家庭所在城市</view>
 			<view class="city" @click="selectCity">{{currentAddress.city}}</view>
 		</view>
 		<view class="btn" @click="save">修改</view>
@@ -56,6 +56,17 @@
 </script>
 
 <style>
+	.modify-address .label-form-item{
+		width:80%;
+		margin:10px auto;
+	}
+	
+	.modify-address .label-form-item > view{
+		font-size:15px;
+		color:#585858;
+		margin-bottom:6px;
+		font-weight:bold;
+	}
 	.label-form-item{
 		margin-bottom:10px;
 	}
@@ -69,14 +80,16 @@
 	.label-form-item > input,
 	.label-form-item > .city{
 		display:inline-block;
-		width:calc(100% - 160px);
-		border:1px solid #333333;
+		width:100%;
 		border-radius:5px;
 		position:relative;
-		height:30px;
-		line-height:30px;
+		height:40px;
+		line-height:40px;
 		top:10px;
 		padding:0 5px;
+		background-color:#F3F5F4;
+		font-weight:normal !important;
+		color:#585858;
 	}
 	
 	.hasvalue{
@@ -86,18 +99,19 @@
 	}
 	
 	.modify-address .btn{
-		width:60%;
+		width:80%;
 		position:absolute;
 		bottom:60px;
 		right:0;
 		left:0;
 		margin:auto;
-		background-color:#26B37A;
-		height:35px;
-		line-height:35px;
+		background-color:#10AB6C;
+		height:40px;
+		line-height:40px;
 		vertical-align:middle;
 		color:#fff;
 		text-align:center;
-		border-radius:5px;
+		border-radius:2px;
+		font-size:16px;
 	}
 </style>

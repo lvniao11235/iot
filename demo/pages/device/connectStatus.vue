@@ -14,6 +14,7 @@
 
 <script>
 	import {mapState} from 'vuex';
+	import {addDevice} from '@/api/device';
 	export default {
 		data:function(){
 			return {
@@ -25,6 +26,14 @@
 		},
 		methods:{
 			next(){
+				addDevice({
+					deviceName: this.selectProduct.productKey,
+					unionId: this.currentUser.OpenId
+				}).then(res=>{
+					if(res){
+						
+					}
+				})
 				uni.request({
 					url:'http://39.98.107.68:8000/Api/devices',
 					dataType:'json',
@@ -85,7 +94,7 @@
 		bottom:80px;
 		left:0;
 		right:0;
-		background-color:#26B37A;
+		background-color:#10AB6C;
 		color:#fff;
 		border-radius:5px;
 		height:30px;

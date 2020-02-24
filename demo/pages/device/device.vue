@@ -7,14 +7,17 @@
 				<view class="device-item" v-for="device in devices"
 				 :key="device.Id" @click="selectDevice(device)">
 					<view>
-						<label>{{device.NickName}}</label>
+						<label>{{shortName(device.NickName)}}</label>
 						<label @click.stop="configDevice(device)" v-if="true" class="title-right">设置<label class="fa fa-angle-right"></label></label>
 						<label v-else class="title-right">共享</label>
 					</view>
 					<view class="quality">空气质量：{{'优'}}</view>
 					<cover-image :src="device.DeviceModelImageUrl"></cover-image>
 				</view>
-				<view class="add-device" @click="addDevice"><view class="fa fa-plus"></view></view>
+				<view class="add-device" @click="addDevice">
+					<view class="hori"></view>
+					<view class="vert"></view>
+				</view>
 			</view>
 		</view>
 		<view class="no-device" v-else>
@@ -76,6 +79,12 @@
 			console.log("destroyed")
 		},
 		methods: {
+			shortName(name){
+				if(name && name.length > 4){
+					return name.substr(0, 4) + "...";
+				}
+				return name;
+			},
 			...mapMutations(["setSelectDevice", "setDevices"]),
 			switchAddress(){
 				uni.navigateTo({
@@ -149,9 +158,9 @@
 		line-height:30px;
 		vertical-align:middle;
 		text-align:center;
-		border:1px solid #26B37A;
+		border:1px solid #10AB6C;
 		margin:20px auto;
-		color:#26B37A;
+		color:#10AB6C;
 	}
 	
 	.device .has-device .add-device{
@@ -165,37 +174,50 @@
 	
 	
 	.device .has-device .mydevice{
-		border-left:2px solid #26B37A;
+		border-left:2px solid #10AB6C;
 		height:20px;
 		line-height:20px;
 		vertical-align:middle;
 		margin-left:16px;
 		padding-left:5px;
-		font-size:14px;
+		font-size:18px;
 		margin-top:10px;
 		margin-bottom:10px;
+		color:#323232;
 	}
 	
 	.device .devices{
 		font-size:0px;
 		padding:0 5px;
+		width:calc(100% - 32px);
+		margin:auto;
 	}
 	
 	.device .device-item{
-		width:calc(50% - 20px);
-		margin:5px;
+		width:calc(50% - 17px);
+		box-sizing: content-box;
 		background-color:#fff;
 		font-size:14px;
 		display:inline-block;
 		box-shadow:0 0 5px #8F8F8F;
-		padding:5px;
 		border-radius:5px;
+		padding:5px;
+		margin-bottom:15px;
+		
 	}
 	
+	.device .devices > .device-item:nth-child(even){
+		margin-left:14px;
+	}
+	
+	.device .device-item > view:first-child > label:first-child{
+		color:#585858;
+		font-size:15px;
+	}
 	.device .device-item .title-right{
 		float:right;
 		margin-right:10px;
-		color:#26B37A;
+		color:#10AB6C;
 		font-size:12px;
 	}
 	
@@ -213,7 +235,7 @@
 	}
 	
 	.device .device-item .quality{
-		color:#c0c0c0;
+		color:#9B9B9B;
 		margin-top:5px;
 		margin-bottom:10px;
 		font-size:12px;
@@ -223,15 +245,37 @@
 		position:fixed;
 		bottom:30px;
 		right:10px;
-		background-color:#26B37A;
+		background-color:#10AB6C;
 		height:50px;
 		width:50px;
 		border-radius:25px;
 		line-height:50px;
 		text-align:center;
 		color:#fff;
-		font-size:30px;
+		font-size:24px;
 	}
+	
+	.devices .add-device > view{
+		display:inline-block;
+	}
+	
+	.devices .add-device .hori{
+		border-top:1px solid #fff;
+		width:24px;
+		position:absolute;
+		top:24px;
+		left:13px;
+	}
+	
+	.devices .add-device .vert{
+		border-left:1px solid #fff;
+		height:24px;
+		position:absolute;
+		top:13px;
+		left:24px;
+	}
+	
+	
 	
 	.devices .add-device .fa{
 		height:50px;

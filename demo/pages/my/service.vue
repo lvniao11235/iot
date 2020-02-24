@@ -73,8 +73,8 @@
 		line-height:40px;
 		vertical-align: middle;
 		text-align:center;
-		border:1px solid #26B37A;
-		color:#26B37A;
+		border:1px solid #10AB6C;
+		color:#10AB6C;
 		display:inline-block;
 	}
 	

@@ -2,7 +2,7 @@
 	<view class="setting-device">
 		<navbar :back="true" title="设备配置"></navbar>
 		<view class="tip">按照下图的提示，长按配置按钮 10s 以上，确认 LED 灯变成闪烁状态</view>
-		<cover-image class="product" :src="selectProduct.DeviceImageBase64String"></cover-image>
+		<cover-image class="product" :src="selectProduct.imageUrl"></cover-image>
 		<view class="confirm"><radio-group @change="change"><radio>已确认上述操作</radio></radio-group></view>
 		<view class="next" :class="{'enable':confirm, 'disable':!confirm}"  @click="next">下一步</view>
 	</view>
@@ -85,7 +85,7 @@
 	}
 	
 	.setting-device .next.enable{
-		background-color:#26B37A;
+		background-color:#10AB6C;
 	}
 	
 	.setting-device .next.disable{

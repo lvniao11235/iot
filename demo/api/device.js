@@ -2,15 +2,15 @@ import {baseUrl, request} from './request';
 
 export const product = (id) => {
 	console.log(id)
-	return uni.request({
-		url: `${baseUrl}M_DeviceModel/${id}`,
+	return request({
+		url: `device/listDeviceTypes?brandId=${id}`,
 		method:'GET'
 	});
 }
 
 export const devices = (openid)=>{
 	return request({
-		url:`Devices?endUserId=${openid}`,
+		url:`device/listUserBindDevices?unionId=${openid}`,
 		method:'GET'
 	});
 }
@@ -31,7 +31,7 @@ export const removeDevice = (id)=>{
 
 export const addDevice = data=>{
 	return request({
-		url:`Devices`,
+		url:`device/bindDevice`,
 		method:'POST',
 		data
 	});
@@ -48,7 +48,7 @@ export const buyService = data => {
 
 export const products = ()=>{
 	return request({
-		url:`M_DeviceModel`,
+		url:`device/listBrands`,
 		method:'GET'
 	});
 }

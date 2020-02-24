@@ -8,18 +8,18 @@
 		<view class="brands">
 			<view class="brand-item" 
 				v-for="brand in brands"
-				:class="{'selected':brand.Id == currentBrand.Id}"
-				:key="brand.Id" @click="selectItem(brand)">{{brand.Name}}</view>
+				:class="{'selected':brand.id == currentBrand.id}"
+				:key="brand.id" @click="selectItem(brand)">{{brand.name}}</view>
 		</view>
 		<view class="products">
 			<view v-if="products && products.length > 0">
 				<view class="product-item" @click="selectProduct(product)"
 					v-for="product in products"
-					:key="product.Id">
+					:key="product.productKey">
 					<view class="image-container">
-						<cover-image :src="product.DeviceImageBase64String"></cover-image>
+						<cover-image :src="product.imageUrl"></cover-image>
 					</view>
-					<view>{{product.Name}}</view>
+					<view>{{product.deviceTypeName}}</view>
 				</view>
 			</view>
 			<view class="empty-products" v-else>
@@ -32,6 +32,7 @@
 
 <script>
 	import { mapState, mapMutations } from 'vuex';
+	import {product, products} from '@/api/device';
 	export default {
 		data() {
 			return {
@@ -41,16 +42,15 @@
 			}
 		},
 		onLoad() {
-			
-			uni.request({
-				url:'http://39.98.107.68:8000/Api/M_Brand',
-				dataType:'json',
-				success:res=>{
-					if(res.data && res.data.length > 0){
-						this.brands = res.data;
-						this.currentBrand = this.brands[0];
-						this.$store.commit("setSelectBrand", this.brands[0]);
-					}
+			products().then(res=>{
+				if(res.data.data && res.data.data.length > 0){
+					this.brands = res.data.data;
+					this.currentBrand = this.brands[0];
+					this.$store.commit("setSelectBrand", this.brands[0]);
+				} else {
+					this.brands = [];
+					this.currentBrand = null;
+					this.$store.commit("setSelectBrand", null);
 				}
 			})
 		},
@@ -59,19 +59,15 @@
 				uni.showLoading({
 					title:"数据加载中"
 				})
-				uni.request({
-					url:'http://39.98.107.68:8000/Api/M_DeviceModel',
-					dataType:'json',
-					success:res=>{
-						this.products = [];
-						if(res.data && res.data.length > 0){
-							res.data.forEach(x=>{
-								if(x.BrandId == value.Id){
-									this.products.push(x)
-								}
-							})
-							uni.hideLoading()
-						} 
+				product(value.id).then(res=>{
+					this.products = [];
+					if(res.data.data && res.data.data.length > 0){
+						res.data.data.forEach(x=>{
+							this.products.push(x)
+						})
+						uni.hideLoading()
+					} else {
+						uni.hideLoading()
 					}
 				})
 			}
@@ -84,7 +80,7 @@
 			},
 			search(){
 				uni.navigateTo({
-					url:"./searchDevice?brandid=" + this.currentBrand.Id
+					url:"./searchDevice?brandid=" + this.currentBrand.id
 				})
 			},
 			selectProduct(product){

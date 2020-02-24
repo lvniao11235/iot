@@ -734,7 +734,7 @@ function initData(vueOptions, context) {
     try {
       data = data.call(context); // 支持 Vue.prototype 上挂的数据
     } catch (e) {
-      if (Object({"NODE_ENV":"development","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG) {
+      if (Object({"VUE_APP_PLATFORM":"mp-weixin","NODE_ENV":"development","BASE_URL":"/"}).VUE_APP_DEBUG) {
         console.warn('根据 Vue 的 data 函数初始化小程序 data 失败，请尽量确保 data 函数中不访问 vm 对象，否则可能影响首次数据渲染速度。', data);
       }
     }
@@ -7009,7 +7009,7 @@ function type(obj) {
 
 function flushCallbacks$1(vm) {
     if (vm.__next_tick_callbacks && vm.__next_tick_callbacks.length) {
-        if (Object({"NODE_ENV":"development","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG) {
+        if (Object({"VUE_APP_PLATFORM":"mp-weixin","NODE_ENV":"development","BASE_URL":"/"}).VUE_APP_DEBUG) {
             var mpInstance = vm.$scope;
             console.log('[' + (+new Date) + '][' + (mpInstance.is || mpInstance.route) + '][' + vm._uid +
                 ']:flushCallbacks[' + vm.__next_tick_callbacks.length + ']');
@@ -7030,14 +7030,14 @@ function nextTick$1(vm, cb) {
     //1.nextTick 之前 已 setData 且 setData 还未回调完成
     //2.nextTick 之前存在 render watcher
     if (!vm.__next_tick_pending && !hasRenderWatcher(vm)) {
-        if(Object({"NODE_ENV":"development","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG){
+        if(Object({"VUE_APP_PLATFORM":"mp-weixin","NODE_ENV":"development","BASE_URL":"/"}).VUE_APP_DEBUG){
             var mpInstance = vm.$scope;
             console.log('[' + (+new Date) + '][' + (mpInstance.is || mpInstance.route) + '][' + vm._uid +
                 ']:nextVueTick');
         }
         return nextTick(cb, vm)
     }else{
-        if(Object({"NODE_ENV":"development","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG){
+        if(Object({"VUE_APP_PLATFORM":"mp-weixin","NODE_ENV":"development","BASE_URL":"/"}).VUE_APP_DEBUG){
             var mpInstance$1 = vm.$scope;
             console.log('[' + (+new Date) + '][' + (mpInstance$1.is || mpInstance$1.route) + '][' + vm._uid +
                 ']:nextMPTick');
@@ -7113,7 +7113,7 @@ var patch = function(oldVnode, vnode) {
     });
     var diffData = diff(data, mpData);
     if (Object.keys(diffData).length) {
-      if (Object({"NODE_ENV":"development","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG) {
+      if (Object({"VUE_APP_PLATFORM":"mp-weixin","NODE_ENV":"development","BASE_URL":"/"}).VUE_APP_DEBUG) {
         console.log('[' + (+new Date) + '][' + (mpInstance.is || mpInstance.route) + '][' + this._uid +
           ']差量更新',
           JSON.stringify(diffData));
@@ -7520,9 +7520,9 @@ module.exports = g;
 
 /***/ }),
 /* 4 */
-/*!*********************************************************!*\
-  !*** C:/Users/dev/Desktop/projects/iot/demo/pages.json ***!
-  \*********************************************************/
+/*!************************************************************!*\
+  !*** C:/Users/lvniao/Desktop/projects/iot/demo/pages.json ***!
+  \************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -8427,20 +8427,20 @@ module.exports = {"_from":"@dcloudio/uni-stat@^2.0.0-alpha-24420191128001","_id"
 
 /***/ }),
 /* 7 */
-/*!**************************************************************************!*\
-  !*** C:/Users/dev/Desktop/projects/iot/demo/pages.json?{"type":"style"} ***!
-  \**************************************************************************/
+/*!*****************************************************************************!*\
+  !*** C:/Users/lvniao/Desktop/projects/iot/demo/pages.json?{"type":"style"} ***!
+  \*****************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _default = { "pages": { "pages/login/login": {}, "pages/login/index": {}, "pages/index/index": { "navigationBarBackgroundColor": "#26b37a", "navigationBarTextStyle": "white" }, "pages/device/addDevice": {}, "pages/device/device": {}, "pages/device/connectWifi": {}, "pages/login/phoneLogin": {}, "pages/login/clause": {}, "pages/device/searchDevice": {}, "pages/device/settingDevice": {}, "pages/device/settingWifi": {}, "pages/device/deviceDetail": {}, "pages/device/setTimer": {}, "pages/device/connectStatus": {}, "pages/device/configDevice": {}, "pages/device/repeat": {}, "pages/device/subscribe": {}, "pages/device/serviceDetail": {}, "pages/device/buy": {}, "pages/my/my": {}, "pages/my/about": {}, "pages/my/config": {}, "pages/my/help": {}, "pages/my/message": {}, "pages/my/service": {}, "pages/my/share": {}, "pages/my/opinion": {}, "pages/address/addressList": {}, "pages/address/managerAddress": {}, "pages/address/modifyAddress": {}, "pages/address/createAddress": {}, "components/CitySelect": {} }, "globalStyle": { "navigationBarTextStyle": "black", "navigationBarTitleText": "健康生活", "navigationBarBackgroundColor": "#F8F8F8", "backgroundColor": "#F8F8F8", "navigationStyle": "custom" } };exports.default = _default;
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _default = { "pages": { "pages/login/login": { "usingComponents": {} }, "pages/login/index": { "usingComponents": {} }, "pages/index/index": { "navigationBarBackgroundColor": "#10AB6C", "navigationBarTextStyle": "white", "usingComponents": {} }, "pages/device/addDevice": { "usingComponents": {} }, "pages/device/device": { "usingComponents": {} }, "pages/device/connectWifi": { "usingComponents": {} }, "pages/login/phoneLogin": { "usingComponents": {} }, "pages/login/clause": { "usingComponents": {} }, "pages/device/searchDevice": { "usingComponents": {} }, "pages/device/settingDevice": { "usingComponents": {} }, "pages/device/settingWifi": { "usingComponents": {} }, "pages/device/deviceDetail": { "usingComponents": {} }, "pages/device/setTimer": { "usingComponents": {} }, "pages/device/connectStatus": { "usingComponents": {} }, "pages/device/configDevice": { "usingComponents": {} }, "pages/device/repeat": { "usingComponents": {} }, "pages/device/subscribe": { "usingComponents": {} }, "pages/device/serviceDetail": { "usingComponents": {} }, "pages/device/buy": { "usingComponents": {} }, "pages/my/my": { "usingComponents": {} }, "pages/my/about": { "usingComponents": {} }, "pages/my/config": { "usingComponents": {} }, "pages/my/help": { "usingComponents": {} }, "pages/my/message": { "usingComponents": {} }, "pages/my/service": { "usingComponents": {} }, "pages/my/share": { "usingComponents": {} }, "pages/my/opinion": { "usingComponents": {} }, "pages/address/addressList": { "usingComponents": {} }, "pages/address/managerAddress": { "usingComponents": {} }, "pages/address/modifyAddress": { "usingComponents": {} }, "pages/address/createAddress": { "usingComponents": {} }, "components/CitySelect": { "usingComponents": {} } }, "globalStyle": { "navigationBarTextStyle": "black", "navigationBarTitleText": "健康生活", "navigationBarBackgroundColor": "#F8F8F8", "backgroundColor": "#F8F8F8", "navigationStyle": "custom" } };exports.default = _default;
 
 /***/ }),
 /* 8 */
-/*!*************************************************************************!*\
-  !*** C:/Users/dev/Desktop/projects/iot/demo/pages.json?{"type":"stat"} ***!
-  \*************************************************************************/
+/*!****************************************************************************!*\
+  !*** C:/Users/lvniao/Desktop/projects/iot/demo/pages.json?{"type":"stat"} ***!
+  \****************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -8560,9 +8560,9 @@ function normalizeComponent (
 
 /***/ }),
 /* 15 */
-/*!*************************************************************!*\
-  !*** C:/Users/dev/Desktop/projects/iot/demo/store/index.js ***!
-  \*************************************************************/
+/*!****************************************************************!*\
+  !*** C:/Users/lvniao/Desktop/projects/iot/demo/store/index.js ***!
+  \****************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -9705,9 +9705,9 @@ var index_esm = {
 
 /***/ }),
 /* 17 */
-/*!***************************************************************!*\
-  !*** C:/Users/dev/Desktop/projects/iot/demo/font-awesome.css ***!
-  \***************************************************************/
+/*!******************************************************************!*\
+  !*** C:/Users/lvniao/Desktop/projects/iot/demo/font-awesome.css ***!
+  \******************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -9715,9 +9715,9 @@ var index_esm = {
 
 /***/ }),
 /* 18 */
-/*!*******************************************************!*\
-  !*** C:/Users/dev/Desktop/projects/iot/demo/base.css ***!
-  \*******************************************************/
+/*!**********************************************************!*\
+  !*** C:/Users/lvniao/Desktop/projects/iot/demo/base.css ***!
+  \**********************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -9725,9 +9725,9 @@ var index_esm = {
 
 /***/ }),
 /* 19 */
-/*!**************************************************************!*\
-  !*** C:/Users/dev/Desktop/projects/iot/demo/utils/moment.js ***!
-  \**************************************************************/
+/*!*****************************************************************!*\
+  !*** C:/Users/lvniao/Desktop/projects/iot/demo/utils/moment.js ***!
+  \*****************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -14375,9 +14375,9 @@ module.exports = function(module) {
 /* 25 */,
 /* 26 */,
 /* 27 */
-/*!**********************************************************!*\
-  !*** C:/Users/dev/Desktop/projects/iot/demo/api/user.js ***!
-  \**********************************************************/
+/*!*************************************************************!*\
+  !*** C:/Users/lvniao/Desktop/projects/iot/demo/api/user.js ***!
+  \*************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -14386,14 +14386,14 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.registerUs
 
 var getOpenId = function getOpenId(code) {
   return (0, _request.request)({
-    url: "http://qingyun.kiwihealthcare123.com/mini/getunionid?code=".concat(code),
+    url: "user/getOpenId?code=".concat(code),
     method: 'GET' });
 
 };exports.getOpenId = getOpenId;
 
 var getUser = function getUser(openid) {
   return (0, _request.request)({
-    url: "endusers/".concat(openid),
+    url: "user/getUserInfo?unionId=".concat(openid),
     method: "GET" });
 
 };exports.getUser = getUser;
@@ -14408,14 +14408,14 @@ var registerUser = function registerUser(user) {
 
 /***/ }),
 /* 28 */
-/*!*************************************************************!*\
-  !*** C:/Users/dev/Desktop/projects/iot/demo/api/request.js ***!
-  \*************************************************************/
+/*!****************************************************************!*\
+  !*** C:/Users/lvniao/Desktop/projects/iot/demo/api/request.js ***!
+  \****************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.request = exports.baseUrl = void 0;function _objectSpread(target) {for (var i = 1; i < arguments.length; i++) {var source = arguments[i] != null ? arguments[i] : {};var ownKeys = Object.keys(source);if (typeof Object.getOwnPropertySymbols === 'function') {ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) {return Object.getOwnPropertyDescriptor(source, sym).enumerable;}));}ownKeys.forEach(function (key) {_defineProperty(target, key, source[key]);});}return target;}function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;}var baseUrl = 'http://39.98.107.68:8000/Api/';exports.baseUrl = baseUrl;
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.request = exports.baseUrl = void 0;function _objectSpread(target) {for (var i = 1; i < arguments.length; i++) {var source = arguments[i] != null ? arguments[i] : {};var ownKeys = Object.keys(source);if (typeof Object.getOwnPropertySymbols === 'function') {ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) {return Object.getOwnPropertyDescriptor(source, sym).enumerable;}));}ownKeys.forEach(function (key) {_defineProperty(target, key, source[key]);});}return target;}function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;}var baseUrl = 'http://139.217.3.16:9012/api/';exports.baseUrl = baseUrl;
 
 var request = function request(options) {
   var _options = _objectSpread({}, options);
@@ -14454,9 +14454,9 @@ var request = function request(options) {
 /* 43 */,
 /* 44 */,
 /* 45 */
-/*!*******************************************************************!*\
-  !*** C:/Users/dev/Desktop/projects/iot/demo/u-charts/u-charts.js ***!
-  \*******************************************************************/
+/*!**********************************************************************!*\
+  !*** C:/Users/lvniao/Desktop/projects/iot/demo/u-charts/u-charts.js ***!
+  \**********************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -19511,26 +19511,26 @@ if ( true && typeof module.exports === "object") {
 
 /***/ }),
 /* 46 */
-/*!************************************************************!*\
-  !*** C:/Users/dev/Desktop/projects/iot/demo/api/device.js ***!
-  \************************************************************/
+/*!***************************************************************!*\
+  !*** C:/Users/lvniao/Desktop/projects/iot/demo/api/device.js ***!
+  \***************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.services = exports.products = exports.buyService = exports.addDevice = exports.removeDevice = exports.getDevice = exports.devices = exports.product = void 0;var _request = __webpack_require__(/*! ./request */ 28);
+Object.defineProperty(exports, "__esModule", { value: true });exports.services = exports.products = exports.buyService = exports.addDevice = exports.removeDevice = exports.getDevice = exports.devices = exports.product = void 0;var _request = __webpack_require__(/*! ./request */ 28);
 
 var product = function product(id) {
   console.log(id);
-  return uni.request({
-    url: "".concat(_request.baseUrl, "M_DeviceModel/").concat(id),
+  return (0, _request.request)({
+    url: "device/listDeviceTypes?brandId=".concat(id),
     method: 'GET' });
 
 };exports.product = product;
 
 var devices = function devices(openid) {
   return (0, _request.request)({
-    url: "Devices?endUserId=".concat(openid),
+    url: "device/listUserBindDevices?unionId=".concat(openid),
     method: 'GET' });
 
 };exports.devices = devices;
@@ -19551,7 +19551,7 @@ var removeDevice = function removeDevice(id) {
 
 var addDevice = function addDevice(data) {
   return (0, _request.request)({
-    url: "Devices",
+    url: "device/bindDevice",
     method: 'POST',
     data: data });
 
@@ -19568,7 +19568,7 @@ var buyService = function buyService(data) {
 
 var products = function products() {
   return (0, _request.request)({
-    url: "M_DeviceModel",
+    url: "device/listBrands",
     method: 'GET' });
 
 };exports.products = products;
@@ -19579,7 +19579,6 @@ var services = function services() {
     method: 'GET' });
 
 };exports.services = services;
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 
 /***/ })
 ]]);

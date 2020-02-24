@@ -1,15 +1,15 @@
-import {request} from './request';
+import {baseUrl, request} from './request';
 
 export const getOpenId = code => {
 	return request({
-		url:`http://qingyun.kiwihealthcare123.com/mini/getunionid?code=${code}`,
+		url:`user/getOpenId?code=${code}`,
 		method:'GET'
 	});
 }
 
 export const getUser = openid => {
 	return request({
-		url:`endusers/${openid}`,
+		url:`user/getUserInfo?unionId=${openid}`,
 		method:"GET",
 	});
 }

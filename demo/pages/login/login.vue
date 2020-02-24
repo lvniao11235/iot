@@ -7,9 +7,9 @@
 				@getuserinfo="onGetUserInfo" withCredentials="true" lang="zh_CN">
 				微信授权登录
 			</button>
-			<view @click="phone_login">手机号登录</view>
+			<button open-type="getPhoneNumber" @getphonenumber="getPhoneNumber">手机号登录</button>
 		</view>
-		<view>1.17</view>
+		<view>1.20</view>
 		<view class="login-agree">登录即代表您同意《<label @click="goToClause">健康生活用户服务条款</label>》</view>
 	</view>
 </template>
@@ -36,6 +36,17 @@
 		},
 		methods:{
 			...mapMutations(["setCode", "setCurrentUser"]),
+			getPhoneNumber: function(e) {
+				console.log(e);
+				if (e.detail.errMsg == 'getPhoneNumber:fail user deny') {
+ 
+				} else {
+ 
+				}
+ 
+				// 				console.log(JSON.stringify(e.encryptedData));
+				// 				console.log(JSON.stringify(e.iv));
+			},
 			phone_login(){
 				uni.navigateTo({
 					url:'./phoneLogin'
@@ -69,8 +80,12 @@
 					success:res=>{
 						this.currentUser.code = res.code;
 						getOpenId(res.code).then(res=>{
-							this.currentUser.OpenId = res.data.unionid;
-							return getUser(res.data.unionid);
+							if(res.data.data.unionid){
+								this.currentUser.OpenId = res.data.data.unionid;
+								return getUser(res.data.data.unionid);
+							} else {
+								uni.hideLoading();
+							}
 						}).then(res=>{
 							if(res.data){
 								this.currentUser = {
@@ -122,7 +137,7 @@
 		text-align:center;
 		position:relative;
 		top:100px;
-		color:#26B37A;
+		color:#10AB6C;
 		font-size:30px;
 		font-weight:bold;
 	}
@@ -147,22 +162,22 @@
 		height:45px;
 		line-height:45px;
 		box-sizing:border-box;
-		font-size:13px;
-		border-radius:22.5px;
-		width:60%;
+		font-size:16px;
+		border-radius:2px;
+		width:80%;
 		margin:auto;
 	}
 	
 	.login-btns > button:first-child{
-		background-color:#26B37A;
+		background-color:#10AB6C;
 		color:#fff;
 	}
 	
-	.login-btns > view:last-child{
+	.login-btns > button:last-child{
 		background-color:#fff;
 		margin-top:20px;
-		color:#26B37A;
-		border:1px solid #26B37A;
+		color:#10AB6C;
+		border:1px solid #10AB6C;
 	}
 	
 	.login-agree{
@@ -174,6 +189,6 @@
 	}
 	
 	.login-agree label{
-		color:#26B37A;
+		color:#10AB6C;
 	}
 </style>

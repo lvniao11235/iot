@@ -4,10 +4,10 @@
 		<view class="title-image">健康生活</view>
 		<view class="page-center login-form" v-bind:style="{width:'90%', height:'100px'}">
 			<view>
-				<input :class="phoneClass" @focus="phoneFocus" @blur="phoneBlur" placeholder="请输入手机号" focus="true"></input>
+				<input class="phone" :class="phoneClass" @focus="phoneFocus" @blur="phoneBlur" placeholder="请输入手机号" focus="true"></input>
 			</view>
-			<view class="verify-code">
-				<input :class="codeClass" @focus="codeFocus" @blur="codeBlur"  placeholder="请输入验证码"></input>
+			<view class="verify-code"  :class="codeClass" >
+				<input @focus="codeFocus" @blur="codeBlur"  placeholder="请输入验证码"></input>
 				<label>获取验证码</label>
 			</view>
 			<view @click="login">登录/注册</view>
@@ -65,7 +65,7 @@
 		text-align:center;
 		position:relative;
 		top:100px;
-		color:#26B37A;
+		color:#10AB6C;
 		font-size:30px;
 		font-weight:bold;
 	}
@@ -83,6 +83,12 @@
 		margin:auto;
 	}
 	
+	.verify-code{
+		background-color:#EEF8F4;
+		box-sizing: content-box;
+		height:40px;
+		font-size:16px;
+	}
 	.verify-code input{
 		width:calc(100% - 95px);
 		display:inline-block;
@@ -95,31 +101,36 @@
 		height:40px;
 		line-height:40px;
 		vertical-align:middle;
-		color:#26B37A;
+		color:#10AB6C;
 	}
 	
 	.login-form input{
 		height:40px;
 		line-height:40px;
 		vertical-align:middle;
-		box-sizing: border-box;
+		box-sizing: content-box;
+		background-color:#EEF8F4;
+		padding:0px 5px;
 	}
 	
-	.login-form input.focus{
-		border-bottom:1px solid #26B37A;
+	.login-form .phone.focus,
+	.verify-code.focus{
+		border:1px solid #10AB6C;
+		box-sizing: content-box;
 	}
 	
 	.login-form > view{
 		margin-bottom:10px;
 	}
 	.login-form > view:last-child{
-		background-color:#26B37A;
-		height:35px;
-		line-height:35px;
+		background-color:#10AB6C;
+		height:40px;
+		line-height:40px;
 		vertical-align:middle;
+		font-size:16px;
 		color:#fff;
 		text-align:center;
-		border-radius:5px;
+		border-radius:2px;
 	}
 	
 	.login-agree{
@@ -131,6 +142,6 @@
 	}
 	
 	.login-agree label{
-		color:#26B37A;
+		color:#10AB6C;
 	}
 </style>

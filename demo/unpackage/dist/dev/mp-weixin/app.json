@@ -43,7 +43,7 @@
   },
   "tabBar": {
     "color": "#b1b1b1",
-    "selectedColor": "#26B37A",
+    "selectedColor": "#10AB6C",
     "list": [
       {
         "pagePath": "pages/index/index",
@@ -73,5 +73,5 @@
   "usingComponents": {
     "navbar": "/components/navbar"
   },
-  "sitemapLocation": "sitemap60.json"
+  "sitemapLocation": "sitemap24.json"
 }

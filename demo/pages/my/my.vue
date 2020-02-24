@@ -7,28 +7,31 @@
 			<label class="fa fa-angle-right"></label>
 		</view>
 		<view class="icon-list-item" @click="jumpTo(0)">
-			<label class="icon"><image src="/static/images/Dingyue.PNG"></image></label>
+			<label class="icon"><image src="/static/images/dingyue.png"></image></label>
 			<label class="label">服务订阅</label>
 			<view class="value">
 				<label></label>
 				<label class="value-icon fa fa-angle-right"></label>
 			</view>
+			<view class="border"></view>
 		</view>
 		<view class="icon-list-item" @click="jumpTo(1)">
-			<label class="icon"><image src="/static/images/link.PNG"></image></label>
+			<label class="icon"><image src="/static/images/link.png"></image></label>
 			<label class="label">设备共享</label>
 			<view class="value">
 				<label></label>
 				<label class="value-icon fa fa-angle-right"></label>
 			</view>
+			<view class="border"></view>
 		</view>
 		<view class="icon-list-item" @click="jumpTo(2)">
-			<label class="icon"><image src="/static/images/question.PNG"></image></label>
+			<label class="icon"><image src="/static/images/question.png"></image></label>
 			<label class="label">帮助中心</label>
 			<view class="value">
 				<label></label>
 				<label class="value-icon fa fa-angle-right"></label>
 			</view>
+			<view class="border"></view>
 		</view>
 		<view class="icon-list-item" @click="jumpTo(3)">
 			<label class="icon"><image src="/static/images/edit.png"></image></label>
@@ -37,14 +40,16 @@
 				<label></label>
 				<label class="value-icon fa fa-angle-right"></label>
 			</view>
+			<view class="border"></view>
 		</view>
 		<view class="icon-list-item" @click="jumpTo(4)">
-			<label class="icon"><image src="/static/images/bell.PNG"></image></label>
+			<label class="icon"><image src="/static/images/bell.png"></image></label>
 			<label class="label">消息提醒</label>
 			<view class="value">
 				<label></label>
 				<label class="value-icon fa fa-angle-right"></label>
 			</view>
+			<view class="border"></view>
 		</view>
 		<view class="icon-list-item" @click="jumpTo(5)">
 			<label class="icon"><image src="/static/images/abouts.png"></image></label>
@@ -53,6 +58,7 @@
 				<label></label>
 				<label class="value-icon fa fa-angle-right"></label>
 			</view>
+			<view class="border"></view>
 		</view>
 		<view class="icon-list-item" @click="jumpTo(6)">
 			<label class="icon"><image src="/static/images/config.png"></image></label>
@@ -133,6 +139,13 @@
 		margin-top:5px;
 		float:left;
 		margin-left:10px;
+	}
+	
+	.icon-list-item > .border{
+		width:calc(100% - 10px);
+		margin-left:10px;
+		border-bottom:1px solid #F2F2F2;
+		margin-top:3px;
 	}
 	
 	.my-page .head label{

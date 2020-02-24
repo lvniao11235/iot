@@ -5,11 +5,11 @@
 			<view class="title-left">
 				<view>{{deviceStatus.PM25.Value}}μg/m³</view>
 				<view>空气质量：{{quality[deviceStatus.PM25Level.Value]}}</view>
-				<view><label>温度：{{deviceStatus.CurrentTemperature.Value}}°C</label><label>湿度：{{deviceStatus.CurrentHumidity.Value}}%</label></view>
+				<view><label>温度：{{deviceStatus.CurrentTemperature.Value ? deviceStatus.CurrentTemperature.Value + '°C':'--'}}</label><label>湿度：{{deviceStatus.CurrentHumidity.Value ? deviceStatus.CurrentHumidity.Value+'%':"--"}}</label></view>
 				<view>
 					<label style="position:relative;margin-left:0;">CO
-					<label style="position:relative;font-size:8px;">2</label>：{{deviceStatus.CO2.Value}}</label>
-					<label>甲醛浓度：{{deviceStatus.HCHO.Value}}%</label>
+					<label style="position:relative;font-size:8px;">2</label>：{{deviceStatus.CO2.Value ? deviceStatus.CO2.Value : '--'}}</label>
+					<label>甲醛浓度：{{deviceStatus.HCHO.Value ? deviceStatus.HCHO.Value + '%':'--'}}</label>
 				</view>
 			</view>
 			<view class="title-right">
@@ -50,7 +50,7 @@
 		<view class="ad">
 			<label class="fa fa-exclamation-circle"></label>
 			<label>当前滤芯是非原装，请及时更换！</label>
-			<label @click="goToSubscribe">去订阅</label>
+			<label @click="goToSubscribe">去订阅<label class="fa fa-angle-right"></label></label>
 		</view>
 		<view class="btns">
 			<view class="btn auto" @click="switchWorkMode" 
@@ -148,8 +148,8 @@
 		},
 		onLoad() {
 			uni.createSelectorQuery().select('.hscroll').boundingClientRect(e=>{
-                this.paramWidth = e.width/this.paramDispLength;
-            }).exec()
+                this.paramWidth = e.width/this.paramDispLength;
+            }).exec()
 			getDevice(this.selectDevice.Id).then(res=>{
 				this.deviceStatus = res.data;
 				this.deviceStatus.WindSpeed = 1;
@@ -260,14 +260,13 @@
 		line-height:30px;
 		vertical-align:middle;
 		padding-left:16px;
-		color:#555555;
-		font-size:14px;
+		color:#585858;
+		font-size:15px;
 	}
 	
 	.device-detail > .title .title-left > view:first-child{
-		color:black;
-		font-size:20px;
-		font-weight:bold;
+		color:#585858;
+		font-size:30px;
 		height:40px;
 		line-height:40px;
 	}
@@ -301,6 +300,7 @@
 		box-shadow:0px 3px 5px #C0C0C0;
 		font-size:0px;
 		border-radius:5px;
+		color:#585858;
 	}
 	
 	.device-detail .parameter > view{
@@ -322,8 +322,7 @@
 	
 	.device-detail .parameter .title{
 		text-align:center;
-		font-weight:bold;
-		color:#333333;
+		font-size:14px;
 	}
 	
 	.device-detail .parameter .params{
@@ -364,38 +363,45 @@
 	}
 	
 	.device-detail .ad{
-		font-size:14px;
-		padding:5px 16px;
+		font-size:15px;
+		padding:5px 15px;
 		clear:both;
 	}
 	
 	.device-detail .ad>label:first-child{
-		color:#DD524D;
+		color:#EE4441;
 	}
 	
 	.device-detail .ad>label:nth-child(2){
-		color:rgba(22, 155, 213, 1);
+		color:#6E6E6E;
 	}
 	.device-detail .ad>label:last-child{
-		color:black;
+		color:#10AB6C;
 		display:inline-block;
-		margin-left:20px;
+		float:right;
 		
 	}
 	
 	.device-detail .btns{
 		font-size:0;
+		width:calc(100% - 30px);
+		margin:10px auto;
 	}
 	
 	.device-detail .btns .btn{
-		width:calc(50% - 20px);
+		width:calc(50% - 17px);
 		box-shadow:0 3px 5px #c0c0c0;
 		display:inline-block;
 		position:relative;
+		box-sizing: content-box;
 		font-size:14px;
 		padding:5px;
-		margin:5px;
 		border-radius:5px;
+		margin-bottom:15px;
+	}
+	
+	.device-detail .btns > .btn:nth-child(even){
+		margin-left:14px;
 	}
 	
 	.device-detail .btns .btn .btn-icon{
@@ -415,7 +421,7 @@
 	
 	.device-detail .btns .btn.auto.selected,
 	.device-detail .btns .btn.sleep.selected{
-		background-color:#26B37A;
+		background-color:#10AB6C;
 		color:#fff;
 	}
 	

@@ -40,6 +40,12 @@
 	float:left;
 	margin-left:10px;
 }
+.icon-list-item > .border{
+	width:calc(100% - 10px);
+	margin-left:10px;
+	border-bottom:1px solid #F2F2F2;
+	margin-top:3px;
+}
 .my-page .head label{
 	display:inline-block;
 	height:50px;

@@ -1,4 +1,4 @@
-export const baseUrl = 'http://39.98.107.68:8000/Api/';
+export const baseUrl = 'http://139.217.3.16:9012/api/';
 
 export const request = options => {
 	let _options = {...options};
