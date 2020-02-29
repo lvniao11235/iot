@@ -4,7 +4,7 @@
 		<view class="title-image">健康生活</view>
 		<view class="page-center login-form" v-bind:style="{width:'90%', height:'100px'}">
 			<view>
-				<input class="phone" :class="phoneClass" @focus="phoneFocus" @blur="phoneBlur" placeholder="请输入手机号" focus="true"></input>
+				<input class="phone" v-model="currentUser.phone" :class="phoneClass" @focus="phoneFocus" @blur="phoneBlur" placeholder="请输入手机号" focus="true"></input>
 			</view>
 			<view class="verify-code"  :class="codeClass" >
 				<input @focus="codeFocus" @blur="codeBlur"  placeholder="请输入验证码"></input>
@@ -17,12 +17,16 @@
 </template>
 
 <script>
+	import { mapState } from 'vuex';
 	export default{
 		data:function(){
 			return {
 				phoneClass:'',
 				codeClass:''
 			}
+		},
+		computed:{
+			...mapState(["currentUser"])
 		},
 		mounted(){
 			uni.setNavigationBarTitle({

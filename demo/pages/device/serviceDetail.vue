@@ -5,37 +5,37 @@
 		<view class="icon-list-item border" style="border-top:1px solid #B1B1B1;">
 			<label class="label">订单标号</label>
 			<view class="value">
-				<label>1424567890</label>
+				<label>{{currentService.orderId}}</label>
 			</view>
 		</view>
 		<view class="icon-list-item border">
 			<label class="label">交易时间</label>
 			<view class="value">
-				<label>{{$moment(new Date()).format("YYYY-MM-DD HH:mm:ss")}}</label>
+				<label>{{$moment(currentService.createTime).format("YYYY-MM-DD HH:mm:ss")}}</label>
 			</view>
 		</view>
 		<view class="icon-list-item border">
 			<label class="label">服务类型</label>
 			<view class="value">
-				<label>{{currentService.ServiceType}}</label>
+				<label>{{currentService.description}}</label>
 			</view>
 		</view>
 		<view class="icon-list-item border">
 			<label class="label">有效期</label>
 			<view class="value">
-				<label>{{$moment(new Date()).format("YYYY-MM-DD") + '~' + $moment(new Date()).add(365, 'days').format("YYYY-MM-DD")}}</label>
+				<label>{{$moment(currentService.createTime).format("YYYY-MM-DD") + '~' + $moment(currentService.endTime).format("YYYY-MM-DD")}}</label>
 			</view>
 		</view>
 		<view class="icon-list-item border">
 			<label class="label">订单状态</label>
 			<view class="value">
-				<label>{{currentService.state ? currentService.state : '未付款'}}</label>
+				<label>{{currentService.orderStatus}}</label>
 			</view>
 		</view>
 		<view class="icon-list-item border">
 			<label class="label">实付金额</label>
 			<view class="value">
-				<label>￥{{currentService.CurrentCost}}.00</label>
+				<label>￥{{currentService.price}}</label>
 			</view>
 		</view>
 		<view class="info">
@@ -51,6 +51,7 @@
 
 <script>
 	import { mapState, mapMutations } from 'vuex';
+	import {getOrderDetail} from '@/api/device';
 	export default {
 		data() {
 			return {
@@ -61,9 +62,14 @@
 		computed:{
 			...mapState(["currentService"])
 		},
-		onLoad() {
+		onLoad(e) {
 			uni.setNavigationBarTitle({
 			　　title:'服务订阅'
+			})
+			getOrderDetail(e.orderId).then(res=>{
+				if(res.data.data){
+					this.$store.commit("setCurrentService", res.data.data)
+				}
 			})
 		},
 		mounted(){

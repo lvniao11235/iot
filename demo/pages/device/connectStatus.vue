@@ -14,7 +14,7 @@
 
 <script>
 	import {mapState} from 'vuex';
-	import {addDevice} from '@/api/device';
+	import {addDevice, registerDevice} from '@/api/device';
 	export default {
 		data:function(){
 			return {
@@ -26,32 +26,50 @@
 		},
 		methods:{
 			next(){
-				addDevice({
-					deviceName: this.selectProduct.productKey,
-					unionId: this.currentUser.OpenId
-				}).then(res=>{
+				registerDevice(this.selectProduct.productKey).then(res=>{
 					if(res){
-						
+						return addDevice({
+							deviceName: res.data.data,
+							unionId: this.currentUser.OpenId
+						})
 					}
-				})
-				uni.request({
-					url:'http://39.98.107.68:8000/Api/devices',
-					dataType:'json',
-					method:'post',
-					data:{
-						Id:this.$moment().format("YYYYMMDDHHmmss"),
-						NickName:this.selectProduct.Name,
-						OwnerId:this.currentUser.OpenId,
-						DeviceModelId:this.selectProduct.Id,
-						LastOnlineTime:this.$moment().format("YYYY-MM-DD HH:mm:ss"),
-						ActiveTime:this.$moment().format("YYYY-MM-DD HH:mm:ss"),
-					},
-					success:res=>{
+				}).then(res=>{
+					if(res.data.data){
 						uni.switchTab({
 							url:'./device'
 						})
+					} else {
+						uni.showModal({
+						    title: '提示',
+						    content: res.data.msg,
+						    success: function (res) {
+						        if (res.confirm) {
+						            uni.switchTab({
+						            	url:'./device'
+						            })
+						        }
+						    }
+						});
 					}
 				})
+				// uni.request({
+				// 	url:'http://39.98.107.68:8000/Api/devices',
+				// 	dataType:'json',
+				// 	method:'post',
+				// 	data:{
+				// 		Id:this.$moment().format("YYYYMMDDHHmmss"),
+				// 		NickName:this.selectProduct.Name,
+				// 		OwnerId:this.currentUser.OpenId,
+				// 		DeviceModelId:this.selectProduct.Id,
+				// 		LastOnlineTime:this.$moment().format("YYYY-MM-DD HH:mm:ss"),
+				// 		ActiveTime:this.$moment().format("YYYY-MM-DD HH:mm:ss"),
+				// 	},
+				// 	success:res=>{
+				// 		uni.switchTab({
+				// 			url:'./device'
+				// 		})
+				// 	}
+				// })
 				
 			}
 		}

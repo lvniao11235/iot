@@ -4,11 +4,11 @@
 		<radio-group @change="selectService">
 			<view class="services hscroll">
 				<view class="hscroll-container" style="width:430px;">
-					<view class="service-item hscroll-item" v-for="service in services" :key="service.type">
-						<view><radio :value="service.Id"></radio></view>
-						<view>{{service.ServiceTime}}年期服务</view>
-						<view>原价：￥{{service.OrignalCost}}.00</view>
-						<view>现价：￥{{service.CurrentCost}}.00</view>
+					<view class="service-item hscroll-item" v-for="service in services" :key="service.serviceConfigId">
+						<view><radio :value="service.serviceConfigId"></radio></view>
+						<view>{{service.serviceDuration}}年期服务</view>
+						<view>原价：￥{{service.originalPrice}}</view>
+						<view>现价：￥{{service.presentPrice}}</view>
 					</view>
 				</view>
 			</view>
@@ -19,7 +19,7 @@
 			<view class="service">2.同品牌产品<span>98折</span>优惠特享</view>
 		</view>
 		<view class="page-bottom">
-			<view class="info">需付金额：￥{{currentService ? currentService.CurrentCost:0}}.00</view>
+			<view class="info">需付金额：￥{{currentService ? currentService.presentPrice:"0.00"}}</view>
 			<view class="btn" @click="goToServiceDetail">开通</view>
 		</view>
 	</view>
@@ -36,17 +36,17 @@
 			}
 		},
 		computed:{
-			...mapState(["currentService"]),
+			...mapState(["currentService", "selectDevice"]),
 		},
 		onLoad() {
 			this.$store.commit("setCurrentService", null)
 			uni.setNavigationBarTitle({
 			　　title:'服务订阅'
 			})
-			services().then(res=>{
+			services('a1gOOlyTpKq').then(res=>{
 				this.services = [];
-				if(res.data && res.data.length > 0){
-					this.services.push(...res.data)
+				if(res.data.data && res.data.data.length > 0){
+					this.services.push(...res.data.data)
 				}
 			}).catch(res=>{
 				console.log(res)
@@ -58,7 +58,7 @@
 		methods: {
 			...mapMutations(["setSelectDevice", "setCurrentService"]),
 			selectService(e){
-				let service = this.services.find(x=>x.Id == e.detail.value);
+				let service = this.services.find(x=>x.serviceConfigId == e.detail.value);
 				if(service){
 					this.$store.commit("setCurrentService", service)
 				}

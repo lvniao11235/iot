@@ -1,10 +1,10 @@
 <template>
 	<view class="my-service">
 		<navbar :back="true" title="订阅服务"></navbar>
-		<view v-if="devices && devices.length > 0" >
-			<view @click="goToServiceDetail" class="icon-list-item big-icon" v-for="device in devices" :key="device.Id">
-				<label class="icon"><image src="/static/images/v2.png"></image></label>
-				<label class="label">{{device.NickName}}</label>
+		<view v-if="services && services.length > 0" >
+			<view @click="goToServiceDetail(service.orderId)" class="icon-list-item big-icon" v-for="service in services" :key="service.orderId">
+				<label class="icon"><image :src="service.imageUrl"></image></label>
+				<label class="label">{{service.productName}}</label>
 				<view class="value">
 					<label></label>
 					<label class="value-icon fa fa-angle-right"></label>
@@ -21,30 +21,30 @@
 </template>
 
 <script>
-	import {devices} from '@/api/device';
+	import {devices, getOrders} from '@/api/device';
 	import {mapState} from 'vuex';
 	export default {
 		data:function(){
 			return {
-				devices:[]
+				services:[]
 			}
 		},
 		computed:{
 			...mapState(["currentUser"])
 		},
 		onLoad(){
-			devices(this.currentUser.OpenId).then(res=>{
-				if(res.data && res.data.length > 0){
-					this.devices.push(...res.data);
+			getOrders(this.currentUser.OpenId).then(res=>{
+				if(res.data.data && res.data.data.length > 0){
+					this.services.push(...res.data.data);
 				} else {
-					this.devices = [];
+					this.services = [];
 				}
 			})
 		},
 		methods:{
-			goToServiceDetail(){
+			goToServiceDetail(orderId){
 				uni.navigateTo({
-					url:'../device/serviceDetail'
+					url:`../device/serviceDetail?orderId=${orderId}`
 				})
 			}
 		}

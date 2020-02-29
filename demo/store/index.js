@@ -7,23 +7,8 @@ const store = new Vuex.Store({
 	state:{ 
 		appName:"健康生活",
 		code:null,
-		address:[
-			{
-				id:1,
-				addr:'北京的家',
-				city:'北京'
-			},
-			{
-				id:2,
-				addr:'我的家',
-				city:'西安'
-			}
-		],
-		currentAddress:{
-			id:2,
-			addr:'我的家',
-			city:'西安'
-		},
+		address:[],
+		currentAddress:null,
 		modifyAddress:null,
 		brands:[
 			{id:1, name:"美的", products:[
@@ -58,9 +43,17 @@ const store = new Vuex.Store({
 			{ type:'二年期服务', price:478, oldprice:399},
 			{ type:'三年期服务', price:770, oldprice:599},
 		],
-		currentService:null
+		currentService:null,
+		startTime:null,
+		shutdownTime:null
 	},
 	mutations:{
+		setStartTime(state, startTime){
+			state.startTime = startTime;
+		},
+		setShutdownTime(state, shutdownTime){
+			state.shutdownTime = shutdownTime;
+		},
 		setcurrentAddress(state, addr){
 			state.currentAddress = addr;
 		},
@@ -158,6 +151,9 @@ const store = new Vuex.Store({
 				if(max < x.id) max = x.id;
 			})
 			address.id = max+1;
+			if(state.currentAddress == null){
+				state.currentAddress = address;
+			}
 			state.address.push(address);
 		},
 		removeAddress(state, id){

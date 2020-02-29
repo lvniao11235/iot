@@ -74,8 +74,8 @@
 			
 			
 			devices(this.currentUser.OpenId).then(res=>{
-				if(res.data && res.data.length > 0){
-					this.devices.push(...res.data);
+				if(res.data.data && res.data.data.length > 0){
+					this.devices.push(...res.data.data);
 				} else {
 					this.devices = [];
 				}
@@ -83,10 +83,10 @@
 		},
 		onShow(){
 			devices(this.currentUser.OpenId).then(res=>{
-				if(res.data && res.data.length > 0){
-					this.$store.commit("setDevices", res.data)
+				if(res.data.data && res.data.data.length > 0){
+					this.$store.commit("setDevices", res.data.data)
 					this.devices = [];
-					this.devices.push(...res.data);
+					this.devices.push(...res.data.data);
 				} else {
 					this.$store.commit("setDevices", [])
 					this.devices = [];
@@ -429,8 +429,8 @@
 		}
 		
 		.index-page .no-device cover-image{
-			width:80px;
-			height:100px;
+			width:160px;
+			height:135px;
 			margin:10px auto;
 		}
 		
@@ -439,9 +439,9 @@
 		}
 		
 		.index-page .no-device > view:last-child{
-			width:150px;
-			height:30px;
-			line-height:30px;
+			width:200px;
+			height:40px;
+			line-height:40px;
 			vertical-align:middle;
 			text-align:center;
 			border:1px solid #10AB6C;

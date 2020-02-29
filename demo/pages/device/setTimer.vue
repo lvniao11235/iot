@@ -2,40 +2,25 @@
 	<view class="set-timer">
 		<navbar :back="true" title="设置定时"></navbar>
 		<view>
-			<view class="title">定时开机<switch @change="switchTurnOn" :checked="selectDevice.turnOn"/></view>
-			<view class="options" v-if="selectDevice.turnOn">
-				<view class="repeat" @click="turnOnRepeat">重复
-					<label class="repeat-value" v-if="selectDevice.turnOnRepeat">{{selectDevice.turnOnRepeat}}</label>
-					<label class="fa fa-angle-right"></label>
-				</view>
-				<view class="timer">
-					<picker mode="time" @change="setTurnOnTime" :value="selectDevice.turnOnTime">
-						<view class="timer-disp">
-							时间
-							<label class="timer-value">{{selectDevice.turnOnTime}}</label>
-							<label class="fa fa-angle-right"></label>
-						</view>
-					</picker>
-				</view>
+			<view class="title">
+				定时开机
+				<switch @change="switchTurnOn" :checked="selectDevice.turnOn"/>
+				<label v-if="startTime" style="font-size:13px;float:right;color:#adadad;">
+					<label style="display:inline-block;margin-right:3px">{{startTime.time}}</label>
+					<label>每周 <label style="display:inline-block;margin-right:3px" v-for="day in startTime.weeks" :key="day.id">{{day.text}}</label></label>
+				</label>
 			</view>
 		</view>
 		<view>
-			<view class="title">定时关机<switch @change="switchTurnOff" :checked="selectDevice.turnOff"/></view>
-			<view class="options" v-if="selectDevice.turnOff">
-				<view class="repeat" @click="turnOffRepeat">重复
-					<label class="repeat-value"  v-if="selectDevice.turnOffRepeat">{{selectDevice.turnOffRepeat}}</label>
-					<label class="fa fa-angle-right"></label>
-				</view>
-				<view class="timer">
-					<picker mode="time" @change="setTurnOffTime" :value="selectDevice.turnOffTime">
-						<view class="timer-disp">
-							时间
-							<label class="timer-value">{{selectDevice.turnOffTime}}</label>
-							<label class="fa fa-angle-right"></label>
-						</view>
-					</picker>
-				</view>
+			<view class="title">
+				定时关机
+				<switch @change="switchTurnOff" :checked="selectDevice.turnOff"/>
+				<label v-if="shutdownTime" style="font-size:13px;float:right;color:#adadad;">
+					<label style="display:inline-block;margin-right:3px">{{shutdownTime.time}}</label>
+					<label>每周 <label style="display:inline-block;margin-right:3px" v-for="day in shutdownTime.weeks" :key="day.id">{{day.text}}</label></label>
+				</label>
 			</view>
+			
 		</view>
 	</view>
 </template>
@@ -49,7 +34,7 @@
 			}
 		},
 		computed:{
-			...mapState(["selectDevice"])
+			...mapState(["selectDevice", "startTime", "shutdownTime"])
 		},
 		onLoad() {
 			uni.setNavigationBarTitle({
@@ -63,10 +48,14 @@
 				"setSelectDeviceTurnOnTime"
 			]),
 			switchTurnOn(e){
-				this.$store.commit("setSelectDeviceTurnOn", e.detail.value);
+				uni.navigateTo({
+					url:'./settingTime?type=1'
+				})
 			},
 			switchTurnOff(e){
-				this.$store.commit("setSelectDeviceTurnOff", e.detail.value);
+				uni.navigateTo({
+					url:'./settingTime?type=0'
+				})
 			},
 			turnOnRepeat(){
 				uni.navigateTo({
@@ -90,64 +79,23 @@
 
 <style>
 	.set-timer > view{
-		border:1px solid #000000;
-		border-radius:10px;
-		width:calc(90% - 10px);
-		margin:10px auto;
+		border-bottom:1px solid #f7f7f7;
+		width:100%;
+		height:50px;
+		line-height:50px;
+		vertical-align:middle;
 	}
 	
 	.set-timer > view > .title{
 		height:50px;
 		line-height:50px;
 		vertical-align:middle;
-		padding:10px;
+		padding:0px 10px;
 	}
 	
 	.set-timer > view > .title switch{
 		float:right;
-		margin-right:20px;
 	}
 	
-	.set-timer .options > view{
-		height:40px;
-		line-height:40px;
-		vertical-align:middle;
-		padding:10px;
-		border-top:1px solid #000000;
-	}
 	
-	.set-timer .options .fa{
-		float:right;
-		margin-right:20px;
-		font-size:35px;
-		color:#B1B1B1;
-	}
-	
-	.set-timer .options .repeat-value{
-		color:#C0C0C0;
-		display:inline-block;
-		margin-left:20px;
-		font-size:12px;
-	}
-	
-	.set-timer .options > .timer,
-	.set-timer .options > .repeat{
-		padding:0 10px;
-		height:40px;
-		line-height:40px;
-		vertical-align:middle;
-	}
-	
-	.set-timer .options .timer-disp{
-		height:40px;
-		line-height:40px;
-		vertical-align:middle;
-	}
-	.set-timer .options > .timer > picker  .timer-value{
-		color:#C0C0C0;
-		display:inline-block;
-		margin-left:20px;
-		font-size:12px;
-		
-	}
 </style>

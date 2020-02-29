@@ -9,14 +9,14 @@
 			</button>
 			<button open-type="getPhoneNumber" @getphonenumber="getPhoneNumber">手机号登录</button>
 		</view>
-		<view>1.20</view>
+		<view>1.21</view>
 		<view class="login-agree">登录即代表您同意《<label @click="goToClause">健康生活用户服务条款</label>》</view>
 	</view>
 </template>
 
 <script>
 	import { mapState, mapMutations } from 'vuex';
-	import {getOpenId, getUser, registerUser} from '@/api/user';
+	import {getOpenId, getUser, updateUser, decodeUserInfo, loginWechat, getUserInfoWechat} from '@/api/user';
 	export default {
 		computed:{
 			...mapState(["code"])
@@ -31,17 +31,85 @@
 		},
 		data:function(){
 			return {
-				currentUser:{}
+				currentUser:{},
+				encrypt:null,
+				first:false
 			}
 		},
 		methods:{
 			...mapMutations(["setCode", "setCurrentUser"]),
 			getPhoneNumber: function(e) {
+				let _this = this;
 				console.log(e);
-				if (e.detail.errMsg == 'getPhoneNumber:fail user deny') {
- 
+				this.encrypt = e.detail;
+				if (e.detail && e.detail.errMsg && e.detail.errMsg != 'getPhoneNumber:ok') {
+					uni.showModal({
+						title:'授权失败',
+						content:e.detail.errMsg,
+						showCancel:false
+					})
 				} else {
- 
+					getUserInfoWechat().then(res=>{
+						uni.showLoading({})
+						this.currentUser = res.userInfo;
+						this.$store.commit("setCurrentUser", this.currentUser)
+						return loginWechat();
+					}).then(res=>{
+						return getOpenId(res)
+					}).then(res=>{
+						if(res.data.data.unionid){
+							this.currentUser.OpenId = res.data.data.unionid;
+							this.currentUser.sessionKey = res.data.data.sessionKey;
+							this.$store.commit("setCurrentUser", this.currentUser)
+							return decodeUserInfo(this.encrypt.encryptedData, this.encrypt.iv, this.currentUser.OpenId);
+						} 
+					}).then(res=>{
+						if(res.data.data && res.data.data.phoneNumber){
+							this.currentUser.phone = res.data.data.phoneNumber;
+							this.$store.commit("setCurrentUser", this.currentUser)
+							return getUser(this.currentUser.OpenId);
+						} else {
+							uni.hideLoading()
+							uni.showModal({
+								title:'授权失败',
+								content:'获取电话失败',
+								showCancel:false
+							})
+						}
+					}).then(res=>{
+						if(res){
+							this.first = res.data.data.avatarUrl == null 
+								&& res.data.data.nickName == null;
+							this.currentUser = {
+								...res.data.data,
+								...this.currentUser
+							}
+							console.log(JSON.stringify(this.currentUser))
+							this.$store.commit("setCurrentUser", this.currentUser)
+							if(this.first){
+								updateUser({
+									avatarUrl:this.currentUser.avatarUrl,
+									nickName:this.currentUser.nickName,
+									phone:this.currentUser.phone,
+									unionId:this.currentUser.OpenId
+								}).then(res=>{
+									if(res){
+										uni.hideLoading()
+										uni.navigateTo({
+											url:'../address/addAddress'
+										})
+									}
+								})
+							} else {
+								uni.hideLoading()
+								uni.switchTab({
+									url:'../index/index'
+								})
+							}
+						}
+					}).catch(res=>{
+						uni.hideLoading()
+					});
 				}
  
 				// 				console.log(JSON.stringify(e.encryptedData));
@@ -55,74 +123,55 @@
 			},
 			onGetUserInfo(res){
 				if(res.detail && res.detail.userInfo){
-					this.$store.commit("setCurrentUser", res.detail.userInfo)
 					this.currentUser = res.detail.userInfo;
-					this.login();
+					this.$store.commit("setCurrentUser", this.currentUser)
 					uni.showLoading({
-						title: '登录中...'
-					});
-				}
-			},
-			login(flag){
-				if(flag){
-					uni.getUserInfo({
-						provider:"weixin",
-						success:res=>{
-							this.currentUser = {
-								...this.currentUser,
-								...res.userInfo
-							}
-						}
+						
 					})
-				}
-				uni.login({
-					provider:"weixin",
-					success:res=>{
-						this.currentUser.code = res.code;
-						getOpenId(res.code).then(res=>{
-							if(res.data.data.unionid){
-								this.currentUser.OpenId = res.data.data.unionid;
-								return getUser(res.data.data.unionid);
+					loginWechat().then(res=>{
+						return getOpenId(res);
+					}).then(res=>{
+						if(res.data.data.unionid){
+							this.currentUser.OpenId = res.data.data.unionid;
+							this.$store.commit("setCurrentUser", this.currentUser)
+							return getUser(this.currentUser.OpenId);
+						}
+					}).then(res=>{
+						if(res){
+							this.first = res.data.data.avatarUrl == null 
+								&& res.data.data.nickName == null;
+							this.currentUser = {
+								...res.data.data,
+								...this.currentUser
+							} 
+							console.log(JSON.stringify(this.currentUser))
+							this.$store.commit("setCurrentUser", this.currentUser)
+							if(this.first){
+								updateUser({
+									avatarUrl:this.currentUser.avatarUrl,
+									nickName:this.currentUser.nickName,
+									phone:null,
+									unionId:this.currentUser.OpenId
+								}).then(res=>{
+									if(res){
+										uni.hideLoading()
+										uni.navigateTo({
+											url:'../address/addAddress'
+										})
+									}
+								})
 							} else {
-								uni.hideLoading();
-							}
-						}).then(res=>{
-							if(res.data){
-								this.currentUser = {
-									...this.currentUser,
-									...res.data
-								};
-								this.$store.commit('setCurrentUser', this.currentUser)
 								uni.hideLoading()
 								uni.switchTab({
 									url:'../index/index'
 								})
-							} else {
-								if(!flag){
-									return registerUser({
-										"OpenId":this.currentUser.OpenId,
-										"Name":this.currentUser.nickName,
-										"PSW":"123",
-										"PhoneNumber":"123456"
-									})
-								}
 							}
-						}).then(res=>{
-							this.currentUser = {
-								...this.currentUser,
-								...res.data
-							};
-							this.$store.commit('setCurrentUser', this.currentUser)
-							uni.hideLoading()
-							uni.switchTab({
-								url:'../index/index'
-							})
-						}).catch(res=>{
-							uni.hideLoading();
-						})
-					},
-				});
-			},
+						}
+					}).catch(res=>{
+						uni.hideLoading()
+					})
+				}
+			}
 		}
 	}
 </script>

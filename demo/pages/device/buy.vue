@@ -1,10 +1,10 @@
 <template>
 	<view>
-		<navbar :back="true" title="服务订阅"></navbar>
+		<navbar :back="true" url="device" title="服务订阅"></navbar>
 		<cover-image src="/static/images/timg.jpg"></cover-image>
-		<view class="page-bottom">
+		<!-- <view class="page-bottom">
 			<view class="btn" :class="{'disable':!flag}" @click="goToServiceDetail">确定</view>
-		</view>
+		</view> -->
 	</view>
 </template>
 
@@ -14,7 +14,8 @@
 	export default {
 		data:function(){
 			return {
-				flag:false
+				flag:false,
+				orderId:null
 			}
 		},
 		computed:{
@@ -22,19 +23,14 @@
 		},
 		onLoad(e){
 			buyService({
-				Creation:this.$moment().format("YYYY-MM-DD HH:mm:ss"),
-				Status:' 未开始',
-				Amount:this.currentService.CurrentCost,
-				EndUserName:this.currentUser.Name,
-				EndUserId:this.currentUser.OpenId,
-				ShippingAddress:'锦业路',
-				ServiceContent1:'订阅服务器，一年内最多免费更换一次滤芯',
-				DeviceModelId:this.selectDevice.DeviceModelId,
-				EstimatedServiceTime:this.$moment().add(30, "days").format("YYYY-MM-DD HH:mm:ss"),
-				ServiceConfigId:this.currentService.Id
+				price:this.currentService.presentPrice,
+				serviceConfigId:this.currentService.serviceConfigId,
+				unionId:this.currentUser.OpenId,
+				deviceName:this.selectDevice.deviceName
 			}).then(res=>{
 				console.log(res);
 				this.flag = true;
+				this.orderId = res.data.data;
 			}).catch(res=>{
 				console.log(res);
 			})
@@ -47,13 +43,13 @@
 					method:"POST",
 					data:{
 						unionid:this.currentUser.OpenId,
-						cost:this.currentService.CurrentCost,
-						name:this.currentService.ServiceType
+						cost:this.currentService.presentPrice,
+						name:this.currentService.description
 					},
 					success:res=>{
 						if(this.flag){
 							uni.navigateTo({
-								url:'./serviceDetail'
+								url:`./serviceDetail?orderId=${this.orderId}`
 							})
 						}
 					}

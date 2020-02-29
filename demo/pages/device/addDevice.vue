@@ -86,7 +86,7 @@
 			selectProduct(product){
 				this.$store.commit("setSelectProduct", product)
 				uni.navigateTo({
-					url:"./searchDevice"
+					url:"./settingDevice"
 				})
 			}
 		}

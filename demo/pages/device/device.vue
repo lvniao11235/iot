@@ -5,18 +5,17 @@
 			<view class="mydevice">我的设备</view>
 			<view class="devices">
 				<view class="device-item" v-for="device in devices"
-				 :key="device.Id" @click="selectDevice(device)">
+				 :key="device.deviceName" @click="selectDevice(device)">
 					<view>
-						<label>{{shortName(device.NickName)}}</label>
+						<label>{{shortName(device.productName)}}</label>
 						<label @click.stop="configDevice(device)" v-if="true" class="title-right">设置<label class="fa fa-angle-right"></label></label>
 						<label v-else class="title-right">共享</label>
 					</view>
-					<view class="quality">空气质量：{{'优'}}</view>
-					<cover-image :src="device.DeviceModelImageUrl"></cover-image>
+					<view class="quality">空气质量：{{device.airQuality}}</view>
+					<cover-image :src="device.imageUrl"></cover-image>
 				</view>
 				<view class="add-device" @click="addDevice">
-					<view class="hori"></view>
-					<view class="vert"></view>
+					<cover-image src="/static/images/add-device.png"></cover-image>
 				</view>
 			</view>
 		</view>
@@ -56,8 +55,8 @@
 		},
 		onShow(){
 			devices(this.currentUser.OpenId).then(res=>{
-				if(res.data && res.data.length > 0){
-					this.$store.commit("setDevices", res.data)
+				if(res.data.data && res.data.data.length > 0){
+					this.$store.commit("setDevices", res.data.data)
 				} else {
 					this.$store.commit("setDevices", [])
 				}
@@ -241,7 +240,7 @@
 		font-size:12px;
 	}
 	
-	.devices .add-device{
+	.devices .add-device > cover-image{
 		position:fixed;
 		bottom:30px;
 		right:10px;
@@ -255,32 +254,4 @@
 		font-size:24px;
 	}
 	
-	.devices .add-device > view{
-		display:inline-block;
-	}
-	
-	.devices .add-device .hori{
-		border-top:1px solid #fff;
-		width:24px;
-		position:absolute;
-		top:24px;
-		left:13px;
-	}
-	
-	.devices .add-device .vert{
-		border-left:1px solid #fff;
-		height:24px;
-		position:absolute;
-		top:13px;
-		left:24px;
-	}
-	
-	
-	
-	.devices .add-device .fa{
-		height:50px;
-		line-height:50px;
-		vertical-align:middle;
-		font-size:30px;
-	}
 </style>

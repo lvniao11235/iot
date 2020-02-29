@@ -155,17 +155,85 @@ var _user = __webpack_require__(/*! @/api/user */ 27);function _objectSpread(tar
   },
   data: function data() {
     return {
-      currentUser: {} };
+      currentUser: {},
+      encrypt: null,
+      first: false };
 
   },
   methods: _objectSpread({},
   (0, _vuex.mapMutations)(["setCode", "setCurrentUser"]), {
-    getPhoneNumber: function getPhoneNumber(e) {
+    getPhoneNumber: function getPhoneNumber(e) {var _this2 = this;
+      var _this = this;
       console.log(e);
-      if (e.detail.errMsg == 'getPhoneNumber:fail user deny') {
+      this.encrypt = e.detail;
+      if (e.detail && e.detail.errMsg && e.detail.errMsg != 'getPhoneNumber:ok') {
+        uni.showModal({
+          title: '授权失败',
+          content: e.detail.errMsg,
+          showCancel: false });
 
       } else {
+        (0, _user.getUserInfoWechat)().then(function (res) {
+          uni.showLoading({});
+          _this2.currentUser = res.userInfo;
+          _this2.$store.commit("setCurrentUser", _this2.currentUser);
+          return (0, _user.loginWechat)();
+        }).then(function (res) {
+          return (0, _user.getOpenId)(res);
+        }).then(function (res) {
+          if (res.data.data.unionid) {
+            _this2.currentUser.OpenId = res.data.data.unionid;
+            _this2.currentUser.sessionKey = res.data.data.sessionKey;
+            _this2.$store.commit("setCurrentUser", _this2.currentUser);
+            return (0, _user.decodeUserInfo)(_this2.encrypt.encryptedData, _this2.encrypt.iv, _this2.currentUser.OpenId);
+          }
+        }).then(function (res) {
+          if (res.data.data && res.data.data.phoneNumber) {
+            _this2.currentUser.phone = res.data.data.phoneNumber;
+            _this2.$store.commit("setCurrentUser", _this2.currentUser);
+            return (0, _user.getUser)(_this2.currentUser.OpenId);
+          } else {
+            uni.hideLoading();
+            uni.showModal({
+              title: '授权失败',
+              content: '获取电话失败',
+              showCancel: false });
 
+          }
+        }).then(function (res) {
+          if (res) {
+            _this2.first = res.data.data.avatarUrl == null &&
+            res.data.data.nickName == null;
+            _this2.currentUser = _objectSpread({},
+            res.data.data,
+            _this2.currentUser);
+
+            console.log(JSON.stringify(_this2.currentUser));
+            _this2.$store.commit("setCurrentUser", _this2.currentUser);
+            if (_this2.first) {
+              (0, _user.updateUser)({
+                avatarUrl: _this2.currentUser.avatarUrl,
+                nickName: _this2.currentUser.nickName,
+                phone: _this2.currentUser.phone,
+                unionId: _this2.currentUser.OpenId }).
+              then(function (res) {
+                if (res) {
+                  uni.hideLoading();
+                  uni.navigateTo({
+                    url: '../address/addAddress' });
+
+                }
+              });
+            } else {
+              uni.hideLoading();
+              uni.switchTab({
+                url: '../index/index' });
+
+            }
+          }
+        }).catch(function (res) {
+          uni.hideLoading();
+        });
       }
 
       // 				console.log(JSON.stringify(e.encryptedData));
@@ -177,75 +245,56 @@ var _user = __webpack_require__(/*! @/api/user */ 27);function _objectSpread(tar
 
 
     },
-    onGetUserInfo: function onGetUserInfo(res) {
+    onGetUserInfo: function onGetUserInfo(res) {var _this3 = this;
       if (res.detail && res.detail.userInfo) {
-        this.$store.commit("setCurrentUser", res.detail.userInfo);
         this.currentUser = res.detail.userInfo;
-        this.login();
-        uni.showLoading({
-          title: '登录中...' });
+        this.$store.commit("setCurrentUser", this.currentUser);
+        uni.showLoading({});
 
-      }
-    },
-    login: function login(flag) {var _this = this;
-      if (flag) {
-        uni.getUserInfo({
-          provider: "weixin",
-          success: function success(res) {
-            _this.currentUser = _objectSpread({},
-            _this.currentUser,
-            res.userInfo);
 
-          } });
+        (0, _user.loginWechat)().then(function (res) {
+          return (0, _user.getOpenId)(res);
+        }).then(function (res) {
+          if (res.data.data.unionid) {
+            _this3.currentUser.OpenId = res.data.data.unionid;
+            _this3.$store.commit("setCurrentUser", _this3.currentUser);
+            return (0, _user.getUser)(_this3.currentUser.OpenId);
+          }
+        }).then(function (res) {
+          if (res) {
+            _this3.first = res.data.data.avatarUrl == null &&
+            res.data.data.nickName == null;
+            _this3.currentUser = _objectSpread({},
+            res.data.data,
+            _this3.currentUser);
 
-      }
-      uni.login({
-        provider: "weixin",
-        success: function success(res) {
-          _this.currentUser.code = res.code;
-          (0, _user.getOpenId)(res.code).then(function (res) {
-            if (res.data.data.unionid) {
-              _this.currentUser.OpenId = res.data.data.unionid;
-              return (0, _user.getUser)(res.data.data.unionid);
+            console.log(JSON.stringify(_this3.currentUser));
+            _this3.$store.commit("setCurrentUser", _this3.currentUser);
+            if (_this3.first) {
+              (0, _user.updateUser)({
+                avatarUrl: _this3.currentUser.avatarUrl,
+                nickName: _this3.currentUser.nickName,
+                phone: null,
+                unionId: _this3.currentUser.OpenId }).
+              then(function (res) {
+                if (res) {
+                  uni.hideLoading();
+                  uni.navigateTo({
+                    url: '../address/addAddress' });
+
+                }
+              });
             } else {
-              uni.hideLoading();
-            }
-          }).then(function (res) {
-            if (res.data) {
-              _this.currentUser = _objectSpread({},
-              _this.currentUser,
-              res.data);
-
-              _this.$store.commit('setCurrentUser', _this.currentUser);
               uni.hideLoading();
               uni.switchTab({
                 url: '../index/index' });
 
-            } else {
-              if (!flag) {
-                return (0, _user.registerUser)({
-                  "OpenId": _this.currentUser.OpenId,
-                  "Name": _this.currentUser.nickName,
-                  "PSW": "123",
-                  "PhoneNumber": "123456" });
-
-              }
             }
-          }).then(function (res) {
-            _this.currentUser = _objectSpread({},
-            _this.currentUser,
-            res.data);
-
-            _this.$store.commit('setCurrentUser', _this.currentUser);
-            uni.hideLoading();
-            uni.switchTab({
-              url: '../index/index' });
-
-          }).catch(function (res) {
-            uni.hideLoading();
-          });
-        } });
-
+          }
+        }).catch(function (res) {
+          uni.hideLoading();
+        });
+      }
     } }) };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 

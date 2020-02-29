@@ -123,7 +123,7 @@ page{
 	margin-bottom:10px;
 	font-size:12px;
 }
-.devices .add-device{
+.devices .add-device > cover-image{
 	position:fixed;
 	bottom:30px;
 	right:10px;
@@ -136,27 +136,5 @@ page{
 	color:#fff;
 	font-size:24px;
 }
-.devices .add-device > view{
-	display:inline-block;
-}
-.devices .add-device .hori{
-	border-top:1px solid #fff;
-	width:24px;
-	position:absolute;
-	top:24px;
-	left:13px;
-}
-.devices .add-device .vert{
-	border-left:1px solid #fff;
-	height:24px;
-	position:absolute;
-	top:13px;
-	left:24px;
-}
-.devices .add-device .fa{
-	height:50px;
-	line-height:50px;
-	vertical-align:middle;
-	font-size:30px;
-}
+
 

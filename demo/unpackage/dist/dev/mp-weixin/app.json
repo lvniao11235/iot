@@ -1,6 +1,7 @@
 {
   "pages": [
     "pages/login/login",
+    "pages/address/addAddress",
     "pages/login/index",
     "pages/index/index",
     "pages/device/addDevice",
@@ -13,6 +14,7 @@
     "pages/device/settingWifi",
     "pages/device/deviceDetail",
     "pages/device/setTimer",
+    "pages/device/settingTime",
     "pages/device/connectStatus",
     "pages/device/configDevice",
     "pages/device/repeat",
@@ -42,7 +44,7 @@
     "navigationStyle": "custom"
   },
   "tabBar": {
-    "color": "#b1b1b1",
+    "color": "#585858",
     "selectedColor": "#10AB6C",
     "list": [
       {
@@ -72,6 +74,5 @@
   },
   "usingComponents": {
     "navbar": "/components/navbar"
-  },
-  "sitemapLocation": "sitemap24.json"
+  }
 }

@@ -3,37 +3,33 @@
 		<navbar :back="true" :title="selectDevice.NickName"></navbar>
 		<view class="title">
 			<view class="title-left">
-				<view>{{deviceStatus.PM25.Value}}μg/m³</view>
-				<view>空气质量：{{quality[deviceStatus.PM25Level.Value]}}</view>
-				<view><label>温度：{{deviceStatus.CurrentTemperature.Value ? deviceStatus.CurrentTemperature.Value + '°C':'--'}}</label><label>湿度：{{deviceStatus.CurrentHumidity.Value ? deviceStatus.CurrentHumidity.Value+'%':"--"}}</label></view>
+				<view>{{deviceStatus.pm25}}</view>
+				<view>空气质量：{{deviceStatus.airQuality}}</view>
 				<view>
-					<label style="position:relative;margin-left:0;">CO
-					<label style="position:relative;font-size:8px;">2</label>：{{deviceStatus.CO2.Value ? deviceStatus.CO2.Value : '--'}}</label>
-					<label>甲醛浓度：{{deviceStatus.HCHO.Value ? deviceStatus.HCHO.Value + '%':'--'}}</label>
+					<label v-if="deviceStatus.currentTemperature != 'null°C'">温度：{{deviceStatus.currentTemperature}}</label>
+					<label v-if="deviceStatus.currentHumidity != 'null%'">湿度：{{deviceStatus.currentHumidity}}</label>
+				</view>
+				<view>
+					<label v-if="deviceStatus.CO2" style="position:relative;margin-left:0;">CO
+					<label style="position:relative;font-size:8px;">2</label>：{{deviceStatus.CO2}}</label>
+					<label v-if="deviceStatus.HCHO">甲醛浓度：{{deviceStatus.HCHO}}</label>
 				</view>
 			</view>
 			<view class="title-right">
-				<cover-image :src="selectDevice.DeviceModelImageUrl"></cover-image>
+				<cover-image :src="selectDevice.imageUrl"></cover-image>
 			</view>
 		</view>
 		<view class="parameter">
 			<view>
 				<view class="title">滤芯剩余</view>
-				<view class="param1">
+				<view class="param1" style="height:40px;border-right:1px solid #C0C0C0;box-sizing: content-box;">
 					<view @click="moveToLeft" class="fa fa-angle-left"></view>
 					<view class=" hscroll" ref="hscroll">
 						<view class="hscroll-container" :style="{width:(paramWidth * paramLength) + 'px', left:left+'px'}">
-							<view class="param-item hscroll-item" :style="{width:paramWidth + 'px'}">
-								<view>--</view>
-								<view>活性炭</view>
-							</view>
-							<view class="param-item hscroll-item" :style="{width:paramWidth + 'px'}">
-								<view>82%</view>
-								<view>PM2.5</view>
-							</view>
-							<view class="param-item hscroll-item" :style="{width:paramWidth + 'px'}">
-								<view>84%</view>
-								<view>PM2.5</view>
+							<view class="param-item hscroll-item" :style="{width:paramWidth + 'px'}"
+								v-for="(filter, index) in deviceStatus.filterLifeTimePercent" :key="filter">
+								<view>{{filter != "null%" ? filter:'0%'}}</view>
+								<view>滤芯{{index+1}}</view>
 							</view>
 						</view>
 					</view>
@@ -54,40 +50,40 @@
 		</view>
 		<view class="btns">
 			<view class="btn auto" @click="switchWorkMode" 
-				v-if="deviceStatus != null && deviceStatus.hasOwnProperty('WorkMode')"
-				:class="{'selected':deviceStatus.WorkMode.Value == 1}">
+				v-if="deviceStatus != null && deviceStatus.hasOwnProperty('workMode')"
+				:class="{'selected':deviceStatus.workMode}">
 				<view class="btn-name">自动模式</view>
 				<view class="btn-icon">
 					<cover-image 
-						:src="!deviceStatus.WorkMode.Value == 1 ? '/static/images/whiteauto.png':'/static/images/auto.png'"></cover-image>
+						:src="!deviceStatus.workMode ? '/static/images/whiteauto.png':'/static/images/auto.png'"></cover-image>
 				</view>
-				<view class="btn-state">{{deviceStatus.WorkMode.Value == 1 ? '已启用':'未启用'}}</view>
+				<view class="btn-state">{{deviceStatus.workMode ? '已启用':'未启用'}}</view>
 			</view>
 			<view class="btn" @click="switchSpeed"
-				v-if="deviceStatus != null && deviceStatus.hasOwnProperty('WindSpeed')">
+				v-if="deviceStatus != null && deviceStatus.hasOwnProperty('windSpeed')">
 				<view class="btn-name">风速</view>
 				<view class="btn-icon">
 					<cover-image src="/static/images/fan.png"></cover-image>
 				</view>
-				<view class="btn-state">{{deviceStatus.WindSpeed.Value}}档</view>
+				<view class="btn-state">{{deviceStatus.windSpeed}}档</view>
 			</view>
 			<view class="btn sleep" @click="switchSleep" 
-				v-if="deviceStatus != null && deviceStatus.hasOwnProperty('SleepMode')"
-				:class="{'selected':deviceStatus.SleepMode.Value}">
+				v-if="deviceStatus != null && deviceStatus.hasOwnProperty('sleepMode')"
+				:class="{'selected':deviceStatus.sleepMode}">
 				<view class="btn-name">睡眠模式</view>
 				<view class="btn-icon">
 					<cover-image 
-						:src="!deviceStatus.SleepMode.Value ? '/static/images/sleep.png':'/static/images/whitesleep.png'"></cover-image>
+						:src="!deviceStatus.sleepMode ? '/static/images/sleep.png':'/static/images/whitesleep.png'"></cover-image>
 				</view>
-				<view class="btn-state">{{deviceStatus.SleepMode.Value ? '已启用':'未启用'}}</view>
+				<view class="btn-state">{{deviceStatus.sleepMode ? '已启用':'未启用'}}</view>
 			</view>
 			<view class="btn" @click="switchClock"
-				v-if="deviceStatus.hasOwnProperty('clock')">
+				v-if="deviceStatus.hasOwnProperty('timeEnable')">
 				<view class="btn-name">定时</view>
 				<view class="btn-icon">
 					<cover-image src="/static/images/clock.png"></cover-image>
 				</view>
-				<view class="btn-state">{{deviceStatus.clock ? '已启用':'未启用'}}</view>
+				<view class="btn-state">{{deviceStatus.timeEnable ? '已启用':'未启用'}}</view>
 			</view>
 			<view class="btn sleep" @click="switchChildLock"
 				v-if="deviceStatus.hasOwnProperty('ChildLockSwitch')"
@@ -150,10 +146,19 @@
 			uni.createSelectorQuery().select('.hscroll').boundingClientRect(e=>{
                 this.paramWidth = e.width/this.paramDispLength;
             }).exec()
-			getDevice(this.selectDevice.Id).then(res=>{
-				this.deviceStatus = res.data;
-				this.deviceStatus.WindSpeed = 1;
-				this.deviceStatus.clock = false;	
+			getDevice(this.selectDevice.deviceName).then(res=>{
+				this.deviceStatus = res.data.data;
+				this.deviceStatus.workMode = this.deviceStatus.workMode == "手动" ? false:true;
+				this.deviceStatus.sleepMode = this.deviceStatus.sleepMode == "开" ? true:false;
+				this.deviceStatus.timeEnable = this.deviceStatus.timeEnable == "未启用" ? false:true;
+				this.deviceStatus.windSpeed = this.deviceStatus.windSpeed != "null" ? parseInt(this.deviceStatus.windSpeed):0;
+				let filterLifeTimePercent = [];
+				for(let prop in this.deviceStatus){
+					if(prop.indexOf("filterLifeTimePercent") > -1){
+						filterLifeTimePercent.push(this.deviceStatus[prop])
+					}
+				}
+				this.deviceStatus.filterLifeTimePercent = filterLifeTimePercent;
 				this.$store.commit('setSelectDeviceProperty', {deviceStatus:this.deviceStatus})
 			})
 		},
@@ -194,13 +199,13 @@
 				"setSelectDeviceProperty", 
 			]),
 			switchWorkMode(){
-				this.deviceStatus.WorkMode.Value = 
-					this.deviceStatus.WorkMode.Value == 1 ? 0:1;
+				this.deviceStatus.workMode = 
+					this.deviceStatus.workMode == true ? false:true;
 				this.$store.commit('setSelectDeviceProperty', {deviceStatus:this.deviceStatus})
 			},
 			switchSpeed(){
-				let speed = this.deviceStatus.WindSpeed
-				this.deviceStatus.WindSpeed = (speed+1) % 6;
+				let speed = this.deviceStatus.windSpeed
+				this.deviceStatus.windSpeed = (speed+1) % 6;
 				this.$store.commit('setSelectDeviceProperty', {deviceStatus:this.deviceStatus})
 			},
 			switchIonsSwitch(){
@@ -219,8 +224,8 @@
 				this.$store.commit('setSelectDeviceProperty', {deviceStatus:this.deviceStatus})
 			},
 			switchSleep(){
-				this.deviceStatus.SleepMode.Value =
-					!this.deviceStatus.SleepMode.Value;
+				this.deviceStatus.sleepMode =
+					!this.deviceStatus.sleepMode;
 				this.$store.commit('setSelectDeviceProperty', {deviceStatus:this.deviceStatus})
 			},
 			switchClock(){

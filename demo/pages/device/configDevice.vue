@@ -4,9 +4,9 @@
 		<view class="icon-list-item border">
 			<label class="icon"><image src="/static/images/Dingyue.PNG"></image></label>
 			<label class="label">设备名称</label>
-			<view class="value">
-				<label>{{selectDevice.NickName}}</label>
-				<label class="value-icon fa fa-angle-right"></label>
+			<view class="value" @click="modifyDeviceName">
+				<label>{{selectDevice.deviceComment}}</label>
+				<label class="value-icon fa fa-angle-right" ></label>
 			</view>
 		</view>
 		<view class="icon-list-item border">
@@ -33,20 +33,34 @@
 			</view>
 		</view>
 		<view class="btn" @click="removeDevice">解除绑定</view>
+		<view class="dialog-container" v-if="showDialog">
+			<view class="dialog-mask"></view>
+			<view class="prompt-dialog">
+				<view class="dialog-title">修改设备名称</view>
+				<input class="dialog-input" v-model="newDeviceName"></input>
+				<view class="btn-group">
+					<view class="dialog-cancel" @click="modifyDeviceNameCancel">取消</view>
+					<view class="dialog-ok" @click="modifyDeviceNameOk">确定</view>
+				</view>
+			</view>
+		</view>
 	</view>
+	
 </template>
 
 <script>
 	import { mapState, mapMutations } from 'vuex';
-	import {getDevice, removeDevice} from '@/api/device';
+	import {getDevice, removeDevice, updateDeviceComment} from '@/api/device';
 	
 	export default {
 		data() {
 			return {
+				showDialog:false,
+				newDeviceName:''
 			}
 		},
 		computed:{
-			...mapState(["selectDevice"])
+			...mapState(["selectDevice", "currentUser"])
 		},
 		onLoad(e) {
 			uni.setNavigationBarTitle({
@@ -61,16 +75,55 @@
 		},
 		methods: {
 			...mapMutations(["setSelectDevice"]),
+			modifyDeviceName(){
+				this.showDialog = true;
+				this.newDeviceName = this.selectDevice.deviceComment;
+			},
+			modifyDeviceNameCancel(){
+				this.showDialog = false;
+			},
+			modifyDeviceNameOk(){
+				this.showDialog = false;
+				if(this.newDeviceName && this.newDeviceName.trim().length >= 0){
+					this.selectDevice.deviceComment = this.newDeviceName
+					updateDeviceComment(this.selectDevice.deviceComment, this.selectDevice.deviceId).then(res=>{
+						if(res){
+							
+						}
+					})
+				} else {
+					uni.showModal({
+						title:'提示',
+						content:'请输入新的设备名',
+						showCancel:false
+					})
+				}
+			},
 			goToSubscribe(){
 				uni.navigateTo({
 					url:'./subscribe'
 				})
 			},
 			removeDevice(){
-				removeDevice(this.selectDevice.Id).then(res=>{
-					uni.switchTab({
-						url:'./device'
-					})
+				removeDevice(this.selectDevice.deviceId, this.currentUser.OpenId).then(res=>{
+					if(res.data.data){
+						uni.switchTab({
+							url:'./device'
+						})
+					} else {
+						uni.showModal({
+						    title: '提示',
+						    content: '这是一个模态弹窗',
+						    success: function (res) {
+						        if (res.confirm) {
+						            console.log('用户点击确定');
+						        } else if (res.cancel) {
+						            console.log('用户点击取消');
+						        }
+						    }
+						});
+					}
+					
 				})
 			}
 		},
@@ -78,6 +131,73 @@
 </script>
 
 <style>
+	.dialog-container .dialog-mask{
+		width:100%;
+		height:100%;
+		position:fixed;
+		background-color:#000000;
+		opacity: 0.3;
+		top:0;
+	}
+	
+	.dialog-container .prompt-dialog{
+		width:80%;
+		height:173px;
+		position:absolute;
+		top:0;
+		right:0;
+		bottom:0;
+		left:0;
+		margin:auto;
+		border-radius:10px;
+		background-color:#fff;
+		opacity: 1 !important;
+	}
+	
+	.dialog-container .prompt-dialog .dialog-title{
+		height:50px;
+		width:100%;
+		text-align:center;
+		line-height:50px;
+		vertical-align:middle;
+		font-size:17px;
+		font-weight:bold;
+		color:#030303;
+	}
+	
+	.dialog-container .prompt-dialog .dialog-input{
+		width:calc(100% - 40px) !important;
+		margin:20px auto;
+		height:40px;
+		line-height:40px;
+		vertical-align:middle;
+		border:1px solid #4d4d4d;
+		box-sizing: content-box;
+	}
+	
+	.dialog-container .prompt-dialog .btn-group{
+		border-top:1px solid #4d4d4d;
+	}
+	.dialog-container .prompt-dialog .dialog-cancel,
+	.dialog-container .prompt-dialog .dialog-ok{
+		width:50%;
+		display:inline-block;
+		text-align:center;
+		height:40px;
+		line-height:40px;
+		vertical-align:middle;
+		box-sizing: border-box;
+		font-size:17px;
+	}
+	
+	.dialog-container .prompt-dialog .dialog-cancel{
+		border-right:1px solid #4d4d4d;
+		
+	}
+	
+	.dialog-container .prompt-dialog .dialog-ok{
+		color:#10AB6C;
+	}
 	.config-device .btn{
 		width:60%;
 		height:40px;

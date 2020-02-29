@@ -4,6 +4,9 @@
 			"path": "pages/login/login"
 		},
 		{
+			"path": "pages/address/addAddress"
+		}, 
+		{
 			"path": "pages/login/index"
 		},
 		{
@@ -42,6 +45,9 @@
 		},
 		{
 		    "path" : "pages/device/setTimer"
+		},
+		{
+		    "path" : "pages/device/settingTime"
 		},
 		{
 			"path": "pages/device/connectStatus"
@@ -102,7 +108,7 @@
 		}
     ],
 	"tabBar":{
-		"color":"#b1b1b1",
+		"color":"#585858",
 		"selectedColor":"#10AB6C",
 		"list":[
 			{
