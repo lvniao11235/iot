@@ -17,7 +17,7 @@ export const devices = (openid)=>{
 
 export const getDevice = id=>{
 	return request({
-		url:`device/getDeviceDetail?deviceName=${id}`,
+		url:`device/getDeviceDetail1?deviceName=${id}`,
 		method:'GET',
 	});
 }
@@ -77,6 +77,13 @@ export const registerDevice = (productKey) => {
 export const getOrderDetail = (orderId) => {
 	return request({
 		url:`service/getOrderDetail?orderId=${orderId}`,
+		method:'GET'
+	})
+}
+
+export const getOrderDetailByDeviceId = (deviceId) => {
+	return request({
+		url:`service/getOrderDetailByDeviceId?deviceId=${deviceId}`,
 		method:'GET'
 	})
 }

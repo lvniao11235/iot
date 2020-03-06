@@ -48,6 +48,12 @@ const store = new Vuex.Store({
 		shutdownTime:null
 	},
 	mutations:{
+		setAddress(state, address){
+			state.address = address;
+			if(state.address && state.address.length > 0){
+				state.currentAddress = state.address[0]
+			}
+		},
 		setStartTime(state, startTime){
 			state.startTime = startTime;
 		},
@@ -56,6 +62,16 @@ const store = new Vuex.Store({
 		},
 		setcurrentAddress(state, addr){
 			state.currentAddress = addr;
+			if(state.address && state.address.length > 0){
+				
+				let index = state.address.findIndex(x=>x.id == addr.id);
+				if(index == -1){
+					state.address.push(addr);
+				}
+			} else {
+				state.address = [];
+				state.address.push(addr);
+			}
 		},
 		setCurrentService(state, service){
 			state.currentService = service;
@@ -146,15 +162,17 @@ const store = new Vuex.Store({
 			state.selectBrand = brand;
 		},
 		createAddress(state, address){
-			let max = 0;
-			state.address.forEach(x=>{
-				if(max < x.id) max = x.id;
-			})
-			address.id = max+1;
 			if(state.currentAddress == null){
 				state.currentAddress = address;
 			}
-			state.address.push(address);
+			
+			if(state.address && state.address.length > 0){
+				state.address.push(address);
+			} else {
+				state.address = [];
+				state.address.push(address);
+			}
+			
 		},
 		removeAddress(state, id){
 			let index = state.address.indexOf(x=>x.id == id);
@@ -162,7 +180,8 @@ const store = new Vuex.Store({
 		},
 		changeAddress(state, address){
 			let temp = state.address.find(x=>x.id == address.id);
-			temp.addr = address.addr;
+			temp.familyName = address.familyName;
+			temp.id = address.id;
 			temp.city = address.city;
 			//state.address = state.address;
 		},

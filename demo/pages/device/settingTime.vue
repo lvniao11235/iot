@@ -156,21 +156,5 @@
 		color:#fff;
 	}
 	
-	.bottom-group{
-		position:fixed;
-		bottom:0px;
-		width:calc(100% - 32px);
-		box-sizing: content-box;
-		padding:10px 16px;
-		border-top:1px solid #F3F5F4;
-		height:40px;
-	}
 	
-	.bottom-group .max-btn{
-		width:100%;
-		height:40px;
-		line-height:40px;
-		vertical-align:middle;
-		text-align:center;
-	}
 </style>

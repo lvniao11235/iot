@@ -24,19 +24,20 @@
 
 <script>
 	import {  mapState, mapMutations } from 'vuex';
+	import {createFamily} from '@/api/address';
 	export default{
 		data:function(){
 			return {
 				addressName:'',
 				currentAddress:{
 					id:0,
-					addr:'',
+					familyName:'',
 					city:'',
 				},
 			}
 		},
 		computed:{
-			...mapState(["modifyAddress"]) 
+			...mapState(["modifyAddress", "currentUser"]) 
 		},
 		onLoad(e){
 			this.$store.commit("setModifyAddress", this.currentAddress);
@@ -63,10 +64,16 @@
 					})
 				} else {
 					this.currentAddress.addr = this.addressName;
-					this.$store.commit("createAddress", this.currentAddress);
-					uni.switchTab({
-						url:'../index/index'
+					
+					createFamily(this.currentAddress.city, this.addressName, this.currentUser.OpenId).then(res=>{
+						if(res.data.msg == '家庭创建成功'){
+							this.$store.commit("createAddress", res.data.data);
+							uni.switchTab({
+								url:'../index/index'
+							})
+						}
 					})
+					
 				}
 				
 			}

@@ -19,6 +19,8 @@
     "pages/device/configDevice",
     "pages/device/repeat",
     "pages/device/subscribe",
+    "pages/device/shareDevice",
+    "pages/device/shareManage",
     "pages/device/serviceDetail",
     "pages/device/buy",
     "pages/my/my",
@@ -74,5 +76,6 @@
   },
   "usingComponents": {
     "navbar": "/components/navbar"
-  }
+  },
+  "sitemapLocation": "sitemap95.json"
 }

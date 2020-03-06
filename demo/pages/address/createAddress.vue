@@ -3,7 +3,7 @@
 		<navbar :back="true" title="添加家庭"></navbar>
 		<view class="label-form-item">
 			<view>家庭名称</view>
-			<input v-model="currentAddress.addr"></input>
+			<input v-model="currentAddress.familyName"></input>
 		</view>
 		<view class="label-form-item">
 			<view :class="{'hasvalue':currentAddress && currentAddress.city.length > 0}">家庭所在城市</view>
@@ -15,18 +15,19 @@
 
 <script>
 	import {  mapState, mapMutations } from 'vuex';
+	import {createFamily} from '@/api/address';
 	export default {
 		data:function(){
 			return {
 				currentAddress:{
 					id:0,
-					addr:'',
+					familyName:'',
 					city:'',
 				},
 			}
 		},
 		computed:{
-			...mapState(["modifyAddress"]) 
+			...mapState(["modifyAddress", "currentUser"]) 
 		},
 		mounted(){
 		},
@@ -47,7 +48,12 @@
 			},
 			save(){
 				this.$store.commit("createAddress", this.currentAddress);
-				uni.navigateBack();
+				createFamily(this.currentAddress.city, this.currentAddress.familyName, this.currentUser.OpenId).then(res=>{
+					if(res){
+						uni.navigateBack();
+					}
+				})
+				
 			}
 		}
 	}

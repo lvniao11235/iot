@@ -6,6 +6,7 @@
 	background-color:#000000;
 	opacity: 0.3;
 	top:0;
+	z-index:10000;
 }
 .dialog-container .prompt-dialog{
 	width:80%;
@@ -19,6 +20,7 @@
 	border-radius:10px;
 	background-color:#fff;
 	opacity: 1 !important;
+	z-index:10001;
 }
 .dialog-container .prompt-dialog .dialog-title{
 	height:50px;

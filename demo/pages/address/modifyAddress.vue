@@ -1,40 +1,55 @@
 <template>
-	<view class="modify-address" style="padding-top:50px;">
+	<view class="add-address-page">
 		<navbar :back="true" title="修改家庭"></navbar>
-		<view class="label-form-item">
-			<view>家庭名称</view>
-			<input v-model="currentAddress.addr" @input="nameChanged"></input>
+		<view class="content-container">
+			<view class="input-group">
+				<view class="input-label">家庭名称</view>
+				<view class="input-control">
+					<input placeholder="请输入家庭名称" v-model="addressName"></input>
+				</view>
+			</view>
+			<view class="input-group">
+				<view class="input-label">家庭所在城市</view>
+				<view class="input-control">
+					<input placeholder="请选择城市" disabled class="city" @click="selectCity" v-model="currentAddress.city"></input>
+					<lable class="fa fa-angle-right"></lable>
+				</view>
+			</view>
+			<view class="input-group">
+				<view class="input-ok" @click="createAddress">修改家庭</view>
+			</view>
 		</view>
-		<view class="label-form-item">
-			<view :class="{'hasvalue':currentAddress && currentAddress.city.length > 0}">家庭所在城市</view>
-			<view class="city" @click="selectCity">{{currentAddress.city}}</view>
-		</view>
-		<view class="btn" @click="save">修改</view>
 	</view>
 </template>
 
 <script>
-	import { mapState, mapMutations } from 'vuex';
-	export default {
+	import {  mapState, mapMutations } from 'vuex';
+	import {updateFamily} from '@/api/address';
+	export default{
 		data:function(){
 			return {
-				currentAddress:null,
-				
+				addressName:'',
+				familyId:'',
+				currentAddress:{
+					id:0,
+					familyName:'',
+					city:'',
+				},
 			}
 		},
 		computed:{
-			...mapState(["address", "modifyAddress"]) 
-		},
-		mounted(){
-			
+			...mapState(["address", "currentUser", "modifyAddress"]) 
 		},
 		onLoad(e){
-			this.currentAddress = this.address.find(x=>x.id == e.id);
+			this.currentAddress = this.address.find(x => x.id == e.id);
+			this.familyId = this.currentAddress.id;
 			this.$store.commit("setModifyAddress", this.currentAddress);
+			this.addressName = this.currentAddress.familyName;
+			this.id = this.currentAddress.id;
 		},
 		onShow(){
 			if(this.modifyAddress && this.modifyAddress.id == this.currentAddress.id){
-				this.currentAddress.city = this.modifyAddress.city;
+				this.currentAddress = this.modifyAddress;
 			}
 		},
 		methods:{
@@ -44,74 +59,88 @@
 					url:'../../components/CitySelect'
 				})
 			},
-			nameChanged(e){
-				//this.$store.commit("setModifyAddress", this.currentAddress);
-			},
-			save(){
-				this.$store.commit("changeAddress", this.currentAddress);
-				uni.navigateBack();
+			createAddress(){
+				if(this.addressName == null || this.addressName.length == 0 
+					|| this.currentAddress == null || this.currentAddress.city.length == 0){
+					uni.showModal({
+						title:'提示',
+						content:'家庭名称和城市不能为空',
+						showCancel:false
+					})
+				} else {
+					this.currentAddress.familyName = this.addressName;
+					this.currentAddress.id = this.id;
+					this.$store.commit("changeAddress", this.currentAddress);
+					updateFamily(this.currentAddress.city, this.familyId, this.addressName).then(res=>{
+						if(res.data.msg == '编辑成功'){
+							
+							uni.navigateBack({
+								
+							})
+						}
+					})
+					
+				}
+				
 			}
 		}
 	}
 </script>
 
 <style>
-	.modify-address .label-form-item{
-		width:80%;
-		margin:10px auto;
+	.content-container{
+		width:calc(100% - 28px);
+		margin:0 auto;
 	}
 	
-	.modify-address .label-form-item > view{
-		font-size:15px;
-		color:#585858;
-		margin-bottom:6px;
-		font-weight:bold;
-	}
-	.label-form-item{
+	.input-group{
 		margin-bottom:10px;
 	}
-	.label-form-item > label{
-		width:120px;
-		text-align:left;
-		display:inline-block;
-		padding-left:10px;
-	}
 	
-	.label-form-item > input,
-	.label-form-item > .city{
-		display:inline-block;
-		width:100%;
-		border-radius:5px;
-		position:relative;
-		height:40px;
-		line-height:40px;
-		top:10px;
-		padding:0 5px;
-		background-color:#F3F5F4;
-		font-weight:normal !important;
+	.input-group .input-label{
 		color:#585858;
+		font-size:15px;
+		height:25px;
+		vertical-align:middle;
+		font-weight:bold;
 	}
 	
-	.hasvalue{
-		position:relative;
-		display:inline-block;
-		top:10px;
-	}
-	
-	.modify-address .btn{
-		width:80%;
-		position:absolute;
-		bottom:60px;
-		right:0;
-		left:0;
-		margin:auto;
-		background-color:#10AB6C;
+	.input-group .input-control{
+		width:100%;
+		box-sizing: content-box;
 		height:40px;
+		background-color:#F3F5F4;
+		position:relative;
+	}
+	
+	.input-group .input-control input{
+		width:calc(100% - 10px);
+		margin:0 5px;
+		height:100%;
 		line-height:40px;
 		vertical-align:middle;
+		display:inline-block;
+	}
+	
+	.input-group .input-ok{
+		width:100%;
+		height:40px;
+		background-color:#10AB6C;
 		color:#fff;
-		text-align:center;
-		border-radius:2px;
 		font-size:16px;
+		text-align:center;
+		vertical-align:middle;
+		margin-top:40px;
+		line-height:40px;
+	}
+	
+	.add-address-page .city{
+		width:calc(100% - 30px) !important;
+		margin:0 !important;
+		margin-left:5px !important;
+		height:100%;
+		line-height:40px;
+		vertical-align:middle;
+		display:inline-block;
 	}
 </style>

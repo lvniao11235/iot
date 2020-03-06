@@ -1,4 +1,64 @@
 
+.disParameters{
+	width:calc(100% - 20px);
+	height:90px;
+	margin:10px auto;
+	box-shadow:0px 3px 5px #C0C0C0;
+	font-size:0px;
+	border-radius:5px;
+	color:#585858;
+}
+.leftParameter{
+	float:left;
+}
+.rightParameter{
+	float:right;
+}
+.leftParameter, .rightParameter{
+	display:inline-block;
+	width:50%;
+	font-size:14px;
+	padding-top:5px;
+}
+.leftParameter > .parameter-title,
+.rightParameter > .parameter-title{
+	text-align:center;
+}
+.leftParameter > .parameter-value,
+.rightParameter > .parameter-value{
+	height:60px;
+	width:calc(100% - 10px);
+	padding:0 5px;
+	box-sizing: content;
+	border-right:1px solid #C0C0C0;
+}
+.rightParameter > .parameter-value{
+	border-right:none;
+}
+.rightParameter.not-array > .parameter-value,
+.leftParameter.not-array > .parameter-value{
+	
+	line-height:60px;
+	vertical-align:middle;
+	text-align:center;
+}
+.leftParameter > .parameter-value{
+	border-right:1px solid #C0C0C0;
+}
+.leftParameter > .parameter-value > view,
+.rightParameter > .parameter-value > view{
+	display:inline-block;
+	float:left;
+}
+.leftParameter > .parameter-value > .hscroll,
+.rightParameter > .parameter-value > .hscroll{
+	width:calc(100% - 10px) !important;
+}
+.leftParameter > .parameter-value > .fa,
+.rightParameter > .parameter-value > .fa{
+	position:relative;
+	top:25px;
+}
 .device-detail > .title{
 	font-size:0;
 }
@@ -15,7 +75,7 @@
 	color:#585858;
 	font-size:15px;
 }
-.device-detail > .title .title-left > view:first-child{
+.device-detail > .title .title-left > .pm25{
 	color:#585858;
 	font-size:30px;
 	height:40px;
@@ -23,7 +83,6 @@
 }
 .device-detail > .title .title-left > view > label:last-child{
 	display:inline-block;
-	margin-left:20px;
 }
 .device-detail > .title .title-right{
 	width:100px;
@@ -72,7 +131,6 @@
 	height:15px;
 	padding:10px 0px;
 	text-align:center;
-	color:#b1b1b1;
 }
 .device-detail .parameter > view:first-child .params{
 	border-right:1px solid #b1b1b1;

@@ -41,6 +41,7 @@
 		mapState
 	} from 'vuex';
 	import uCharts from '@/u-charts/u-charts.js';
+	import {listFamilyBindDevices} from '@/api/address';
 	var _self;
 	var canvasObj = {};
 	import {devices} from '@/api/device';
@@ -61,6 +62,9 @@
 				devices:[]
 			}
 		},
+		computed:{
+			...mapState(["currentAddress", "devices", "currentUser"])
+		},
 		onLoad() {
 			uni.setNavigationBarTitle({
 			　　title:'首页'
@@ -71,18 +75,9 @@
 				this.cHeight = 200;
 				this.fillData();
 			}).exec();
-			
-			
-			devices(this.currentUser.OpenId).then(res=>{
-				if(res.data.data && res.data.data.length > 0){
-					this.devices.push(...res.data.data);
-				} else {
-					this.devices = [];
-				}
-			})
 		},
 		onShow(){
-			devices(this.currentUser.OpenId).then(res=>{
+			listFamilyBindDevices(this.currentAddress.id).then(res=>{
 				if(res.data.data && res.data.data.length > 0){
 					this.$store.commit("setDevices", res.data.data)
 					this.devices = [];

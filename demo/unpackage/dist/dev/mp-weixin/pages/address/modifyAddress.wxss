@@ -1,56 +1,51 @@
 
-.modify-address .label-form-item{
-	width:80%;
-	margin:10px auto;
+.content-container{
+	width:calc(100% - 28px);
+	margin:0 auto;
 }
-.modify-address .label-form-item > view{
-	font-size:15px;
-	color:#585858;
-	margin-bottom:6px;
-	font-weight:bold;
-}
-.label-form-item{
+.input-group{
 	margin-bottom:10px;
 }
-.label-form-item > label{
-	width:120px;
-	text-align:left;
-	display:inline-block;
-	padding-left:10px;
-}
-.label-form-item > input,
-.label-form-item > .city{
-	display:inline-block;
-	width:100%;
-	border-radius:5px;
-	position:relative;
-	height:40px;
-	line-height:40px;
-	top:10px;
-	padding:0 5px;
-	background-color:#F3F5F4;
-	font-weight:normal !important;
+.input-group .input-label{
 	color:#585858;
+	font-size:15px;
+	height:25px;
+	vertical-align:middle;
+	font-weight:bold;
 }
-.hasvalue{
-	position:relative;
-	display:inline-block;
-	top:10px;
-}
-.modify-address .btn{
-	width:80%;
-	position:absolute;
-	bottom:60px;
-	right:0;
-	left:0;
-	margin:auto;
-	background-color:#10AB6C;
+.input-group .input-control{
+	width:100%;
+	box-sizing: content-box;
 	height:40px;
+	background-color:#F3F5F4;
+	position:relative;
+}
+.input-group .input-control input{
+	width:calc(100% - 10px);
+	margin:0 5px;
+	height:100%;
 	line-height:40px;
 	vertical-align:middle;
+	display:inline-block;
+}
+.input-group .input-ok{
+	width:100%;
+	height:40px;
+	background-color:#10AB6C;
 	color:#fff;
-	text-align:center;
-	border-radius:2px;
 	font-size:16px;
+	text-align:center;
+	vertical-align:middle;
+	margin-top:40px;
+	line-height:40px;
+}
+.add-address-page .city{
+	width:calc(100% - 30px) !important;
+	margin:0 !important;
+	margin-left:5px !important;
+	height:100%;
+	line-height:40px;
+	vertical-align:middle;
+	display:inline-block;
 }
 

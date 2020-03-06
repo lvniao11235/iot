@@ -1,6 +1,6 @@
 <template>
 	<view class="service-detail">
-		<navbar :back="true" title="服务订阅"></navbar>
+		<navbar :back="true" :url="back" :isTabPage='true' title="服务订阅"></navbar>
 		<view class="head">订阅服务特享</view> 
 		<view class="icon-list-item border" style="border-top:1px solid #B1B1B1;">
 			<label class="label">订单标号</label>
@@ -16,7 +16,7 @@
 		</view>
 		<view class="icon-list-item border">
 			<label class="label">服务类型</label>
-			<view class="value">
+			<view class="value"> 
 				<label>{{currentService.description}}</label>
 			</view>
 		</view>
@@ -43,9 +43,9 @@
 			<view class="service">1.订阅服务器，一年内最多<span>免费</span>更换一次滤芯。厂家会根据当前设备的滤芯使用情况，在滤芯使用完之前联系用户</view>
 			<view class="service">2.同品牌产品<span>98折</span>优惠特享</view>
 		</view>
-		<view class="page-bottom">
+		<!-- <view class="page-bottom">
 			<view class="btn" @click="goToDevices">确定</view>
-		</view>
+		</view> -->
 	</view>
 </template>
 
@@ -55,14 +55,16 @@
 	export default {
 		data() {
 			return {
-				
-				price:0
+				type:0,
+				price:0,   
+				back:null
 			}
 		},
 		computed:{
 			...mapState(["currentService"])
 		},
 		onLoad(e) {
+			this.type = e.type;
 			uni.setNavigationBarTitle({
 			　　title:'服务订阅'
 			})
@@ -73,7 +75,11 @@
 			})
 		},
 		mounted(){
-			
+			if(this.type == 1){
+				this.back = null
+			} else {
+				this.back = './device'
+			}
 		},
 		methods: {
 			...mapMutations(["setSelectDevice", "setCurrentService"]),
@@ -90,9 +96,18 @@
 				})
 			},
 			goToDevices(){
-				uni.switchTab({
-					url:'./device'
-				})
+				// if(this.type == 1){
+				// 	this.back = null
+				// 	uni.navigateBack({
+						
+				// 	})
+				// } else {
+				// 	this.back = './device'
+				// 	uni.switchTab({
+				// 		url:
+				// 	})
+				// }
+				
 			}
 		},
 	}

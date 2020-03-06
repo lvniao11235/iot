@@ -4,7 +4,7 @@
 		<template v-for="addr in address">
 			<view @click="selectAddress(addr)" :key="addr.id" class="icon-list-item" :class="{'selected':currentAddress.id == addr.id}">
 				<label class="icon"><image src="../../static/images/building.png"></image></label>
-				<label class="label">{{addr.addr}}</label>
+				<label class="label">{{addr.familyName}}</label>
 				<label v-if="currentAddress.id == addr.id" class="checked fa fa-check"></label>
 			</view>
 		</template>

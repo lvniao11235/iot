@@ -32,6 +32,7 @@
 <script>
 	import { mapState, mapMutations } from 'vuex';
 	import {devices} from '@/api/device';
+	import {listFamilyBindDevices} from '@/api/address';
 	export default {
 		data() {
 			return {
@@ -54,7 +55,7 @@
 			console.log("onHide")
 		},
 		onShow(){
-			devices(this.currentUser.OpenId).then(res=>{
+			listFamilyBindDevices(this.currentAddress.id).then(res=>{
 				if(res.data.data && res.data.data.length > 0){
 					this.$store.commit("setDevices", res.data.data)
 				} else {

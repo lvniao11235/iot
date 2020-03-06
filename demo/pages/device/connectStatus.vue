@@ -15,6 +15,7 @@
 <script>
 	import {mapState} from 'vuex';
 	import {addDevice, registerDevice} from '@/api/device';
+	import {familyBindDevice} from '@/api/address';
 	export default {
 		data:function(){
 			return {
@@ -22,16 +23,13 @@
 			}
 		},
 		computed:{
-			...mapState(["currentUser", "selectProduct"])
+			...mapState(["currentUser", "selectProduct", "currentAddress"])
 		},
 		methods:{
 			next(){
 				registerDevice(this.selectProduct.productKey).then(res=>{
 					if(res){
-						return addDevice({
-							deviceName: res.data.data,
-							unionId: this.currentUser.OpenId
-						})
+						return familyBindDevice(res.data.data, this.currentAddress.id)
 					}
 				}).then(res=>{
 					if(res.data.data){

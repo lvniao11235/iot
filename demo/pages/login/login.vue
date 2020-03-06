@@ -17,6 +17,7 @@
 <script>
 	import { mapState, mapMutations } from 'vuex';
 	import {getOpenId, getUser, updateUser, decodeUserInfo, loginWechat, getUserInfoWechat} from '@/api/user';
+	import {listFamilys} from '@/api/address';
 	export default {
 		computed:{
 			...mapState(["code"])
@@ -37,7 +38,10 @@
 			}
 		},
 		methods:{
-			...mapMutations(["setCode", "setCurrentUser"]),
+			...mapMutations(["setCode", "setCurrentUser", "setAddress"]),
+			addAddress(address){
+				this.$store.commit("setAddress", address)
+			},
 			getPhoneNumber: function(e) {
 				let _this = this;
 				console.log(e);
@@ -94,16 +98,43 @@
 									unionId:this.currentUser.OpenId
 								}).then(res=>{
 									if(res){
-										uni.hideLoading()
+										return listFamilys(this.currentUser.OpenId);
+									}
+								}).then(res=>{
+									uni.hideLoading()
+									if(res.data.data && res.data.data.length == 0){
 										uni.navigateTo({
 											url:'../address/addAddress'
+										})
+									} else {
+										this.addAddress(res.data.data)
+										uni.switchTab({
+											url:'../index/index'
 										})
 									}
 								})
 							} else {
-								uni.hideLoading()
-								uni.switchTab({
-									url:'../index/index'
+								updateUser({
+									avatarUrl:this.currentUser.avatarUrl,
+									nickName:this.currentUser.nickName,
+									phone:this.currentUser.phone,
+									unionId:this.currentUser.OpenId
+								}).then(res=>{
+									if(res){
+										return listFamilys(this.currentUser.OpenId);
+									}
+								}).then(res=>{
+									uni.hideLoading()
+									if(res.data.data && res.data.data.length == 0){
+										uni.navigateTo({
+											url:'../address/addAddress'
+										})
+									} else {
+										this.addAddress(res.data.data)
+										uni.switchTab({
+											url:'../index/index'
+										})
+									}
 								})
 							}
 						}
@@ -146,6 +177,7 @@
 							} 
 							console.log(JSON.stringify(this.currentUser))
 							this.$store.commit("setCurrentUser", this.currentUser)
+							
 							if(this.first){
 								updateUser({
 									avatarUrl:this.currentUser.avatarUrl,
@@ -154,18 +186,40 @@
 									unionId:this.currentUser.OpenId
 								}).then(res=>{
 									if(res){
-										uni.hideLoading()
+										return listFamilys(this.currentUser.OpenId);
+									}
+								}).then(res=>{
+									uni.hideLoading()
+									if(res.data.data && res.data.data.length == 0){
 										uni.navigateTo({
 											url:'../address/addAddress'
+										})
+									} else {
+										this.addAddress(res.data.data)
+										uni.switchTab({
+											url:'../index/index'
 										})
 									}
 								})
 							} else {
+								return listFamilys(this.currentUser.OpenId);
 								uni.hideLoading()
 								uni.switchTab({
 									url:'../index/index'
 								})
 							}
+						}
+					}).then(res=>{
+						uni.hideLoading()
+						if(res.data.data && res.data.data.length == 0){
+							uni.navigateTo({
+								url:'../address/addAddress'
+							})
+						} else {
+							this.addAddress(res.data.data)
+							uni.switchTab({
+								url:'../index/index'
+							})
 						}
 					}).catch(res=>{
 						uni.hideLoading()

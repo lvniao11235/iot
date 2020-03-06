@@ -44,7 +44,7 @@
 		methods:{
 			goToServiceDetail(orderId){
 				uni.navigateTo({
-					url:`../device/serviceDetail?orderId=${orderId}`
+					url:`../device/serviceDetail?orderId=${orderId}&type=1`
 				})
 			}
 		}

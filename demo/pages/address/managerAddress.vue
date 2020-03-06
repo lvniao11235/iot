@@ -4,7 +4,7 @@
 		<template v-for="addr in address">
 			<view :key="addr.id" class="icon-list-item">
 				<label class="icon"><image src="../../static/images/building.png"></image></label>
-				<label class="label">{{addr.addr}}</label>
+				<label class="label">{{addr.familyName}}</label>
 				<view class="btns">
 					<label @click="modify(addr.id)">修改</label>
 					<label @click="remove(addr.id)" style="color:red;">删除</label>
@@ -34,7 +34,7 @@
 			},
 			create(){
 				uni.navigateTo({
-					url:'./createAddress'
+					url:'./addAddress'
 				})
 			}
 		}

@@ -27,7 +27,7 @@
 
 <script>
 	import { mapState, mapMutations } from 'vuex';
-	import {services} from '@/api/device';
+	import {services, getOrderDetailByDeviceId} from '@/api/device';
 	export default {
 		data() {
 			return {
@@ -43,7 +43,23 @@
 			uni.setNavigationBarTitle({
 			　　title:'服务订阅'
 			})
-			services('a1gOOlyTpKq').then(res=>{
+			getOrderDetailByDeviceId(this.selectDevice.deviceId).then(res=>{
+				if(res.data && res.data.data && res.data.data.orderId){
+					let orderid = res.data.data.orderId;
+					uni.showModal({
+						title:'提示',
+						content:'已购买服务',
+						showCancel:false,
+						success:res=>{
+							uni.navigateTo({
+								url:`./serviceDetail?orderId=${orderid}`
+							})
+						}
+					})
+				} else {
+					return services(this.selectDevice.productKey);
+				}
+			}).then(res=>{
 				this.services = [];
 				if(res.data.data && res.data.data.length > 0){
 					this.services.push(...res.data.data)

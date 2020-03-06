@@ -62,6 +62,12 @@
 			"path": "pages/device/subscribe"
 		},
 		{
+			"path": "pages/device/shareDevice"
+		},
+		{
+			"path": "pages/device/shareManage"
+		},
+		{
 			"path": "pages/device/serviceDetail"
 		},
 		{

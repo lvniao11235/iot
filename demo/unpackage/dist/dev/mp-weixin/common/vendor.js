@@ -8434,7 +8434,7 @@ module.exports = {"_from":"@dcloudio/uni-stat@^2.0.0-alpha-24420191128001","_id"
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _default = { "pages": { "pages/login/login": { "usingComponents": {} }, "pages/address/addAddress": { "usingComponents": {} }, "pages/login/index": { "usingComponents": {} }, "pages/index/index": { "navigationBarBackgroundColor": "#10AB6C", "navigationBarTextStyle": "white", "usingComponents": {} }, "pages/device/addDevice": { "usingComponents": {} }, "pages/device/device": { "usingComponents": {} }, "pages/device/connectWifi": { "usingComponents": {} }, "pages/login/phoneLogin": { "usingComponents": {} }, "pages/login/clause": { "usingComponents": {} }, "pages/device/searchDevice": { "usingComponents": {} }, "pages/device/settingDevice": { "usingComponents": {} }, "pages/device/settingWifi": { "usingComponents": {} }, "pages/device/deviceDetail": { "usingComponents": {} }, "pages/device/setTimer": { "usingComponents": {} }, "pages/device/connectStatus": { "usingComponents": {} }, "pages/device/configDevice": { "usingComponents": {} }, "pages/device/repeat": { "usingComponents": {} }, "pages/device/subscribe": { "usingComponents": {} }, "pages/device/serviceDetail": { "usingComponents": {} }, "pages/device/buy": { "usingComponents": {} }, "pages/my/my": { "usingComponents": {} }, "pages/my/about": { "usingComponents": {} }, "pages/my/config": { "usingComponents": {} }, "pages/my/help": { "usingComponents": {} }, "pages/my/message": { "usingComponents": {} }, "pages/my/service": { "usingComponents": {} }, "pages/my/share": { "usingComponents": {} }, "pages/my/opinion": { "usingComponents": {} }, "pages/address/addressList": { "usingComponents": {} }, "pages/address/managerAddress": { "usingComponents": {} }, "pages/address/modifyAddress": { "usingComponents": {} }, "pages/address/createAddress": { "usingComponents": {} }, "components/CitySelect": { "usingComponents": {} }, "pages/device/settingTime": { "usingComponents": {} } }, "globalStyle": { "navigationBarTextStyle": "black", "navigationBarTitleText": "健康生活", "navigationBarBackgroundColor": "#F8F8F8", "backgroundColor": "#F8F8F8", "navigationStyle": "custom" } };exports.default = _default;
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _default = { "pages": { "pages/login/login": { "usingComponents": {} }, "pages/address/addAddress": { "usingComponents": {} }, "pages/login/index": { "usingComponents": {} }, "pages/index/index": { "navigationBarBackgroundColor": "#10AB6C", "navigationBarTextStyle": "white", "usingComponents": {} }, "pages/device/addDevice": { "usingComponents": {} }, "pages/device/device": { "usingComponents": {} }, "pages/device/connectWifi": { "usingComponents": {} }, "pages/login/phoneLogin": { "usingComponents": {} }, "pages/login/clause": { "usingComponents": {} }, "pages/device/searchDevice": { "usingComponents": {} }, "pages/device/settingDevice": { "usingComponents": {} }, "pages/device/settingWifi": { "usingComponents": {} }, "pages/device/deviceDetail": { "usingComponents": {} }, "pages/device/setTimer": { "usingComponents": {} }, "pages/device/settingTime": { "usingComponents": {} }, "pages/device/connectStatus": { "usingComponents": {} }, "pages/device/configDevice": { "usingComponents": {} }, "pages/device/repeat": { "usingComponents": {} }, "pages/device/subscribe": { "usingComponents": {} }, "pages/device/shareDevice": { "usingComponents": {} }, "pages/device/shareManage": { "usingComponents": {} }, "pages/device/serviceDetail": { "usingComponents": {} }, "pages/device/buy": { "usingComponents": {} }, "pages/my/my": { "usingComponents": {} }, "pages/my/about": { "usingComponents": {} }, "pages/my/config": { "usingComponents": {} }, "pages/my/help": { "usingComponents": {} }, "pages/my/message": { "usingComponents": {} }, "pages/my/service": { "usingComponents": {} }, "pages/my/share": { "usingComponents": {} }, "pages/my/opinion": { "usingComponents": {} }, "pages/address/addressList": { "usingComponents": {} }, "pages/address/managerAddress": { "usingComponents": {} }, "pages/address/modifyAddress": { "usingComponents": {} }, "pages/address/createAddress": { "usingComponents": {} }, "components/CitySelect": { "usingComponents": {} } }, "globalStyle": { "navigationBarTextStyle": "black", "navigationBarTitleText": "健康生活", "navigationBarBackgroundColor": "#F8F8F8", "backgroundColor": "#F8F8F8", "navigationStyle": "custom" } };exports.default = _default;
 
 /***/ }),
 /* 8 */
@@ -8617,6 +8617,12 @@ var store = new _vuex.default.Store({
     shutdownTime: null },
 
   mutations: {
+    setAddress: function setAddress(state, address) {
+      state.address = address;
+      if (state.address && state.address.length > 0) {
+        state.currentAddress = state.address[0];
+      }
+    },
     setStartTime: function setStartTime(state, startTime) {
       state.startTime = startTime;
     },
@@ -8625,6 +8631,16 @@ var store = new _vuex.default.Store({
     },
     setcurrentAddress: function setcurrentAddress(state, addr) {
       state.currentAddress = addr;
+      if (state.address && state.address.length > 0) {
+
+        var index = state.address.findIndex(function (x) {return x.id == addr.id;});
+        if (index == -1) {
+          state.address.push(addr);
+        }
+      } else {
+        state.address = [];
+        state.address.push(addr);
+      }
     },
     setCurrentService: function setCurrentService(state, service) {
       state.currentService = service;
@@ -8715,15 +8731,17 @@ var store = new _vuex.default.Store({
       state.selectBrand = brand;
     },
     createAddress: function createAddress(state, address) {
-      var max = 0;
-      state.address.forEach(function (x) {
-        if (max < x.id) max = x.id;
-      });
-      address.id = max + 1;
       if (state.currentAddress == null) {
         state.currentAddress = address;
       }
-      state.address.push(address);
+
+      if (state.address && state.address.length > 0) {
+        state.address.push(address);
+      } else {
+        state.address = [];
+        state.address.push(address);
+      }
+
     },
     removeAddress: function removeAddress(state, id) {
       var index = state.address.indexOf(function (x) {return x.id == id;});
@@ -8731,7 +8749,8 @@ var store = new _vuex.default.Store({
     },
     changeAddress: function changeAddress(state, address) {
       var temp = state.address.find(function (x) {return x.id == address.id;});
-      temp.addr = address.addr;
+      temp.familyName = address.familyName;
+      temp.id = address.id;
       temp.city = address.city;
       //state.address = state.address;
     },
@@ -14481,7 +14500,62 @@ var request = function request(options) {
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 
 /***/ }),
-/* 29 */,
+/* 29 */
+/*!****************************************************************!*\
+  !*** C:/Users/lvniao/Desktop/projects/iot/demo/api/address.js ***!
+  \****************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });exports.updateFamily = exports.unBindDevice = exports.listFamilys = exports.listFamilyBindDevices = exports.familyBindDevice = exports.createFamily = void 0;var _request = __webpack_require__(/*! ./request */ 28);
+
+var createFamily = function createFamily(city, familyName, unionId) {
+  return (0, _request.request)({
+    url: "family/createFamily",
+    data: { city: city, familyName: familyName, unionId: unionId },
+    method: 'POST' });
+
+};exports.createFamily = createFamily;
+
+var familyBindDevice = function familyBindDevice(deviceName, familyId) {
+  return (0, _request.request)({
+    url: "family/familyBindDevice",
+    data: { deviceName: deviceName, familyId: familyId },
+    method: 'POST' });
+
+};exports.familyBindDevice = familyBindDevice;
+
+var listFamilyBindDevices = function listFamilyBindDevices(familyId) {
+  return (0, _request.request)({
+    url: "family/listFamilyBindDevices?familyId=".concat(familyId),
+    method: 'GET' });
+
+};exports.listFamilyBindDevices = listFamilyBindDevices;
+
+var listFamilys = function listFamilys(unionId) {
+  return (0, _request.request)({
+    url: "family/listFamilys?unionId=".concat(unionId),
+    method: 'GET' });
+
+};exports.listFamilys = listFamilys;
+
+var unBindDevice = function unBindDevice(deviceId) {
+  return (0, _request.request)({
+    url: "family/unBindDevice?deviceId=".concat(deviceId),
+    method: 'DELETE' });
+
+};exports.unBindDevice = unBindDevice;
+
+var updateFamily = function updateFamily(city, familyId, familyName) {
+  return (0, _request.request)({
+    url: "family/updateFamily",
+    data: { city: city, familyId: familyId, familyName: familyName },
+    method: 'PUT' });
+
+};exports.updateFamily = updateFamily;
+
+/***/ }),
 /* 30 */,
 /* 31 */,
 /* 32 */,
@@ -14505,7 +14579,8 @@ var request = function request(options) {
 /* 50 */,
 /* 51 */,
 /* 52 */,
-/* 53 */
+/* 53 */,
+/* 54 */
 /*!**********************************************************************!*\
   !*** C:/Users/lvniao/Desktop/projects/iot/demo/u-charts/u-charts.js ***!
   \**********************************************************************/
@@ -19562,7 +19637,7 @@ if ( true && typeof module.exports === "object") {
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 
 /***/ }),
-/* 54 */
+/* 55 */
 /*!***************************************************************!*\
   !*** C:/Users/lvniao/Desktop/projects/iot/demo/api/device.js ***!
   \***************************************************************/
@@ -19570,7 +19645,7 @@ if ( true && typeof module.exports === "object") {
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.updateDeviceComment = exports.getOrders = exports.getOrderDetail = exports.registerDevice = exports.getDeviceName = exports.services = exports.products = exports.buyService = exports.addDevice = exports.removeDevice = exports.getDevice = exports.devices = exports.product = void 0;var _request = __webpack_require__(/*! ./request */ 28);
+Object.defineProperty(exports, "__esModule", { value: true });exports.updateDeviceComment = exports.getOrders = exports.getOrderDetailByDeviceId = exports.getOrderDetail = exports.registerDevice = exports.getDeviceName = exports.services = exports.products = exports.buyService = exports.addDevice = exports.removeDevice = exports.getDevice = exports.devices = exports.product = void 0;var _request = __webpack_require__(/*! ./request */ 28);
 
 var product = function product(id) {
   console.log(id);
@@ -19589,7 +19664,7 @@ var devices = function devices(openid) {
 
 var getDevice = function getDevice(id) {
   return (0, _request.request)({
-    url: "device/getDeviceDetail?deviceName=".concat(id),
+    url: "device/getDeviceDetail1?deviceName=".concat(id),
     method: 'GET' });
 
 };exports.getDevice = getDevice;
@@ -19652,6 +19727,13 @@ var getOrderDetail = function getOrderDetail(orderId) {
     method: 'GET' });
 
 };exports.getOrderDetail = getOrderDetail;
+
+var getOrderDetailByDeviceId = function getOrderDetailByDeviceId(deviceId) {
+  return (0, _request.request)({
+    url: "service/getOrderDetailByDeviceId?deviceId=".concat(deviceId),
+    method: 'GET' });
+
+};exports.getOrderDetailByDeviceId = getOrderDetailByDeviceId;
 
 var getOrders = function getOrders(unionId) {
   return (0, _request.request)({

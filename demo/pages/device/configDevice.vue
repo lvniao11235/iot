@@ -2,7 +2,6 @@
 	<view class="config-device">
 		<navbar :back="true" title="设置设备"></navbar>
 		<view class="icon-list-item border">
-			<label class="icon"><image src="/static/images/Dingyue.PNG"></image></label>
 			<label class="label">设备名称</label>
 			<view class="value" @click="modifyDeviceName">
 				<label>{{selectDevice.deviceComment}}</label>
@@ -10,15 +9,13 @@
 			</view>
 		</view>
 		<view class="icon-list-item border">
-			<label class="icon"><image src="/static/images/Dingyue.PNG"></image></label>
 			<label class="label">设备共享</label>
-			<view class="value">
+			<view class="value" @click="shareDevice">
 				<label>{{selectDevice.share ? "已共享":"未共享"}}</label>
 				<label class="value-icon fa fa-angle-right"></label>
 			</view>
 		</view>
 		<view class="icon-list-item border">
-			<label class="icon"></label>
 			<label class="label">服务订阅</label>
 			<view class="value" @click="goToSubscribe">
 				<label>{{selectDevice.subscribe ? "已订阅":"去订阅"}}</label>
@@ -26,13 +23,11 @@
 			</view>
 		</view>
 		<view class="icon-list-item border">
-			<label class="icon"></label>
 			<label class="label">更换家庭</label>
 			<view class="value">
 				<label class="value-icon fa fa-angle-right"></label>
 			</view>
 		</view>
-		<view class="btn" @click="removeDevice">解除绑定</view>
 		<view class="dialog-container" v-if="showDialog">
 			<view class="dialog-mask"></view>
 			<view class="prompt-dialog">
@@ -44,6 +39,9 @@
 				</view>
 			</view>
 		</view>
+		<view class="bottom-group">
+			<view class="max-btn" @click="removeDevice" style="">解除绑定</view>
+		</view>
 	</view>
 	
 </template>
@@ -51,7 +49,7 @@
 <script>
 	import { mapState, mapMutations } from 'vuex';
 	import {getDevice, removeDevice, updateDeviceComment} from '@/api/device';
-	
+	import {unBindDevice} from '@/api/address';
 	export default {
 		data() {
 			return {
@@ -75,6 +73,11 @@
 		},
 		methods: {
 			...mapMutations(["setSelectDevice"]),
+			shareDevice(){
+				uni.navigateTo({
+					url:'./shareDevice'
+				})
+			},
 			modifyDeviceName(){
 				this.showDialog = true;
 				this.newDeviceName = this.selectDevice.deviceComment;
@@ -105,15 +108,15 @@
 				})
 			},
 			removeDevice(){
-				removeDevice(this.selectDevice.deviceId, this.currentUser.OpenId).then(res=>{
-					if(res.data.data){
+				unBindDevice(this.selectDevice.deviceId).then(res=>{
+					if(res.data.msg == "删除成功"){
 						uni.switchTab({
 							url:'./device'
 						})
 					} else {
 						uni.showModal({
 						    title: '提示',
-						    content: '这是一个模态弹窗',
+						    content: '解除失败',
 						    success: function (res) {
 						        if (res.confirm) {
 						            console.log('用户点击确定');
@@ -138,6 +141,7 @@
 		background-color:#000000;
 		opacity: 0.3;
 		top:0;
+		z-index:10000;
 	}
 	
 	.dialog-container .prompt-dialog{
@@ -152,6 +156,7 @@
 		border-radius:10px;
 		background-color:#fff;
 		opacity: 1 !important;
+		z-index:10001;
 	}
 	
 	.dialog-container .prompt-dialog .dialog-title{

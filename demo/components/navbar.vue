@@ -6,7 +6,7 @@
 			:style="{Top:0, paddingTop:paddingTop+'px', 
 				backgroundColor:background,
 				color:color}">
-			<view @click="switchAddress" :style="{color:addressColor}" v-if="showAddress && currentAddress != null" class="address">{{currentAddress.addr}}<label class="fa fa-angle-right"></label></view>
+			<view @click="switchAddress" :style="{color:addressColor}" v-if="showAddress && currentAddress != null" class="address">{{currentAddress.familyName}}<label class="fa fa-angle-right"></label></view>
 			<view @click="navigateBack" class="back" v-if="back"><label class="fa fa-angle-left"></label></view>
 			<label class="navbar-title">{{dispTitle}}</label>
 		</view>
@@ -21,7 +21,7 @@
 		components:{
 			address
 		},
-		props:["bgColor", "fgColor", "showAddress", "title", "back", "isHome", "url"],
+		props:["bgColor", "fgColor", "showAddress", "title", "back", "isHome", "url", "isTabPage"],
 		data:function(){
 			return {
 				paddingTop:uni.getSystemInfoSync().statusBarHeight,
@@ -58,9 +58,16 @@
 			},
 			navigateBack(){
 				if(this.url && this.url.length > 0){
-					uni.navigateTo({
-						url:this.url
-					})
+					if(this.isTabPage){
+						uni.switchTab({
+							url:this.url
+						})
+					} else {
+						uni.navigateTo({
+							url:this.url
+						})
+					}
+					
 					
 				} else {
 					uni.navigateBack({
