@@ -2,24 +2,52 @@
   "pages": [
     "pages/index/index",
     "pages/login/login",
+    "pages/address/addAddress",
+    "pages/login/index",
+    "pages/device/addDevice",
+    "pages/device/device",
+    "pages/device/connectWifi",
     "pages/login/phoneLogin",
     "pages/login/clause",
-    "pages/device/device",
+    "pages/device/searchDevice",
+    "pages/device/settingDevice",
+    "pages/device/settingWifi",
+    "pages/device/deviceDetail",
+    "pages/device/setTimer",
+    "pages/device/settingTime",
+    "pages/device/connectStatus",
+    "pages/device/configDevice",
+    "pages/device/repeat",
+    "pages/device/subscribe",
+    "pages/device/shareDevice",
+    "pages/device/shareManage",
+    "pages/device/serviceDetail",
+    "pages/device/buy",
     "pages/my/my",
+    "pages/my/about",
+    "pages/my/config",
+    "pages/my/help",
+    "pages/my/message",
+    "pages/my/service",
+    "pages/my/share",
+    "pages/my/opinion",
+    "pages/my/modifyUser",
     "pages/address/addressList",
     "pages/address/managerAddress",
     "pages/address/modifyAddress",
+    "pages/address/createAddress",
     "components/CitySelect"
   ],
   "window": {
     "navigationBarTextStyle": "black",
-    "navigationBarTitleText": "uni-app",
+    "navigationBarTitleText": "健康生活",
     "navigationBarBackgroundColor": "#F8F8F8",
-    "backgroundColor": "#F8F8F8"
+    "backgroundColor": "#F8F8F8",
+    "navigationStyle": "custom"
   },
   "tabBar": {
-    "color": "#b1b1b1",
-    "selectedColor": "#1296db",
+    "color": "#585858",
+    "selectedColor": "#10AB6C",
     "list": [
       {
         "pagePath": "pages/index/index",
@@ -49,5 +77,7 @@
   },
   "appname": "demo",
   "compilerVersion": "2.4.6",
-  "usingComponents": {}
+  "usingComponents": {
+    "navbar": "/components/navbar"
+  }
 }

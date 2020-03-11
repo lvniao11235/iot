@@ -1,9 +1,9 @@
 {
   "pages": [
+    "pages/index/index",
     "pages/login/login",
     "pages/address/addAddress",
     "pages/login/index",
-    "pages/index/index",
     "pages/device/addDevice",
     "pages/device/device",
     "pages/device/connectWifi",
@@ -31,6 +31,7 @@
     "pages/my/service",
     "pages/my/share",
     "pages/my/opinion",
+    "pages/my/modifyUser",
     "pages/address/addressList",
     "pages/address/managerAddress",
     "pages/address/modifyAddress",
@@ -76,6 +77,5 @@
   },
   "usingComponents": {
     "navbar": "/components/navbar"
-  },
-  "sitemapLocation": "sitemap95.json"
+  }
 }

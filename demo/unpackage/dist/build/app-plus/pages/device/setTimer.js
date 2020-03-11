@@ -1,0 +1,2 @@
+setCssToHead([".",[1],"set-timer \x3e wx-view{ border-bottom:1px solid #f7f7f7; width:100%; height:50px; line-height:50px; vertical-align:middle; }\n.",[1],"set-timer \x3e wx-view \x3e .",[1],"title{ height:50px; line-height:50px; vertical-align:middle; padding:0px 10px; }\n.",[1],"set-timer \x3e wx-view \x3e .",[1],"title wx-switch{ float:right; }\n",],undefined,{path:"./pages/device/setTimer.wxss"})();
+document.dispatchEvent(new CustomEvent("generateFuncReady", { detail: { generateFunc: $gwx('./pages/device/setTimer.wxml') } }));

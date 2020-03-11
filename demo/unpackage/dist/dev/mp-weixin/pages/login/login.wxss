@@ -40,12 +40,6 @@ page{
 	background-color:#10AB6C;
 	color:#fff;
 }
-.login-btns > button:last-child{
-	background-color:#fff;
-	margin-top:20px;
-	color:#10AB6C;
-	border:1px solid #10AB6C;
-}
 .login-agree{
 	width:100%;
 	position:absolute;

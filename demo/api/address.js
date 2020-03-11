@@ -37,6 +37,13 @@ export const unBindDevice = (deviceId) => {
 	});
 }
 
+export const deleteFamily = (familyId) => {
+	return request({
+		url: `family/deleteFamily?familyId=${familyId}`,
+		method:'DELETE'
+	});
+}
+
 export const updateFamily = (city, familyId, familyName) => {
 	return request({
 		url: `family/updateFamily`,

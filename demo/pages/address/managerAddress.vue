@@ -17,9 +17,11 @@
 
 <script>
 	import { mapState } from 'vuex';
+	import { listFamilyBindDevices, deleteFamily } from '@/api/address';
+	
 	export default {
 		computed:{
-			...mapState(["address"]) 
+			...mapState(["address", "currentAddress"]) 
 		},
 		mounted(){
 		},
@@ -30,7 +32,30 @@
 				})
 			},
 			remove(id){
-				this.$store.commit("removeAddress", id);
+				if(id == this.currentAddress.id){
+					uni.showModal({
+						title:'提示',
+						content:'不能删除当前家庭',
+						showCancel:false
+					})
+					return;
+				}
+				listFamilyBindDevices(id).then(res=>{
+					if(res.data.data && res.data.data.length > 0){
+						uni.showModal({
+							title:'提示',
+							content:'该家庭下有设备数据，不能删除',
+							showCancel:false
+						})
+					} else {
+						return deleteFamily(id)
+					}
+				}).then(res=>{
+					if(res && res.data.msg == "删除成功"){
+						this.$store.commit("removeAddress", id);
+					}
+				})
+				
 			},
 			create(){
 				uni.navigateTo({

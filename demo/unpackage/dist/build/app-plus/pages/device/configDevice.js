@@ -1,0 +1,2 @@
+setCssToHead([".",[1],"config-device .",[1],"btn{ width:60%; height:40px; line-height:40px; vertical-align:middle; text-align:center; color:#fff; background-color:rgba(255, 51, 0, 1); border-radius:5px; margin:50px auto; }\n",],undefined,{path:"./pages/device/configDevice.wxss"})();
+document.dispatchEvent(new CustomEvent("generateFuncReady", { detail: { generateFunc: $gwx('./pages/device/configDevice.wxml') } }));

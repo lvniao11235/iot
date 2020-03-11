@@ -1,0 +1,43 @@
+
+page, .connect-wifi{
+	position:relative;
+	height:100%;
+	width:100%;
+}
+.connect-wifi .tip{
+	position:absolute;
+	top:0;
+	right:0;
+	bottom:0;
+	left:0;
+	margin:auto;
+	height:200px;
+	width:100%;
+}
+.connect-wifi .tip > view:first-child{
+	font-size:60px;
+	text-align:center;
+	width: 100%;
+	color:#10AB6C;
+}
+.connect-wifi .tip > view:last-child{
+	width:80%;
+	word-break: break-all;
+	margin:20px auto;
+}
+.connect-wifi > view:last-child{
+	position:absolute;
+	bottom:50px;
+	left:0;
+	right:0;
+	margin:auto;
+	height:30px;
+	width:200px;
+	background-color:#10AB6C;
+	color:#fff;
+	line-height:30px;
+	vertical-align:middle;
+	text-align:center;
+	border-radius:5px;
+}
+

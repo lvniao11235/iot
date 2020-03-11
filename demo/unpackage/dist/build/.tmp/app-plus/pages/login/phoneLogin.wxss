@@ -7,7 +7,10 @@ page{
 .title-image{
 	text-align:center;
 	position:relative;
-	top:70px;
+	top:100px;
+	color:#10AB6C;
+	font-size:30px;
+	font-weight:bold;
 }
 .title-image image{
 	width:127px;
@@ -21,6 +24,12 @@ page{
 	left:0;
 	margin:auto;
 }
+.verify-code{
+	background-color:#EEF8F4;
+	box-sizing: content-box;
+	height:40px;
+	font-size:16px;
+}
 .verify-code input{
 	width:calc(100% - 95px);
 	display:inline-block;
@@ -32,28 +41,33 @@ page{
 	height:40px;
 	line-height:40px;
 	vertical-align:middle;
-	color:#1890FF;
+	color:#10AB6C;
 }
 .login-form input{
 	height:40px;
 	line-height:40px;
 	vertical-align:middle;
-	box-sizing: border-box;
+	box-sizing: content-box;
+	background-color:#EEF8F4;
+	padding:0px 5px;
 }
-.login-form input.focus{
-	border-bottom:1px solid rgba(74, 144, 226, 1);
+.login-form .phone.focus,
+.verify-code.focus{
+	border:1px solid #10AB6C;
+	box-sizing: content-box;
 }
 .login-form > view{
 	margin-bottom:10px;
 }
 .login-form > view:last-child{
-	background-color:rgba(74, 144, 226, 1);
-	height:35px;
-	line-height:35px;
+	background-color:#10AB6C;
+	height:40px;
+	line-height:40px;
 	vertical-align:middle;
+	font-size:16px;
 	color:#fff;
 	text-align:center;
-	border-radius:5px;
+	border-radius:2px;
 }
 .login-agree{
 	width:100%;
@@ -63,6 +77,6 @@ page{
 	font-size:12px;
 }
 .login-agree label{
-	color:#1890FF;
+	color:#10AB6C;
 }
 

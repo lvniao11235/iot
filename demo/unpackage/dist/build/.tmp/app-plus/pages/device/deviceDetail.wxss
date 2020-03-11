@@ -1,0 +1,255 @@
+
+.disParameters{
+	width:calc(100% - 20px);
+	height:90px;
+	margin:10px auto;
+	box-shadow:0px 3px 5px #C0C0C0;
+	font-size:0px;
+	border-radius:5px;
+	color:#585858;
+}
+.leftParameter{
+	float:left;
+}
+.rightParameter{
+	float:right;
+}
+.leftParameter, .rightParameter{
+	display:inline-block;
+	width:50%;
+	font-size:14px;
+	padding-top:5px;
+}
+.leftParameter > .parameter-title,
+.rightParameter > .parameter-title{
+	text-align:center;
+}
+.leftParameter > .parameter-value,
+.rightParameter > .parameter-value{
+	height:60px;
+	width:calc(100% - 10px);
+	padding:0 5px;
+	box-sizing: content;
+	border-right:1px solid #C0C0C0;
+}
+.rightParameter > .parameter-value{
+	border-right:none;
+}
+.rightParameter.not-array > .parameter-value,
+.leftParameter.not-array > .parameter-value{
+	
+	line-height:60px;
+	vertical-align:middle;
+	text-align:center;
+}
+.leftParameter > .parameter-value{
+	border-right:1px solid #C0C0C0;
+}
+.leftParameter > .parameter-value > view,
+.rightParameter > .parameter-value > view{
+	display:inline-block;
+	float:left;
+}
+.leftParameter > .parameter-value > .hscroll,
+.rightParameter > .parameter-value > .hscroll{
+	width:calc(100% - 10px) !important;
+}
+.leftParameter > .parameter-value > .fa,
+.rightParameter > .parameter-value > .fa{
+	position:relative;
+	top:25px;
+}
+.device-detail > .title{
+	font-size:0;
+}
+.device-detail > .title .title-left{
+	width:calc(100% - 100px);
+	height:130px;
+	display:inline-block;
+}
+.device-detail > .title .title-left > view{
+	height:30px;
+	line-height:30px;
+	vertical-align:middle;
+	padding-left:16px;
+	color:#585858;
+	font-size:15px;
+}
+.device-detail > .title .title-left > .pm25{
+	color:#585858;
+	font-size:30px;
+	height:40px;
+	line-height:40px;
+}
+.device-detail > .title .title-left > view > label:last-child{
+	display:inline-block;
+}
+.device-detail > .title .title-right{
+	width:100px;
+	height:100px;
+	position:relative;
+	display:inline-block;
+}
+.device-detail > .title .title-right cover-image{
+	width:50px;
+	height:80px;
+	position:absolute;
+	top:0;
+	right:0;
+	bottom:0;
+	left:0;
+	margin:auto;
+}
+.device-detail .parameter{
+	width:calc(100% - 20px);
+	height:90px;
+	margin:10px auto;
+	box-shadow:0px 3px 5px #C0C0C0;
+	font-size:0px;
+	border-radius:5px;
+	color:#585858;
+}
+.device-detail .parameter > view{
+	display:inline-block;
+	width:50%;
+	box-sizing:border-box;
+	font-size:14px !important;
+	line-height:30px;
+	vertical-align:middle;
+}
+.device-detail .parameter > view:first-child{
+	float:left;
+}
+.device-detail .parameter > view:last-child{
+	float:right;
+}
+.device-detail .parameter .title{
+	text-align:center;
+	font-size:14px;
+}
+.device-detail .parameter .params{
+	height:15px;
+	padding:10px 0px;
+	text-align:center;
+}
+.device-detail .parameter > view:first-child .params{
+	border-right:1px solid #b1b1b1;
+}
+.device-detail .parameter > view:first-child .params > label{
+	display:inline-block;
+	box-sizing: border-box;
+	width:33.33%;
+	height:15px;
+	line-height:15px;
+	border-right:1px solid #b1b1b1;
+	color:#b1b1b1;
+	text-align:center;
+}
+.device-detail .parameter > view:first-child .params > label:last-child{
+	border-right:none;
+}
+.device-detail .parameter > view:first-child .remarks > label{
+	display:inline-block;
+	box-sizing: border-box;
+	width:33.33%;
+	height:15px;
+	line-height:15px;
+	color:#b1b1b1;
+	text-align:center;
+	font-size:9px;
+}
+.device-detail .ad{
+	font-size:15px;
+	padding:5px 15px;
+	clear:both;
+}
+.device-detail .ad>label:first-child{
+	color:#EE4441;
+}
+.device-detail .ad>label:nth-child(2){
+	color:#6E6E6E;
+}
+.device-detail .ad>label:last-child{
+	color:#10AB6C;
+	display:inline-block;
+	float:right;
+}
+.device-detail .btns{
+	font-size:0;
+	width:calc(100% - 30px);
+	margin:10px auto;
+}
+.device-detail .btns .btn{
+	width:calc(50% - 17px);
+	box-shadow:0 3px 5px #c0c0c0;
+	display:inline-block;
+	position:relative;
+	box-sizing: content-box;
+	font-size:14px;
+	padding:5px;
+	border-radius:5px;
+	margin-bottom:15px;
+}
+.device-detail .btns > .btn:nth-child(even){
+	margin-left:14px;
+}
+.device-detail .btns .btn .btn-icon{
+	width:20px;
+	height:20px;
+	position:absolute;
+	top:5px;
+	right:10px;
+}
+.device-detail .btns .btn .btn-state{
+	margin-top:10px;
+	margin-bottom:5px;
+	color:#b1b1b1;
+	font-size:12px;
+}
+.device-detail .btns .btn.auto.selected,
+.device-detail .btns .btn.sleep.selected{
+	background-color:#10AB6C;
+	color:#fff;
+}
+.device-detail .btns .btn.auto.selected > .btn-state,
+.device-detail .btns .btn.sleep.selected > .btn-state{
+	color:#fff;
+}
+.device-detail .close-btn{
+	height:50px;
+	width:50px;
+	margin:30px auto;
+	box-shadow: 0 0 10px #808080;
+	border-radius:25px;
+}
+.param1 > view{
+	display:inline-block;
+	float:left;
+}
+.param1 > .hscroll{
+	width:calc(100% - 40px) !important;
+	overflow:hidden;
+}
+.param1 .hscroll-container{
+	position:relative;
+}
+.param1 > view:first-child,
+.param1 > view:last-child{
+	line-height:40px;
+	vertical-align:bottom;
+	width:20px;
+	text-align:center;
+}
+.param1 > view:first-child{
+	float:left;
+}
+.param1 > view:last-child{
+	float:right;
+}
+.param-item{
+	width:60px;
+	text-align:center;
+	line-height:20px;
+	vertical-align:middle;
+}
+

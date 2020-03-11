@@ -1,0 +1,2 @@
+setCssToHead([".",[1],"page-bottom .",[1],"btn.",[1],"disable{ background-color:#B1B1B1; }\n",],undefined,{path:"./pages/device/buy.wxss"})();
+document.dispatchEvent(new CustomEvent("generateFuncReady", { detail: { generateFunc: $gwx('./pages/device/buy.wxml') } }));

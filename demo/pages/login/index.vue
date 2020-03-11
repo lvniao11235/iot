@@ -1,110 +1,297 @@
 <template>
-	<view class="login-index-page">
+	<view>
 		<navbar></navbar>
-		<view>
-			<view class="registed" v-if="registed">
-				<view>您已经注册，页面跳转中...</view>
-			</view>
-			<view class="unregisted" v-else>
-				<view>您尚未注册，请跳转到注册页面</view>
-				<view @click="goToRegister" class="empty-btn">去注册</view>
-			</view>
+		<view class="title-image">健康生活</view>
+		<view class="login-btns">
+			<button open-type="getUserInfo" 
+				@getuserinfo="OnWechatAuthorized" withCredentials="true" lang="zh_CN">
+				微信授权
+			</button>
 		</view>
 	</view>
 </template>
 
 <script>
 	import { mapState, mapMutations } from 'vuex';
-	import {getOpenId, getUser, registerUser} from '@/api/user';
+	import {getOpenId, getUser, updateUser, decodeUserInfo, loginWechat, getUserInfoWechat} from '@/api/user';
+	import {listFamilys} from '@/api/address';
 	export default {
+		computed:{
+			...mapState(["code"])
+		},
+		mounted(){
+			uni.setNavigationBarTitle({
+			　　title:'健康生活'
+			})
+		},
+		onLoad(){
+			//this.login(true);
+		},
 		data:function(){
 			return {
-				registed:false,
-				currentUser:{}
+				showDialog:false,
+				currentUser:{},
+				encrypt:null,
+				first:false
 			}
 		},
-		onLoad(e){
-			var param = {value:10};
-			uni.getUserInfo({
-				provider:"weixin",
-				success:res=>{
-					this.currentUser = {
-						...this.currentUser,
-						...res.userInfo
-					}
-				}
-			})
-			uni.login({
-				provider:"weixin",
-				success:res=>{
-					this.currentUser.code = res.code;
-					getOpenId(res.code).then(res=>{
-						let str = res.data.replace(/\'/g, '\"');
-						str = str.substr(0, str.indexOf('}')+1)
-						let data = JSON.parse(str)
-						this.currentUser.OpenId = data.openid;
-						return getUser(data.openid);
+		methods:{
+			...mapMutations(["setCode", "setCurrentUser", "setAddress"]),
+			addAddress(address){
+				this.$store.commit("setAddress", address)
+			},
+			OnWechatAuthorized(){
+				uni.navigateTo({
+					url:'login'
+				})
+			},
+			getPhoneNumber: function(e) {
+				let _this = this;
+				console.log(e);
+				this.encrypt = e.detail;
+				if (e.detail && e.detail.errMsg && e.detail.errMsg != 'getPhoneNumber:ok') {
+					uni.showModal({
+						title:'授权失败',
+						content:e.detail.errMsg,
+						showCancel:false
+					})
+				} else {
+					getUserInfoWechat().then(res=>{
+						uni.showLoading({})
+						this.currentUser = res.userInfo;
+						this.$store.commit("setCurrentUser", this.currentUser)
+						return loginWechat();
 					}).then(res=>{
-						uni.hideLoading();
-						if(res.data){
-							this.registed = true;
+						return getOpenId(res)
+					}).then(res=>{
+						if(res.data.data.unionid){
+							this.currentUser.OpenId = res.data.data.unionid;
+							this.currentUser.sessionKey = res.data.data.sessionKey;
+							this.$store.commit("setCurrentUser", this.currentUser)
+							return decodeUserInfo(this.encrypt.encryptedData, this.encrypt.iv, this.currentUser.OpenId);
+						} 
+					}).then(res=>{
+						if(res.data.data && res.data.data.phoneNumber){
+							this.currentUser.phone = res.data.data.phoneNumber;
+							this.$store.commit("setCurrentUser", this.currentUser)
+							return getUser(this.currentUser.OpenId);
+						} else {
+							uni.hideLoading()
+							uni.showModal({
+								title:'授权失败',
+								content:'获取电话失败',
+								showCancel:false
+							})
+						}
+					}).then(res=>{
+						if(res){
+							this.first = res.data.data.avatarUrl == null 
+								&& res.data.data.nickName == null;
 							this.currentUser = {
-								...this.currentUser,
-								...res.data
-							};
-							this.$store.commit('setCurrentUser', this.currentUser)
-							console.log(param.value)
+								...res.data.data,
+								...this.currentUser
+							}
+							console.log(JSON.stringify(this.currentUser))
+							this.$store.commit("setCurrentUser", this.currentUser)
+							if(this.first){
+								updateUser({
+									avatarUrl:this.currentUser.avatarUrl,
+									nickName:this.currentUser.nickName,
+									phone:this.currentUser.phone,
+									unionId:this.currentUser.OpenId
+								}).then(res=>{
+									if(res){
+										return listFamilys(this.currentUser.OpenId);
+									}
+								}).then(res=>{
+									uni.hideLoading()
+									if(res.data.data && res.data.data.length == 0){
+										uni.navigateTo({
+											url:'../address/addAddress'
+										})
+									} else {
+										this.addAddress(res.data.data)
+										uni.switchTab({
+											url:'../index/index'
+										})
+									}
+								})
+							} else {
+								updateUser({
+									avatarUrl:this.currentUser.avatarUrl,
+									nickName:this.currentUser.nickName,
+									phone:this.currentUser.phone,
+									unionId:this.currentUser.OpenId
+								}).then(res=>{
+									if(res){
+										return listFamilys(this.currentUser.OpenId);
+									}
+								}).then(res=>{
+									uni.hideLoading()
+									if(res.data.data && res.data.data.length == 0){
+										uni.navigateTo({
+											url:'../address/addAddress'
+										})
+									} else {
+										this.addAddress(res.data.data)
+										uni.switchTab({
+											url:'../index/index'
+										})
+									}
+								})
+							}
+						}
+					}).catch(res=>{
+						uni.hideLoading()
+						if(res.errMsg == "getUserInfo:fail scope unauthorized"){
+							this.showDialog = true;
+						}
+					});
+				}
+ 
+				// 				console.log(JSON.stringify(e.encryptedData));
+				// 				console.log(JSON.stringify(e.iv));
+			},
+			phone_login(){
+				uni.navigateTo({
+					url:'./phoneLogin'
+				})
+				
+			},
+			onGetUserInfo(res){
+				if(res.detail && res.detail.userInfo){
+					this.currentUser = res.detail.userInfo;
+					this.$store.commit("setCurrentUser", this.currentUser)
+					uni.showLoading({
+						
+					})
+					loginWechat().then(res=>{
+						return getOpenId(res);
+					}).then(res=>{
+						if(res.data.data.unionid){
+							this.currentUser.OpenId = res.data.data.unionid;
+							this.$store.commit("setCurrentUser", this.currentUser)
+							return getUser(this.currentUser.OpenId);
+						}
+					}).then(res=>{
+						if(res){
+							this.first = res.data.data.avatarUrl == null 
+								&& res.data.data.nickName == null;
+							this.currentUser = {
+								...res.data.data,
+								...this.currentUser
+							} 
+							console.log(JSON.stringify(this.currentUser))
+							this.$store.commit("setCurrentUser", this.currentUser)
+							
+							if(this.first){
+								updateUser({
+									avatarUrl:this.currentUser.avatarUrl,
+									nickName:this.currentUser.nickName,
+									phone:null,
+									unionId:this.currentUser.OpenId
+								}).then(res=>{
+									if(res){
+										return listFamilys(this.currentUser.OpenId);
+									}
+								}).then(res=>{
+									uni.hideLoading()
+									if(res.data.data && res.data.data.length == 0){
+										uni.navigateTo({
+											url:'../address/addAddress'
+										})
+									} else {
+										this.addAddress(res.data.data)
+										uni.switchTab({
+											url:'../index/index'
+										})
+									}
+								})
+							} else {
+								return listFamilys(this.currentUser.OpenId);
+								uni.hideLoading()
+								uni.switchTab({
+									url:'../index/index'
+								})
+							}
+						}
+					}).then(res=>{
+						uni.hideLoading()
+						if(res.data.data && res.data.data.length == 0){
+							uni.navigateTo({
+								url:'../address/addAddress'
+							})
+						} else {
+							this.addAddress(res.data.data)
 							uni.switchTab({
 								url:'../index/index'
 							})
-						} else {
-							this.registed = false;
 						}
 					}).catch(res=>{
-						uni.hideLoading();
+						uni.hideLoading()
 					})
-				},
-			});
-		},
-		methods:{
-			...mapMutations(["setCurrentUser"]),
-			goToRegister(){
-				uni.navigateTo({
-					url:'./login'
-				})
+				}
 			}
 		}
 	}
 </script>
 
 <style>
-	.login-index-page .registed,
-	.login-index-page .unregisted{
+	page{
+		position:relative;
+		height:100%;
+		width:100%;
+	}
+	.title-image{
+		text-align:center;
+		position:relative;
+		top:100px;
+		color:#10AB6C;
+		font-size:30px;
+		font-weight:bold;
+	}
+	.title-image image{
+		width:127px;
+		height:31px;
+	}
+	
+	.login-btns{
 		position:absolute;
 		top:0;
 		right:0;
 		bottom:0;
 		left:0;
 		margin:auto;
-		width:80%;
+		height:110px;
 		text-align:center;
 	}
 	
-	.login-index-page .registed{
-		height:20px;
-		line-height:20px;
-		vertical-align:middle;
+	.login-btns > view,
+	.login-btns > button{
+		height:45px;
+		line-height:45px;
+		box-sizing:border-box;
+		font-size:16px;
+		border-radius:2px;
+		width:80%;
+		margin:auto;
 	}
 	
-	.login-index-page .unregisted{
-		height:70px;
-		
+	.login-btns > button:first-child{
+		background-color:#10AB6C;
+		color:#fff;
 	}
 	
-	.login-index-page .unregisted > view:first-child{
-		height:20px;
-		line-height:20px;
-		vertical-align:middle;
-		margin-bottom:10px;
+	
+	.login-agree{
+		width:100%;
+		position:absolute;
+		bottom:50px;
+		text-align:center;
+		font-size:12px;
+	}
+	
+	.login-agree label{
+		color:#10AB6C;
 	}
 </style>

@@ -17,9 +17,10 @@
 
 <script>
 	import { mapState, mapMutations } from 'vuex';
+	import { setCurFamilyId } from '@/api/user'
 	export default {
 		computed:{
-			...mapState(["address", "currentAddress"]) 
+			...mapState(["address", "currentAddress", "currentUser"]) 
 		},
 		mounted(){
 		},
@@ -31,6 +32,11 @@
 				})
 			},
 			selectAddress(addr){
+				setCurFamilyId(addr.id, this.currentUser.OpenId).then(res=>{
+					if(res){
+						
+					}
+				})
 				this.$store.commit("setcurrentAddress", addr)
 			}
 		}

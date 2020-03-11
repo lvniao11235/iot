@@ -1,1 +1,2 @@
+setCssToHead([".",[1],"address-list .",[1],"icon-list-item .",[1],"icon{ height:16px !important; top:0; margin-right:5px; }\n.",[1],"address-list .",[1],"icon-list-item.",[1],"selected .",[1],"checked{ color:#10AB6C; float:right; display:inline-block; height:40px; line-height:40px; vertical-align:middle; }\n",],undefined,{path:"./pages/address/addressList.wxss"})();
 document.dispatchEvent(new CustomEvent("generateFuncReady", { detail: { generateFunc: $gwx('./pages/address/addressList.wxml') } }));

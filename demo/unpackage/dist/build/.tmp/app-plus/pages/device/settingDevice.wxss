@@ -1,0 +1,46 @@
+
+.setting-device .tip{
+	width:80%;
+	position:relative;
+	top:30px;
+	margin:auto;
+	margin-bottom:30px;
+	word-break:break-word;
+}
+.setting-device .product{
+	width:100px;
+	margin:20px auto;
+	display:block;
+}
+.setting-device .confirm{
+	display:block;
+	width:80%;
+	margin:auto;
+	text-align:center;
+	position:absolute;
+	bottom:100px;
+	left:0;
+	right:0;
+}
+.setting-device .next{
+	width:80%;
+	margin:auto;
+	text-align:center;
+	position:absolute;
+	bottom:40px;
+	left:0;
+	right:0;
+	
+	color:#fff;
+	border-radius:5px;
+	height:30px;
+	line-height:30px;
+	vertical-align:middle;
+}
+.setting-device .next.enable{
+	background-color:#10AB6C;
+}
+.setting-device .next.disable{
+	background-color:#8F8F8F;
+}
+

@@ -1,1 +1,2 @@
+setCssToHead([".",[1],"manager-address .",[1],"icon-list-item .",[1],"icon{ height:16px !important; top:0; margin-right:5px; }\n.",[1],"manager-address .",[1],"btn{ width:80%; position:absolute; bottom:60px; right:0; left:0; margin:auto; background-color:#10AB6C; height:35px; line-height:35px; vertical-align:middle; color:#fff; text-align:center; border-radius:2px; }\n",],undefined,{path:"./pages/address/managerAddress.wxss"})();
 document.dispatchEvent(new CustomEvent("generateFuncReady", { detail: { generateFunc: $gwx('./pages/address/managerAddress.wxml') } }));

@@ -48,6 +48,14 @@ const store = new Vuex.Store({
 		shutdownTime:null
 	},
 	mutations:{
+		modifyCurrentUser(state, data){
+			let user = state.currentUser;
+			user.avatarUrl = data.avatarUrl;
+			user.nickName = data.nickName;
+			user.gender = data.gender;
+			user.birthday = data.birthday;
+			state.currentUser = user;
+		},
 		setAddress(state, address){
 			state.address = address;
 			if(state.address && state.address.length > 0){

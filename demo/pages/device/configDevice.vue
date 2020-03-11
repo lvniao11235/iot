@@ -134,75 +134,7 @@
 </script>
 
 <style>
-	.dialog-container .dialog-mask{
-		width:100%;
-		height:100%;
-		position:fixed;
-		background-color:#000000;
-		opacity: 0.3;
-		top:0;
-		z-index:10000;
-	}
 	
-	.dialog-container .prompt-dialog{
-		width:80%;
-		height:173px;
-		position:absolute;
-		top:0;
-		right:0;
-		bottom:0;
-		left:0;
-		margin:auto;
-		border-radius:10px;
-		background-color:#fff;
-		opacity: 1 !important;
-		z-index:10001;
-	}
-	
-	.dialog-container .prompt-dialog .dialog-title{
-		height:50px;
-		width:100%;
-		text-align:center;
-		line-height:50px;
-		vertical-align:middle;
-		font-size:17px;
-		font-weight:bold;
-		color:#030303;
-	}
-	
-	.dialog-container .prompt-dialog .dialog-input{
-		width:calc(100% - 40px) !important;
-		margin:20px auto;
-		height:40px;
-		line-height:40px;
-		vertical-align:middle;
-		border:1px solid #4d4d4d;
-		box-sizing: content-box;
-	}
-	
-	.dialog-container .prompt-dialog .btn-group{
-		border-top:1px solid #4d4d4d;
-	}
-	.dialog-container .prompt-dialog .dialog-cancel,
-	.dialog-container .prompt-dialog .dialog-ok{
-		width:50%;
-		display:inline-block;
-		text-align:center;
-		height:40px;
-		line-height:40px;
-		vertical-align:middle;
-		box-sizing: border-box;
-		font-size:17px;
-	}
-	
-	.dialog-container .prompt-dialog .dialog-cancel{
-		border-right:1px solid #4d4d4d;
-		
-	}
-	
-	.dialog-container .prompt-dialog .dialog-ok{
-		color:#10AB6C;
-	}
 	.config-device .btn{
 		width:60%;
 		height:40px;

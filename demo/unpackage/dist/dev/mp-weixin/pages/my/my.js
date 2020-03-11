@@ -207,7 +207,8 @@ var _vuex = __webpack_require__(/*! vuex */ 16);function _objectSpread(target) {
       './opinion',
       './message',
       './about',
-      './config'] };
+      './config',
+      './modifyUser'] };
 
 
   },

@@ -1,0 +1,2 @@
+setCssToHead([".",[1],"icon-list-item \x3e .",[1],"border{ width:calc(100% - 10px); margin-left:10px; border-bottom:1px solid #F2F2F2; margin-top:3px; }\n.",[1],"modify-user-page .",[1],"icon-list-item{ padding:0px 3px 0px 5px; }\n",],undefined,{path:"./pages/my/modifyUser.wxss"})();
+document.dispatchEvent(new CustomEvent("generateFuncReady", { detail: { generateFunc: $gwx('./pages/my/modifyUser.wxml') } }));

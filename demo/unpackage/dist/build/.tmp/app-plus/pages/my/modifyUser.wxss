@@ -1,0 +1,11 @@
+
+.icon-list-item > .border{
+	width:calc(100% - 10px);
+	margin-left:10px;
+	border-bottom:1px solid #F2F2F2;
+	margin-top:3px;
+}
+.modify-user-page .icon-list-item{
+	padding:0px 3px 0px 5px;
+}
+

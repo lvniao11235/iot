@@ -1,9 +1,45 @@
 import {baseUrl, request} from './request';
 
+export const login = ()=>{
+	let currentUser = null;
+	let phone = {};
+	return new Promise((resolve, reject)=>{
+		getUserInfoWechat().then(res=>{
+			currentUser = res.userInfo;
+			phone = {};
+			phone.encryptedData = res.encryptedData;
+			phone.iv = res.iv;
+			currentUser.phoneData = phone;
+			return loginWechat();
+		}).then(res=>{
+			return getOpenId(res)
+		}).then(res=>{
+			if(res.data.data.unionid){
+				currentUser.OpenId = res.data.data.unionid;
+				return getUser(currentUser.OpenId);
+			} 
+		}).then(res=>{
+			if(res.data.data){
+				currentUser.firstLogin = res.data.data.avatarUrl == null 
+					&& res.data.data.nickName == null;
+				currentUser = {
+					...res.data.data,
+					...currentUser
+				}
+				resolve(currentUser);
+			}
+		}).catch(res=>{
+			reject(res);
+		});
+	})
+	
+}
+
 export const getUserInfoWechat = ()=>{
 	return new Promise((resolve, reject)=>{
 		uni.getUserInfo({
 			provider:"weixin",
+			withCredentials:true,
 			success:res=>{
 				resolve(res);
 			},
@@ -50,6 +86,20 @@ export const updateUser = user => {
 		url:`user/updateUserInfo`,
 		method:"POST",
 		data:user
+	});
+}
+
+export const setCurFamilyId = (familyId, unionId) => {
+	return request({
+		url: `user/setCurFamilyId?familyId=${familyId}&unionId=${unionId}`,
+		method:'GET'
+	});
+}
+
+export const getCurFamilyId = (unionId) => {
+	return request({
+		url: `user/getCurFamilyId?&unionId=${unionId}`,
+		method:'GET'
 	});
 }
 

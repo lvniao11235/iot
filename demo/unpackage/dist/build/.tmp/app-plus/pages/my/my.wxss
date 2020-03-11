@@ -26,4 +26,50 @@
 	font-size: 36rpx;
 	color: #8f8f94;
 }
+.my-page .head{
+	height:60px;
+	background-color:#fff;
+	position:relative;
+}
+.my-page .head cover-image{
+	display:inline-block;
+	height:50px;
+	width:50px;
+	border-radius:25px;
+	margin-top:5px;
+	float:left;
+	margin-left:10px;
+}
+.icon-list-item > .border{
+	width:calc(100% - 10px);
+	margin-left:10px;
+	border-bottom:1px solid #F2F2F2;
+	margin-top:3px;
+}
+.my-page .head label{
+	display:inline-block;
+	height:50px;
+	width:50px;
+	line-height:50px;
+	vertical-align:middle;
+	margin-left:10px;
+	float:left;
+	margin-top:5px;
+}
+.my-page .head .fa{
+	float:right;
+	width:30px;
+	text-align:center;
+	color:#B1B1B1;
+}
+.my-page .icon-list-item{
+	padding:0px 3px 0px 5px;
+}
+.my-page .icon-list-item .value-icon{
+	font-size:16px !important;
+}
+.my-page .icon-list-item > label{
+	display:inline-block;
+	margin-left:5px;
+}
 

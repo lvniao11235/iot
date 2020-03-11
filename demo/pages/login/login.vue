@@ -3,20 +3,21 @@
 		<navbar></navbar>
 		<view class="title-image">健康生活</view>
 		<view class="login-btns">
-			<button open-type="getUserInfo" 
+			<!-- <button open-type="getUserInfo" 
 				@getuserinfo="onGetUserInfo" withCredentials="true" lang="zh_CN">
 				微信授权登录
-			</button>
-			<button open-type="getPhoneNumber" @getphonenumber="getPhoneNumber">手机号登录</button>
+			</button> -->
+			<button open-type="getPhoneNumber" withCredentials="true" lang="zh_CN" @getphonenumber="getPhoneNumber">微信登录</button>
 		</view>
 		<view>1.21</view>
 		<view class="login-agree">登录即代表您同意《<label @click="goToClause">健康生活用户服务条款</label>》</view>
+		
 	</view>
 </template>
 
 <script>
 	import { mapState, mapMutations } from 'vuex';
-	import {getOpenId, getUser, updateUser, decodeUserInfo, loginWechat, getUserInfoWechat} from '@/api/user';
+	import {getOpenId, getUser, updateUser, decodeUserInfo, loginWechat, getUserInfoWechat, setCurFamilyId} from '@/api/user';
 	import {listFamilys} from '@/api/address';
 	export default {
 		computed:{
@@ -32,6 +33,7 @@
 		},
 		data:function(){
 			return {
+				showDialog:false,
 				currentUser:{},
 				encrypt:null,
 				first:false
@@ -41,6 +43,9 @@
 			...mapMutations(["setCode", "setCurrentUser", "setAddress"]),
 			addAddress(address){
 				this.$store.commit("setAddress", address)
+			},
+			OnWechatAuthorized(){
+				this.showDialog = false;
 			},
 			getPhoneNumber: function(e) {
 				let _this = this;
@@ -140,6 +145,9 @@
 						}
 					}).catch(res=>{
 						uni.hideLoading()
+						if(res.errMsg == "getUserInfo:fail scope unauthorized"){
+							this.showDialog = true;
+						}
 					});
 				}
  
@@ -276,12 +284,6 @@
 		color:#fff;
 	}
 	
-	.login-btns > button:last-child{
-		background-color:#fff;
-		margin-top:20px;
-		color:#10AB6C;
-		border:1px solid #10AB6C;
-	}
 	
 	.login-agree{
 		width:100%;

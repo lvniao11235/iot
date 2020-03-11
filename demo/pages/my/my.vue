@@ -1,7 +1,7 @@
 <template>
 	<view class="my-page">
 		<navbar title="我的"></navbar>
-		<view class="head">
+		<view class="head" @click="jumpTo(7)">
 			<cover-image :src="currentUser.avatarUrl"></cover-image>
 			<label>{{currentUser.nickName}}</label>
 			<label class="fa fa-angle-right"></label>
@@ -83,7 +83,8 @@
 					'./opinion',
 					'./message',
 					'./about',
-					'./config'
+					'./config',
+					'./modifyUser'
 				]
 			}
 		},

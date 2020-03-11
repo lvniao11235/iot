@@ -7,7 +7,10 @@ page{
 .title-image{
 	text-align:center;
 	position:relative;
-	top:70px;
+	top:100px;
+	color:#10AB6C;
+	font-size:30px;
+	font-weight:bold;
 }
 .title-image image{
 	width:127px;
@@ -23,24 +26,19 @@ page{
 	height:110px;
 	text-align:center;
 }
-.login-btns > view{
+.login-btns > view,
+.login-btns > button{
 	height:45px;
 	line-height:45px;
 	box-sizing:border-box;
-	font-size:13px;
-	border-radius:22.5px;
-	width:60%;
+	font-size:16px;
+	border-radius:2px;
+	width:80%;
 	margin:auto;
 }
-.login-btns > view:first-child{
-	background-color:rgba(102, 204, 51, 1);
+.login-btns > button:first-child{
+	background-color:#10AB6C;
 	color:#fff;
-}
-.login-btns > view:last-child{
-	background-color:#fff;
-	margin-top:20px;
-	color:#4A90E2;
-	border:1px solid rgba(74, 144, 226, 1);
 }
 .login-agree{
 	width:100%;
@@ -50,6 +48,6 @@ page{
 	font-size:12px;
 }
 .login-agree label{
-	color:#1890FF;
+	color:#10AB6C;
 }
 

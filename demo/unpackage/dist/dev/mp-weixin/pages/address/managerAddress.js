@@ -140,10 +140,12 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-var _vuex = __webpack_require__(/*! vuex */ 16);function _objectSpread(target) {for (var i = 1; i < arguments.length; i++) {var source = arguments[i] != null ? arguments[i] : {};var ownKeys = Object.keys(source);if (typeof Object.getOwnPropertySymbols === 'function') {ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) {return Object.getOwnPropertyDescriptor(source, sym).enumerable;}));}ownKeys.forEach(function (key) {_defineProperty(target, key, source[key]);});}return target;}function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;}var _default =
+var _vuex = __webpack_require__(/*! vuex */ 16);
+var _address = __webpack_require__(/*! @/api/address */ 28);function _objectSpread(target) {for (var i = 1; i < arguments.length; i++) {var source = arguments[i] != null ? arguments[i] : {};var ownKeys = Object.keys(source);if (typeof Object.getOwnPropertySymbols === 'function') {ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) {return Object.getOwnPropertyDescriptor(source, sym).enumerable;}));}ownKeys.forEach(function (key) {_defineProperty(target, key, source[key]);});}return target;}function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;}var _default =
+
 {
   computed: _objectSpread({},
-  (0, _vuex.mapState)(["address"])),
+  (0, _vuex.mapState)(["address", "currentAddress"])),
 
   mounted: function mounted() {
   },
@@ -153,8 +155,31 @@ var _vuex = __webpack_require__(/*! vuex */ 16);function _objectSpread(target) {
         url: './modifyAddress' + '?id=' + id });
 
     },
-    remove: function remove(id) {
-      this.$store.commit("removeAddress", id);
+    remove: function remove(id) {var _this = this;
+      if (id == this.currentAddress.id) {
+        uni.showModal({
+          title: '提示',
+          content: '不能删除当前家庭',
+          showCancel: false });
+
+        return;
+      }
+      (0, _address.listFamilyBindDevices)(id).then(function (res) {
+        if (res.data.data && res.data.data.length > 0) {
+          uni.showModal({
+            title: '提示',
+            content: '该家庭下有设备数据，不能删除',
+            showCancel: false });
+
+        } else {
+          return (0, _address.deleteFamily)(id);
+        }
+      }).then(function (res) {
+        if (res && res.data.msg == "删除成功") {
+          _this.$store.commit("removeAddress", id);
+        }
+      });
+
     },
     create: function create() {
       uni.navigateTo({

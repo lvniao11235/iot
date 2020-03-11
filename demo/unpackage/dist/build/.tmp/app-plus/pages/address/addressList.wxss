@@ -1,0 +1,16 @@
+
+.address-list .icon-list-item .icon{
+	height:16px !important;
+	
+	top:0;
+	margin-right:5px;
+}
+.address-list .icon-list-item.selected .checked{
+	color:#10AB6C;
+	float:right;
+	display:inline-block;
+	height:40px;
+	line-height:40px;
+	vertical-align:middle;
+}
+

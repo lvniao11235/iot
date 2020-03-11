@@ -33,15 +33,31 @@
 				<view @click="addDevice" class="empty-btn">去添加</view>
 			</view>
 		</view>
+		<view class="dialog-container" v-if="showDialog">
+			<view class="dialog-mask"></view>
+			<view class="prompt-dialog" style="height:170px;">
+				<view class="dialog-title">微信授权</view>
+				<view class="dialog-content">
+					如果要使用小程序，需要进行授权才可以，请点击微信授权。
+				</view>
+				<view class="btn-group single-btn">
+					<button  open-type="getUserInfo"
+						@getuserinfo="OnWechatAuthorized" withCredentials="true" lang="zh_CN">
+						微信授权
+					</button>
+				</view>
+			</view>
+		</view>
 	</view>
 </template>
 
 <script>
 	import {
-		mapState
+		mapState, mapMutations
 	} from 'vuex';
 	import uCharts from '@/u-charts/u-charts.js';
-	import {listFamilyBindDevices} from '@/api/address';
+	import {listFamilyBindDevices, listFamilys} from '@/api/address';
+	import { login, decodeUserInfo, setCurFamilyId, getCurFamilyId } from '@/api/user';
 	var _self;
 	var canvasObj = {};
 	import {devices} from '@/api/device';
@@ -52,6 +68,7 @@
 		// },
 		data() {
 			return {
+				showDialog:false,
 				cWidth: '',
 				cHeight: '',
 				tips: '',
@@ -63,11 +80,59 @@
 			}
 		},
 		computed:{
-			...mapState(["currentAddress", "devices", "currentUser"])
+			...mapState(["currentAddress", "devices", "currentUser", "address"])
 		},
 		onLoad() {
+			uni.showLoading({})
 			uni.setNavigationBarTitle({
 			　　title:'首页'
+			})
+			login().then(res=>{
+				this.$store.commit("setCurrentUser", res);
+				return listFamilys(res.OpenId)
+			}).then(res=>{
+				if(res){
+					if(res.data.data && res.data.data.length == 0){
+						uni.navigateTo({
+							url:'../address/addAddress'
+						})
+					} else {
+						let addrs = res.data.data
+						getCurFamilyId(this.currentUser.OpenId).then(res=>{
+							if(res.data.data){
+								let addr = addrs.find(x=>x.id == res.data.data);
+								if(addr){
+									this.$store.commit("setcurrentAddress", addr)
+								}
+							} else {
+								this.$store.commit("setcurrentAddress", res.data.data[0])
+							}
+						})
+						this.$store.commit("setAddress", res.data.data)
+						return listFamilyBindDevices(res.data.data[0].id)
+					}
+				}
+			}).then(res=>{
+				if(res){
+					if(res.data.data && res.data.data.length > 0){
+						this.$store.commit("setDevices", res.data.data)
+						this.devices = [];
+						this.devices.push(...res.data.data);
+					} else {
+						this.$store.commit("setDevices", [])
+						this.devices = [];
+					}
+					uni.hideLoading();
+				}
+			}).catch(res=>{
+				if(res.errMsg == "getUserInfo:fail scope unauthorized"){
+					uni.navigateTo({
+						url:'../login/index',
+						success:res=>{
+							uni.hideLoading();
+						}
+					})
+				}
 			})
 			_self = this;
 			uni.createSelectorQuery().select(".index-page").boundingClientRect(e=>{
@@ -77,21 +142,36 @@
 			}).exec();
 		},
 		onShow(){
-			listFamilyBindDevices(this.currentAddress.id).then(res=>{
-				if(res.data.data && res.data.data.length > 0){
-					this.$store.commit("setDevices", res.data.data)
-					this.devices = [];
-					this.devices.push(...res.data.data);
-				} else {
-					this.$store.commit("setDevices", [])
-					this.devices = [];
-				}
-			})
+			this.showDialog = false;
+			if(this.currentAddress){
+				listFamilyBindDevices(this.currentAddress.id).then(res=>{
+					if(res.data.data && res.data.data.length > 0){
+						this.$store.commit("setDevices", res.data.data)
+						this.devices = [];
+						this.devices.push(...res.data.data);
+					} else {
+						this.$store.commit("setDevices", [])
+						this.devices = [];
+					}
+				})
+			}
+			
 		},
 		onReady() {
 			
 		},
 		methods: {
+			...mapMutations(["setCurrentUser", "setAddress", "setcurrentAddress"]),
+			OnWechatAuthorized(){
+				uni.navigateTo({
+					url:'../login/login'
+				})
+			},
+			onGetUserInfo(){
+				uni.navigateTo({
+					url:'../login/login'
+				})
+			},
 			switchAddress() {
 				uni.navigateTo({
 					url: '../address/addressList'
