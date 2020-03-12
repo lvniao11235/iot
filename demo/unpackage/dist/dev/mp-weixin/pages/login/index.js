@@ -164,10 +164,12 @@ var _address = __webpack_require__(/*! @/api/address */ 28);function _objectSpre
     addAddress: function addAddress(address) {
       this.$store.commit("setAddress", address);
     },
-    OnWechatAuthorized: function OnWechatAuthorized() {
-      uni.navigateTo({
-        url: 'login' });
+    OnWechatAuthorized: function OnWechatAuthorized(e) {
+      if (e.detail.errMsg != "getUserInfo:fail auth deny") {
+        uni.navigateTo({
+          url: 'login' });
 
+      }
     },
     getPhoneNumber: function getPhoneNumber(e) {var _this2 = this;
       var _this = this;

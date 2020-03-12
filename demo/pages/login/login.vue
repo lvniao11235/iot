@@ -48,6 +48,9 @@
 				this.showDialog = false;
 			},
 			getPhoneNumber: function(e) {
+				if(e.detail.errMsg == "getPhoneNumber:fail user deny"){
+					return;
+				}
 				let _this = this;
 				console.log(e);
 				this.encrypt = e.detail;
@@ -147,6 +150,7 @@
 						uni.hideLoading()
 						if(res.errMsg == "getUserInfo:fail scope unauthorized"){
 							this.showDialog = true;
+							
 						}
 					});
 				}

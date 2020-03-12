@@ -211,7 +211,7 @@ page, .index-page{
 		text-align:center;
 		margin-top:40px;
 }
-.index-page .no-device cover-image{
+.index-page .no-device image{
 		width:160px;
 		height:135px;
 		margin:10px auto;

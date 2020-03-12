@@ -172,6 +172,9 @@ var _address = __webpack_require__(/*! @/api/address */ 28);function _objectSpre
       this.showDialog = false;
     },
     getPhoneNumber: function getPhoneNumber(e) {var _this2 = this;
+      if (e.detail.errMsg == "getPhoneNumber:fail user deny") {
+        return;
+      }
       var _this = this;
       console.log(e);
       this.encrypt = e.detail;
@@ -271,6 +274,7 @@ var _address = __webpack_require__(/*! @/api/address */ 28);function _objectSpre
           uni.hideLoading();
           if (res.errMsg == "getUserInfo:fail scope unauthorized") {
             _this2.showDialog = true;
+
           }
         });
       }

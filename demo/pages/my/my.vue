@@ -1,10 +1,14 @@
 <template>
 	<view class="my-page">
 		<navbar title="我的"></navbar>
-		<view class="head" @click="jumpTo(7)">
+		<view class="head" @click="jumpTo(7)" v-if="currentUser != null">
 			<cover-image :src="currentUser.avatarUrl"></cover-image>
 			<label>{{currentUser.nickName}}</label>
 			<label class="fa fa-angle-right"></label>
+		</view>
+		<view class="head head-no-user" @click="jumpTo(7)" v-else>
+			<label class="fa fa-user-circle-o"></label>
+			<label>登录/注册</label>
 		</view>
 		<view class="icon-list-item" @click="jumpTo(0)">
 			<label class="icon"><image src="/static/images/dingyue.png"></image></label>
@@ -98,9 +102,16 @@
 		},
 		methods: {
 			jumpTo(id){
-				uni.navigateTo({
-					url:this.urls[id]
-				})
+				if(this.currentUser != null){
+					uni.navigateTo({
+						url:this.urls[id]
+					})
+				} else if(id == 7){
+					uni.navigateTo({
+						url:'../login/index'
+					})
+				}
+				
 			}
 		}
 	}
@@ -140,6 +151,19 @@
 		margin-top:5px;
 		float:left;
 		margin-left:10px;
+	}
+	
+	.my-page .head-no-user > label{
+		float:none !important;
+	}
+	
+	.my-page .head-no-user > label:first-child{
+		width:auto;
+		font-size:40px;
+	}
+	
+	.my-page .head-no-user > label:last-child{
+		width:auto;
 	}
 	
 	.icon-list-item > .border{

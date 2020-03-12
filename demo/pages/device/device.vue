@@ -26,6 +26,19 @@
 			<view>app添加设备，这样您可以尽快开始使用</view>
 			<view @click="addDevice">立即添加</view>
 		</view>
+		<view class="dialog-container" v-if="currentUser == null">
+			<view class="dialog-mask"></view>
+			<view class="prompt-dialog" style="height:170px;">
+				<view class="dialog-title">提示</view>
+				<view class="dialog-content">
+					如果要使用小程序，需要进行登录才可以，请点击允许进行登录。
+				</view>
+				<view class="btn-group single-btn">
+					<navigator class="dialog-cancel" open-type="exit" target="miniProgram">拒绝</navigator>
+					<view class="dialog-ok" @click="loginOk">去登录</view>
+				</view>
+			</view>
+		</view>
 	</view>
 </template>
 
@@ -36,6 +49,7 @@
 	export default {
 		data() {
 			return {
+				showDialog:false,
 				quality:[
 					"优","良","轻度污染","中度污染","重度污染","严重污染"
 				]
@@ -55,16 +69,21 @@
 			console.log("onHide")
 		},
 		onShow(){
-			listFamilyBindDevices(this.currentAddress.id).then(res=>{
-				if(res.data.data && res.data.data.length > 0){
-					this.$store.commit("setDevices", res.data.data)
-				} else {
-					this.$store.commit("setDevices", [])
-				}
-			})
+			if(this.currentAddress && this.currentAddress.id){
+				listFamilyBindDevices(this.currentAddress.id).then(res=>{
+					if(res.data.data && res.data.data.length > 0){
+						this.$store.commit("setDevices", res.data.data)
+					} else {
+						
+						
+						this.$store.commit("setDevices", [])
+					}
+				})
+			}
+			
 		},
 		mounted(){
-			console.log("mounted")
+			console.log("mounted")  
 		},
 		created(){
 			console.log("created")
@@ -79,6 +98,17 @@
 			console.log("destroyed")
 		},
 		methods: {
+			loginCancel(){
+				uni.hideLoading();
+				this.showDialog = false;
+			},
+			loginOk(){
+				uni.hideLoading();
+				this.showDialog = false;
+				uni.navigateTo({
+					url:'../login/index'
+				})
+			},
 			shortName(name){
 				if(name && name.length > 4){
 					return name.substr(0, 4) + "...";

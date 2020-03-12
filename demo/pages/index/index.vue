@@ -27,24 +27,22 @@
 			</view>
 		</view>
 		<view v-else>
-			<view class="no-device">
-				<cover-image src="/static/images/phone.png"></cover-image>
+			<view class="no-device" style="z-index:1;">
+				<image src="/static/images/phone.png"></image>
 				<view>添加设备，更多服务</view>
 				<view @click="addDevice" class="empty-btn">去添加</view>
 			</view>
 		</view>
-		<view class="dialog-container" v-if="showDialog">
+		<view class="dialog-container" v-if="showDialog || currentUser == null">
 			<view class="dialog-mask"></view>
 			<view class="prompt-dialog" style="height:170px;">
-				<view class="dialog-title">微信授权</view>
+				<view class="dialog-title">提示</view>
 				<view class="dialog-content">
-					如果要使用小程序，需要进行授权才可以，请点击微信授权。
+					如果要使用小程序，需要进行登录才可以，请点击允许进行登录。
 				</view>
 				<view class="btn-group single-btn">
-					<button  open-type="getUserInfo"
-						@getuserinfo="OnWechatAuthorized" withCredentials="true" lang="zh_CN">
-						微信授权
-					</button>
+					<navigator class="dialog-cancel" open-type="exit" target="miniProgram">拒绝</navigator>
+					<view class="dialog-ok" @click="loginOk">去登录</view>
 				</view>
 			</view>
 		</view>
@@ -87,53 +85,7 @@
 			uni.setNavigationBarTitle({
 			　　title:'首页'
 			})
-			login().then(res=>{
-				this.$store.commit("setCurrentUser", res);
-				return listFamilys(res.OpenId)
-			}).then(res=>{
-				if(res){
-					if(res.data.data && res.data.data.length == 0){
-						uni.navigateTo({
-							url:'../address/addAddress'
-						})
-					} else {
-						let addrs = res.data.data
-						getCurFamilyId(this.currentUser.OpenId).then(res=>{
-							if(res.data.data){
-								let addr = addrs.find(x=>x.id == res.data.data);
-								if(addr){
-									this.$store.commit("setcurrentAddress", addr)
-								}
-							} else {
-								this.$store.commit("setcurrentAddress", res.data.data[0])
-							}
-						})
-						this.$store.commit("setAddress", res.data.data)
-						return listFamilyBindDevices(res.data.data[0].id)
-					}
-				}
-			}).then(res=>{
-				if(res){
-					if(res.data.data && res.data.data.length > 0){
-						this.$store.commit("setDevices", res.data.data)
-						this.devices = [];
-						this.devices.push(...res.data.data);
-					} else {
-						this.$store.commit("setDevices", [])
-						this.devices = [];
-					}
-					uni.hideLoading();
-				}
-			}).catch(res=>{
-				if(res.errMsg == "getUserInfo:fail scope unauthorized"){
-					uni.navigateTo({
-						url:'../login/index',
-						success:res=>{
-							uni.hideLoading();
-						}
-					})
-				}
-			})
+			this.wechatLogin();
 			_self = this;
 			uni.createSelectorQuery().select(".index-page").boundingClientRect(e=>{
 				this.cWidth = e.width;
@@ -162,6 +114,71 @@
 		},
 		methods: {
 			...mapMutations(["setCurrentUser", "setAddress", "setcurrentAddress"]),
+			wechatLogin(){
+				login().then(res=>{
+					if(res.firstLogin){
+						uni.hideLoading();
+						this.showDialog = true;
+						this.$store.commit("setCurrentUser", null)
+					} else {
+						this.$store.commit("setCurrentUser", res);
+						return listFamilys(res.OpenId)
+					}
+					
+				}).then(res=>{
+					if(res){
+						if(res.data.data && res.data.data.length == 0){
+							uni.navigateTo({
+								url:'../address/addAddress'
+							})
+						} else {
+							let addrs = res.data.data
+							getCurFamilyId(this.currentUser.OpenId).then(res=>{
+								if(res.data.data){
+									let addr = addrs.find(x=>x.id == res.data.data);
+									if(addr){
+										this.$store.commit("setcurrentAddress", addr)
+									}
+								} else {
+									this.$store.commit("setcurrentAddress", res.data.data[0])
+								}
+							})
+							this.$store.commit("setAddress", res.data.data)
+							return listFamilyBindDevices(res.data.data[0].id)
+						}
+					}
+				}).then(res=>{
+					if(res){
+						if(res.data.data && res.data.data.length > 0){
+							this.$store.commit("setDevices", res.data.data)
+							this.devices = [];
+							this.devices.push(...res.data.data);
+						} else {
+							this.$store.commit("setDevices", [])
+							this.devices = [];
+						}
+						uni.hideLoading();
+					}
+				}).catch(res=>{
+					uni.hideLoading();
+					if(res.errMsg.startsWith("getUserInfo:fail")){
+						
+						this.showDialog = true;
+						this.$store.commit("setCurrentUser", null)
+					}
+				})
+			},
+			loginCancel(){
+				uni.hideLoading();
+				this.showDialog = false;
+			},
+			loginOk(){
+				uni.hideLoading();
+				this.showDialog = false;
+				uni.navigateTo({
+					url:'../login/index'
+				})
+			},
 			OnWechatAuthorized(){
 				uni.navigateTo({
 					url:'../login/login'
@@ -503,7 +520,7 @@
 			margin-top:40px;
 		}
 		
-		.index-page .no-device cover-image{
+		.index-page .no-device image{
 			width:160px;
 			height:135px;
 			margin:10px auto;

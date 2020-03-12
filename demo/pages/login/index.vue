@@ -40,10 +40,12 @@
 			addAddress(address){
 				this.$store.commit("setAddress", address)
 			},
-			OnWechatAuthorized(){
-				uni.navigateTo({
-					url:'login'
-				})
+			OnWechatAuthorized(e){
+				if(e.detail.errMsg != "getUserInfo:fail auth deny"){
+					uni.navigateTo({
+						url:'login'
+					})
+				}
 			},
 			getPhoneNumber: function(e) {
 				let _this = this;

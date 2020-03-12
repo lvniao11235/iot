@@ -3838,6 +3838,7 @@
 	text-align:center;
 	line-height:50px;
 	vertical-align:middle;
+	background-color:#fff;
 	font-size:17px;
 	font-weight:bold;
 	color:#030303;
@@ -3848,6 +3849,7 @@
 	text-align:center;
 	margin:auto;
 	margin-bottom:20px;
+	background-color:#fff;
 	
 }
 
@@ -3866,6 +3868,7 @@
 	position:absolute;
 	bottom:0;
 	width:100%;
+	background-color:#fff;
 }
 
 .dialog-container .prompt-dialog .btn-group.single-btn > button{

@@ -170,12 +170,26 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
 var _vuex = __webpack_require__(/*! vuex */ 16);
 var _device = __webpack_require__(/*! @/api/device */ 31);
 var _address = __webpack_require__(/*! @/api/address */ 28);function _objectSpread(target) {for (var i = 1; i < arguments.length; i++) {var source = arguments[i] != null ? arguments[i] : {};var ownKeys = Object.keys(source);if (typeof Object.getOwnPropertySymbols === 'function') {ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) {return Object.getOwnPropertyDescriptor(source, sym).enumerable;}));}ownKeys.forEach(function (key) {_defineProperty(target, key, source[key]);});}return target;}function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;}var _default =
 {
   data: function data() {
     return {
+      showDialog: false,
       quality: [
       "优", "良", "轻度污染", "中度污染", "重度污染", "严重污染"] };
 
@@ -195,13 +209,18 @@ var _address = __webpack_require__(/*! @/api/address */ 28);function _objectSpre
     console.log("onHide");
   },
   onShow: function onShow() {var _this = this;
-    (0, _address.listFamilyBindDevices)(this.currentAddress.id).then(function (res) {
-      if (res.data.data && res.data.data.length > 0) {
-        _this.$store.commit("setDevices", res.data.data);
-      } else {
-        _this.$store.commit("setDevices", []);
-      }
-    });
+    if (this.currentAddress && this.currentAddress.id) {
+      (0, _address.listFamilyBindDevices)(this.currentAddress.id).then(function (res) {
+        if (res.data.data && res.data.data.length > 0) {
+          _this.$store.commit("setDevices", res.data.data);
+        } else {
+
+
+          _this.$store.commit("setDevices", []);
+        }
+      });
+    }
+
   },
   mounted: function mounted() {
     console.log("mounted");
@@ -219,6 +238,17 @@ var _address = __webpack_require__(/*! @/api/address */ 28);function _objectSpre
     console.log("destroyed");
   },
   methods: _objectSpread({
+    loginCancel: function loginCancel() {
+      uni.hideLoading();
+      this.showDialog = false;
+    },
+    loginOk: function loginOk() {
+      uni.hideLoading();
+      this.showDialog = false;
+      uni.navigateTo({
+        url: '../login/index' });
+
+    },
     shortName: function shortName(name) {
       if (name && name.length > 4) {
         return name.substr(0, 4) + "...";

@@ -40,6 +40,16 @@
 	float:left;
 	margin-left:10px;
 }
+.my-page .head-no-user > label{
+	float:none !important;
+}
+.my-page .head-no-user > label:first-child{
+	width:auto;
+	font-size:40px;
+}
+.my-page .head-no-user > label:last-child{
+	width:auto;
+}
 .icon-list-item > .border{
 	width:calc(100% - 10px);
 	margin-left:10px;

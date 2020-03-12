@@ -174,8 +174,6 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-
-
 var _vuex = __webpack_require__(/*! vuex */ 16);
 
 
@@ -211,53 +209,7 @@ var _default = (_data$computed$onLoad = {
     uni.setNavigationBarTitle({
       title: '首页' });
 
-    (0, _user.login)().then(function (res) {
-      _this.$store.commit("setCurrentUser", res);
-      return (0, _address.listFamilys)(res.OpenId);
-    }).then(function (res) {
-      if (res) {
-        if (res.data.data && res.data.data.length == 0) {
-          uni.navigateTo({
-            url: '../address/addAddress' });
-
-        } else {
-          var addrs = res.data.data;
-          (0, _user.getCurFamilyId)(_this.currentUser.OpenId).then(function (res) {
-            if (res.data.data) {
-              var addr = addrs.find(function (x) {return x.id == res.data.data;});
-              if (addr) {
-                _this.$store.commit("setcurrentAddress", addr);
-              }
-            } else {
-              _this.$store.commit("setcurrentAddress", res.data.data[0]);
-            }
-          });
-          _this.$store.commit("setAddress", res.data.data);
-          return (0, _address.listFamilyBindDevices)(res.data.data[0].id);
-        }
-      }
-    }).then(function (res) {
-      if (res) {
-        if (res.data.data && res.data.data.length > 0) {var _this$devices;
-          _this.$store.commit("setDevices", res.data.data);
-          _this.devices = [];
-          (_this$devices = _this.devices).push.apply(_this$devices, _toConsumableArray(res.data.data));
-        } else {
-          _this.$store.commit("setDevices", []);
-          _this.devices = [];
-        }
-        uni.hideLoading();
-      }
-    }).catch(function (res) {
-      if (res.errMsg == "getUserInfo:fail scope unauthorized") {
-        uni.navigateTo({
-          url: '../login/index',
-          success: function success(res) {
-            uni.hideLoading();
-          } });
-
-      }
-    });
+    this.wechatLogin();
     _self = this;
     uni.createSelectorQuery().select(".index-page").boundingClientRect(function (e) {
       _this.cWidth = e.width;
@@ -286,6 +238,71 @@ var _default = (_data$computed$onLoad = {
   },
   methods: _objectSpread({},
   (0, _vuex.mapMutations)(["setCurrentUser", "setAddress", "setcurrentAddress"]), {
+    wechatLogin: function wechatLogin() {var _this3 = this;
+      (0, _user.login)().then(function (res) {
+        if (res.firstLogin) {
+          uni.hideLoading();
+          _this3.showDialog = true;
+          _this3.$store.commit("setCurrentUser", null);
+        } else {
+          _this3.$store.commit("setCurrentUser", res);
+          return (0, _address.listFamilys)(res.OpenId);
+        }
+
+      }).then(function (res) {
+        if (res) {
+          if (res.data.data && res.data.data.length == 0) {
+            uni.navigateTo({
+              url: '../address/addAddress' });
+
+          } else {
+            var addrs = res.data.data;
+            (0, _user.getCurFamilyId)(_this3.currentUser.OpenId).then(function (res) {
+              if (res.data.data) {
+                var addr = addrs.find(function (x) {return x.id == res.data.data;});
+                if (addr) {
+                  _this3.$store.commit("setcurrentAddress", addr);
+                }
+              } else {
+                _this3.$store.commit("setcurrentAddress", res.data.data[0]);
+              }
+            });
+            _this3.$store.commit("setAddress", res.data.data);
+            return (0, _address.listFamilyBindDevices)(res.data.data[0].id);
+          }
+        }
+      }).then(function (res) {
+        if (res) {
+          if (res.data.data && res.data.data.length > 0) {var _this3$devices;
+            _this3.$store.commit("setDevices", res.data.data);
+            _this3.devices = [];
+            (_this3$devices = _this3.devices).push.apply(_this3$devices, _toConsumableArray(res.data.data));
+          } else {
+            _this3.$store.commit("setDevices", []);
+            _this3.devices = [];
+          }
+          uni.hideLoading();
+        }
+      }).catch(function (res) {
+        uni.hideLoading();
+        if (res.errMsg.startsWith("getUserInfo:fail")) {
+
+          _this3.showDialog = true;
+          _this3.$store.commit("setCurrentUser", null);
+        }
+      });
+    },
+    loginCancel: function loginCancel() {
+      uni.hideLoading();
+      this.showDialog = false;
+    },
+    loginOk: function loginOk() {
+      uni.hideLoading();
+      this.showDialog = false;
+      uni.navigateTo({
+        url: '../login/index' });
+
+    },
     OnWechatAuthorized: function OnWechatAuthorized() {
       uni.navigateTo({
         url: '../login/login' });
