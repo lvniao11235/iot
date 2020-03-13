@@ -81,6 +81,7 @@
 			...mapState(["currentAddress", "devices", "currentUser", "address"])
 		},
 		onLoad() {
+			this.$store.commit("setCurrentUser", {})
 			uni.showLoading({})
 			uni.setNavigationBarTitle({
 			　　title:'首页'

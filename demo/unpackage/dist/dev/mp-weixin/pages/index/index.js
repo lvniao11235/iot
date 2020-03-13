@@ -205,6 +205,7 @@ var _default = (_data$computed$onLoad = {
   (0, _vuex.mapState)(["currentAddress", "devices", "currentUser", "address"])),
 
   onLoad: function onLoad() {var _this = this;
+    this.$store.commit("setCurrentUser", {});
     uni.showLoading({});
     uni.setNavigationBarTitle({
       title: '首页' });
