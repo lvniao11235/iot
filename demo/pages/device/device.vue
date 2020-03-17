@@ -7,7 +7,7 @@
 				<view class="device-item" v-for="device in devices"
 				 :key="device.deviceName" @click="selectDevice(device)">
 					<view>
-						<label>{{shortName(device.productName)}}</label>
+						<label>{{shortName(device.deviceComment)}}</label>
 						<label @click.stop="configDevice(device)" v-if="true" class="title-right">设置<label class="fa fa-angle-right"></label></label>
 						<label v-else class="title-right">共享</label>
 					</view>
