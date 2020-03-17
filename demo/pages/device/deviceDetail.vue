@@ -1,6 +1,6 @@
 <template>
 	<view class="device-detail">
-		<navbar :back="true" :title="selectDevice.NickName"></navbar>
+		<navbar :back="true" :title="shortName(selectDevice.deviceComment)"></navbar>
 		<view class="title">
 			<view class="title-left">
 				<view class="pm25" v-if="deviceStatus.PM25">{{deviceStatus.PM25 + 'μg/m³'}}</view>
@@ -378,6 +378,12 @@
 				
 				
 			}, 
+			shortName(name){
+				if(name && name.length > 4){
+					return name.substr(0, 4) + "...";
+				}
+				return name;
+			},
 			moveToRight(e, index){
 				let left = this.left[e.name];
 				if(left <= -1*(e.value.length-2) * this.arguementWidth){
