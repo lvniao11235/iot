@@ -3,7 +3,7 @@
 		<navbar :isHome="true" :bgColor="'#10AB6C'" :fgColor="'#fff'" :showAddress="true" :title="'首页'"></navbar>
 		<view class="header">
 			<view class="info">
-				<view class="location">北京</view>
+				<view class="location">{{currentAddress.city}}</view>
 				<view><label>空气质量：良</label><label>温度：4°C</label></view>
 				<view><label>湿度：23%</label><label>PM2.5：6μg/m³</label></view>
 			</view>
