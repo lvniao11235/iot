@@ -16,6 +16,13 @@ export const familyBindDevice = (deviceName, familyId) => {
 	});
 }
 
+export const get = (id) => {
+	return request({
+		url: `weather/get?id=${id}`,
+		method:'GET'
+	});
+}
+
 export const listFamilyBindDevices = (familyId) => {
 	return request({
 		url: `family/listFamilyBindDevices?familyId=${familyId}`,
