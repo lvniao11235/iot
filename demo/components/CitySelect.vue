@@ -8,7 +8,7 @@
 		<view v-if="!showSearch">
 			<view class="city-category" v-for="group in cities" :key="group.group">
 				<view class="category-title address-item" :id="group.group">{{group.group.toUpperCase()}}</view>
-				<view @click="selectCity(city)" class="address-item address-list-item"
+				<view @click="selectCity(city.city_name, city.id)" class="address-item address-list-item"
 					v-for="city in group.cities" :key="city.pinyin">{{city.city_name}}</view>
 			</view>
 			<view class="city-index" :style="{height:(cities.length * 15) + 'px'}">
@@ -2464,11 +2464,12 @@
 		},
 		methods:{
 			...mapMutations(["setModifyAddress"]),
-			selectCity(city){
+			selectCity(city, cityid){
 				this.$store.commit("setModifyAddress", {
 					id:this.modifyAddress.id,
 					addr:this.modifyAddress.addr,
 					city:city,
+					cityid:cityid,
 				});
 				uni.navigateBack();
 			},
