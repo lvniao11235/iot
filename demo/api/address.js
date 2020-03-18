@@ -1,9 +1,9 @@
 import {baseUrl, request} from './request';
 
-export const createFamily = (city, familyName, unionId) => {
+export const createFamily = (city, cityId, familyName, unionId) => {
 	return request({
 		url: `family/createFamily`,
-		data:{city, familyName, unionId},
+		data:{city, cityId, familyName, unionId},
 		method:'POST'
 	});
 }
@@ -44,10 +44,10 @@ export const deleteFamily = (familyId) => {
 	});
 }
 
-export const updateFamily = (city, familyId, familyName) => {
+export const updateFamily = (city, cityId, familyId, familyName) => {
 	return request({
 		url: `family/updateFamily`,
-		data:{city, familyId, familyName},
+		data:{city, cityId, familyId, familyName},
 		method:'PUT'
 	});
 }
