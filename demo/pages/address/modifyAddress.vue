@@ -30,10 +30,12 @@
 			return {
 				addressName:'',
 				familyId:'',
+				cityId:'',
 				currentAddress:{
 					id:0,
 					familyName:'',
 					city:'',
+					cityid:'',
 				},
 			}
 		},
@@ -70,10 +72,10 @@
 				} else {
 					this.currentAddress.familyName = this.addressName;
 					this.currentAddress.id = this.id;
+					this.cityId=this.currentAddress.cityid;
 					this.$store.commit("changeAddress", this.currentAddress);
-					updateFamily(this.currentAddress.city, this.familyId, this.addressName).then(res=>{
+					updateFamily(this.currentAddress.city, this.cityId, this.familyId, this.addressName).then(res=>{
 						if(res.data.msg == '编辑成功'){
-							
 							uni.navigateBack({
 								
 							})
