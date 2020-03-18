@@ -11,7 +11,7 @@
 			<view class="input-group">
 				<view class="input-label">家庭所在城市</view>
 				<view class="input-control">
-					<input placeholder="请选择城市" disabled class="city" @click="selectCity" v-model="currentAddress.city"></input>
+					<input placeholder="请选择城市" disabled class="city" @click="selectCity" v-model="currentAddress.city.city_name"></input>
 					<lable class="fa fa-angle-right"></lable>
 				</view>
 			</view>
@@ -29,6 +29,7 @@
 		data:function(){
 			return {
 				addressName:'',
+				cityId:'',
 				currentAddress:{
 					id:0,
 					familyName:'',
@@ -64,8 +65,8 @@
 					})
 				} else {
 					this.currentAddress.addr = this.addressName;
-					
-					createFamily(this.currentAddress.city, this.addressName, this.currentUser.OpenId).then(res=>{
+					this.cityId=this.currentAddress.city.id;
+					createFamily(this.currentAddress.city.city_name, this.cityId, this.addressName, this.currentUser.OpenId).then(res=>{
 						if(res.data.msg == '家庭创建成功'){
 							this.$store.commit("createAddress", res.data.data);
 							uni.switchTab({
