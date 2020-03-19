@@ -47,8 +47,12 @@ const store = new Vuex.Store({
 		startTime:null,
 		shutdownTime:null,
 		currentTab:null,
+		currentFamilyData:{}
 	},
 	mutations:{
+		setCurrentFamilyData(state, data){
+			state.currentFamilyData = data;
+		},
 		setCurrentTab(state, tab){
 			state.currentTab = tab;
 		},

@@ -263,6 +263,10 @@ var _address = __webpack_require__(/*! @/api/address */ 28);function _objectSpre
 
     },
     addDevice: function addDevice() {
+      if (this.currentUser == null) {
+        this.showDialog = true;
+        return;
+      }
       uni.navigateTo({
         url: './addDevice' });
 

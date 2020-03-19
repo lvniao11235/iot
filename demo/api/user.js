@@ -119,3 +119,9 @@ export const decodeUserInfo = (encryptedData, iv, unionId) => {
 	});
 }
 
+export const getFamilyAvgData = (code, familyId) => {
+	return request({
+		url:`family/getFamilyAvgData?code=${code}&familyId=${familyId}`,
+		method:"GET"
+	});
+}

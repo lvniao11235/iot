@@ -26,7 +26,7 @@
 			<view>app添加设备，这样您可以尽快开始使用</view>
 			<view @click="addDevice">立即添加</view>
 		</view>
-		<view class="dialog-container" v-if="currentUser == null">
+		<view class="dialog-container" v-if="showDialog && currentUser == null">
 			<view class="dialog-mask"></view>
 			<view class="prompt-dialog" style="height:170px;">
 				<view class="dialog-title">提示</view>
@@ -123,6 +123,10 @@
 				})
 			},
 			addDevice(){
+				if(this.currentUser == null){
+					this.showDialog = true;
+					return;
+				}
 				uni.navigateTo({
 					url:'./addDevice'
 				})

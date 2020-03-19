@@ -8615,9 +8615,13 @@ var store = new _vuex.default.Store({
     currentService: null,
     startTime: null,
     shutdownTime: null,
-    currentTab: null },
+    currentTab: null,
+    currentFamilyData: {} },
 
   mutations: {
+    setCurrentFamilyData: function setCurrentFamilyData(state, data) {
+      state.currentFamilyData = data;
+    },
     setCurrentTab: function setCurrentTab(state, tab) {
       state.currentTab = tab;
     },
@@ -19566,7 +19570,7 @@ var request = function request(options) {
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.decodeUserInfo = exports.getCurFamilyId = exports.setCurFamilyId = exports.updateUser = exports.getUser = exports.getOpenId = exports.loginWechat = exports.getUserInfoWechat = exports.login = void 0;var _request = __webpack_require__(/*! ./request */ 29);function _objectSpread(target) {for (var i = 1; i < arguments.length; i++) {var source = arguments[i] != null ? arguments[i] : {};var ownKeys = Object.keys(source);if (typeof Object.getOwnPropertySymbols === 'function') {ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) {return Object.getOwnPropertyDescriptor(source, sym).enumerable;}));}ownKeys.forEach(function (key) {_defineProperty(target, key, source[key]);});}return target;}function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;}
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.getFamilyAvgData = exports.decodeUserInfo = exports.getCurFamilyId = exports.setCurFamilyId = exports.updateUser = exports.getUser = exports.getOpenId = exports.loginWechat = exports.getUserInfoWechat = exports.login = void 0;var _request = __webpack_require__(/*! ./request */ 29);function _objectSpread(target) {for (var i = 1; i < arguments.length; i++) {var source = arguments[i] != null ? arguments[i] : {};var ownKeys = Object.keys(source);if (typeof Object.getOwnPropertySymbols === 'function') {ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) {return Object.getOwnPropertyDescriptor(source, sym).enumerable;}));}ownKeys.forEach(function (key) {_defineProperty(target, key, source[key]);});}return target;}function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;}
 
 var login = function login() {
   var currentUser = null;
@@ -19686,6 +19690,13 @@ var decodeUserInfo = function decodeUserInfo(encryptedData, iv, unionId) {
     data: { encryptedData: encryptedData, iv: iv, unionId: unionId } });
 
 };exports.decodeUserInfo = decodeUserInfo;
+
+var getFamilyAvgData = function getFamilyAvgData(code, familyId) {
+  return (0, _request.request)({
+    url: "family/getFamilyAvgData?code=".concat(code, "&familyId=").concat(familyId),
+    method: "GET" });
+
+};exports.getFamilyAvgData = getFamilyAvgData;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 
 /***/ }),
@@ -19778,4 +19789,30 @@ var getOrderDetail = function getOrderDetail(orderId) {
     url: "service/getOrderDetail?orderId=".concat(orderId),
     method: 'GET' });
 
-};exports
+};exports.getOrderDetail = getOrderDetail;
+
+var getOrderDetailByDeviceId = function getOrderDetailByDeviceId(deviceId) {
+  return (0, _request.request)({
+    url: "service/getOrderDetailByDeviceId?deviceId=".concat(deviceId),
+    method: 'GET' });
+
+};exports.getOrderDetailByDeviceId = getOrderDetailByDeviceId;
+
+var getOrders = function getOrders(unionId) {
+  return (0, _request.request)({
+    url: "service/listOrders?unionId=".concat(unionId),
+    method: 'GET' });
+
+};exports.getOrders = getOrders;
+
+var updateDeviceComment = function updateDeviceComment(deviceComment, deviceId) {
+  return (0, _request.request)({
+    url: "device/updateDeviceComment",
+    data: { deviceComment: deviceComment, deviceId: deviceId },
+    method: 'post' });
+
+};exports.updateDeviceComment = updateDeviceComment;
+
+/***/ })
+]]);
+//# sourceMappingURL=../../.sourcemap/mp-weixin/common/vendor.js.map

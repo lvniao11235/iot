@@ -4,8 +4,8 @@
 		<view class="header" v-if="currentUser != null">
 			<view class="info">
 				<view class="location">{{currentAddress.city}}</view>
-				<view><label>空气质量：良</label><label>温度：4°C</label></view>
-				<view><label>湿度：23%</label><label>PM2.5：6μg/m³</label></view>
+				<view><label>空气质量：{{familyData.airQuality}}</label><label>温度：{{familyData.currentTemperature}}</label></view>
+				<view><label>湿度：{{familyData.currentHumidity}}</label><label style="width:150px;">PM2.5：{{familyData.pm25}}</label></view>
 			</view>
 			<view class="img"><cover-image src="/static/images/sun.png"></cover-image></view>
 			<view class="mask" v-if="devices && devices.length > 0"></view>
@@ -17,9 +17,9 @@
 		</view>
 		<view v-if="devices && devices.length > 0">
 			<view class="parameters">
-				<view><label>优</label>室内环境</view>
-				<view class="info"><label>温度：22°C</label><label>湿度：23%</label></view>
-				<view class="info"><label>PM2.5：3μg/m³</label></view>
+				<view><label>{{familyData.airQuality}}</label>室内环境</view>
+				<view class="info"><label>温度：{{familyData.currentTemperature}}</label><label>湿度：{{familyData.currentHumidity}}</label></view>
+				<view class="info" ><label style="width:200px;">PM2.5：{{familyData.pm25}}</label></view>
 			</view>
 			<view class="qiun-charts">
 				<view>统计数据</view>
@@ -60,7 +60,7 @@
 	} from 'vuex';
 	import uCharts from '@/u-charts/u-charts.js';
 	import {listFamilyBindDevices, listFamilys} from '@/api/address';
-	import { login, decodeUserInfo, setCurFamilyId, getCurFamilyId } from '@/api/user';
+	import { login, decodeUserInfo, setCurFamilyId, getCurFamilyId, getFamilyAvgData } from '@/api/user';
 	var _self;
 	var canvasObj = {};
 	import {devices} from '@/api/device';
@@ -79,11 +79,12 @@
 				serverData: '',
 				itemCount: 10,
 				sliderMax: 50,
-				devices:[]
+				devices:[],
+				familyData:{}
 			}
 		},
 		computed:{
-			...mapState(["currentAddress", "devices", "currentUser", "address"])
+			...mapState(["currentAddress", "devices", "currentUser", "address", "currentFamilyData"])
 		},
 		onLoad() {
 			//this.$store.commit("setCurrentUser", {})
@@ -120,7 +121,7 @@
 			
 		},
 		methods: {
-			...mapMutations(["setCurrentUser", "setAddress", "setcurrentAddress", "setCurrentTab"]),
+			...mapMutations(["setCurrentUser", "setAddress", "setcurrentAddress", "setCurrentTab", "setCurrentFamilyData"]),
 			wechatLogin(){
 				login().then(res=>{
 					if(res.firstLogin){
@@ -142,12 +143,15 @@
 							let addrs = res.data.data
 							getCurFamilyId(this.currentUser.OpenId).then(res=>{
 								if(res.data.data){
-									let addr = addrs.find(x=>x.id == res.data.data);
-									if(addr){
-										this.$store.commit("setcurrentAddress", addr)
-									}
+									this.$store.commit("setcurrentAddress", res.data.data)
+									getFamilyAvgData(1, res.data.data.id).then(res=>{
+										if(res.data.data && res.data.data.familyData){
+											this.familyData = res.data.data.familyData
+											this.$store.commit("setCurrentFamilyData", res.data.data.familyData)
+										}
+									})
 								} else {
-									this.$store.commit("setcurrentAddress", res.data.data[0])
+									this.$store.commit("setcurrentAddress", addrs[0])
 								}
 							})
 							this.$store.commit("setAddress", res.data.data)

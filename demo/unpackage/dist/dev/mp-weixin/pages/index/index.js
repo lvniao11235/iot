@@ -203,11 +203,12 @@ var _default = (_data$computed$onLoad = {
       serverData: '',
       itemCount: 10,
       sliderMax: 50,
-      devices: [] };
+      devices: [],
+      familyData: {} };
 
   },
   computed: _objectSpread({},
-  (0, _vuex.mapState)(["currentAddress", "devices", "currentUser", "address"])),
+  (0, _vuex.mapState)(["currentAddress", "devices", "currentUser", "address", "currentFamilyData"])),
 
   onLoad: function onLoad() {var _this = this;
     //this.$store.commit("setCurrentUser", {})
@@ -244,7 +245,7 @@ var _default = (_data$computed$onLoad = {
 
   },
   methods: _objectSpread({},
-  (0, _vuex.mapMutations)(["setCurrentUser", "setAddress", "setcurrentAddress", "setCurrentTab"]), {
+  (0, _vuex.mapMutations)(["setCurrentUser", "setAddress", "setcurrentAddress", "setCurrentTab", "setCurrentFamilyData"]), {
     wechatLogin: function wechatLogin() {var _this3 = this;
       (0, _user.login)().then(function (res) {
         if (res.firstLogin) {
@@ -266,12 +267,15 @@ var _default = (_data$computed$onLoad = {
             var addrs = res.data.data;
             (0, _user.getCurFamilyId)(_this3.currentUser.OpenId).then(function (res) {
               if (res.data.data) {
-                var addr = addrs.find(function (x) {return x.id == res.data.data;});
-                if (addr) {
-                  _this3.$store.commit("setcurrentAddress", addr);
-                }
+                _this3.$store.commit("setcurrentAddress", res.data.data);
+                (0, _user.getFamilyAvgData)(1, res.data.data.id).then(function (res) {
+                  if (res.data.data && res.data.data.familyData) {
+                    _this3.familyData = res.data.data.familyData;
+                    _this3.$store.commit("setCurrentFamilyData", res.data.data.familyData);
+                  }
+                });
               } else {
-                _this3.$store.commit("setcurrentAddress", res.data.data[0]);
+                _this3.$store.commit("setcurrentAddress", addrs[0]);
               }
             });
             _this3.$store.commit("setAddress", res.data.data);
