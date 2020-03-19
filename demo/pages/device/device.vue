@@ -31,7 +31,7 @@
 			<view class="prompt-dialog" style="height:170px;">
 				<view class="dialog-title">提示</view>
 				<view class="dialog-content">
-					如果要使用小程序，需要进行登录才可以，请点击允许进行登录。
+					请先登录小程序，才可以添加设备。
 				</view>
 				<view class="btn-group single-btn">
 					<navigator class="dialog-cancel" open-type="exit" target="miniProgram">拒绝</navigator>
@@ -69,6 +69,7 @@
 			console.log("onHide")
 		},
 		onShow(){
+			this.$store.commit("setCurrentTab", '/pages/device/device')
 			if(this.currentAddress && this.currentAddress.id){
 				listFamilyBindDevices(this.currentAddress.id).then(res=>{
 					if(res.data.data && res.data.data.length > 0){

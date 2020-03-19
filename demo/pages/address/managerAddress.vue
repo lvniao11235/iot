@@ -59,7 +59,7 @@
 			},
 			create(){
 				uni.navigateTo({
-					url:'./addAddress'
+					url:'./addAddress?type=1'
 				})
 			}
 		}

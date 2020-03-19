@@ -45,9 +45,13 @@ const store = new Vuex.Store({
 		],
 		currentService:null,
 		startTime:null,
-		shutdownTime:null
+		shutdownTime:null,
+		currentTab:null,
 	},
 	mutations:{
+		setCurrentTab(state, tab){
+			state.currentTab = tab;
+		},
 		modifyCurrentUser(state, data){
 			let user = state.currentUser;
 			user.avatarUrl = data.avatarUrl;

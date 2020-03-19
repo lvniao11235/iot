@@ -734,7 +734,7 @@ function initData(vueOptions, context) {
     try {
       data = data.call(context); // 支持 Vue.prototype 上挂的数据
     } catch (e) {
-      if (Object({"NODE_ENV":"development","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG) {
+      if (Object({"VUE_APP_PLATFORM":"mp-weixin","NODE_ENV":"development","BASE_URL":"/"}).VUE_APP_DEBUG) {
         console.warn('根据 Vue 的 data 函数初始化小程序 data 失败，请尽量确保 data 函数中不访问 vm 对象，否则可能影响首次数据渲染速度。', data);
       }
     }
@@ -7009,7 +7009,7 @@ function type(obj) {
 
 function flushCallbacks$1(vm) {
     if (vm.__next_tick_callbacks && vm.__next_tick_callbacks.length) {
-        if (Object({"NODE_ENV":"development","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG) {
+        if (Object({"VUE_APP_PLATFORM":"mp-weixin","NODE_ENV":"development","BASE_URL":"/"}).VUE_APP_DEBUG) {
             var mpInstance = vm.$scope;
             console.log('[' + (+new Date) + '][' + (mpInstance.is || mpInstance.route) + '][' + vm._uid +
                 ']:flushCallbacks[' + vm.__next_tick_callbacks.length + ']');
@@ -7030,14 +7030,14 @@ function nextTick$1(vm, cb) {
     //1.nextTick 之前 已 setData 且 setData 还未回调完成
     //2.nextTick 之前存在 render watcher
     if (!vm.__next_tick_pending && !hasRenderWatcher(vm)) {
-        if(Object({"NODE_ENV":"development","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG){
+        if(Object({"VUE_APP_PLATFORM":"mp-weixin","NODE_ENV":"development","BASE_URL":"/"}).VUE_APP_DEBUG){
             var mpInstance = vm.$scope;
             console.log('[' + (+new Date) + '][' + (mpInstance.is || mpInstance.route) + '][' + vm._uid +
                 ']:nextVueTick');
         }
         return nextTick(cb, vm)
     }else{
-        if(Object({"NODE_ENV":"development","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG){
+        if(Object({"VUE_APP_PLATFORM":"mp-weixin","NODE_ENV":"development","BASE_URL":"/"}).VUE_APP_DEBUG){
             var mpInstance$1 = vm.$scope;
             console.log('[' + (+new Date) + '][' + (mpInstance$1.is || mpInstance$1.route) + '][' + vm._uid +
                 ']:nextMPTick');
@@ -7113,7 +7113,7 @@ var patch = function(oldVnode, vnode) {
     });
     var diffData = diff(data, mpData);
     if (Object.keys(diffData).length) {
-      if (Object({"NODE_ENV":"development","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG) {
+      if (Object({"VUE_APP_PLATFORM":"mp-weixin","NODE_ENV":"development","BASE_URL":"/"}).VUE_APP_DEBUG) {
         console.log('[' + (+new Date) + '][' + (mpInstance.is || mpInstance.route) + '][' + this._uid +
           ']差量更新',
           JSON.stringify(diffData));
@@ -8434,7 +8434,7 @@ module.exports = {"_from":"@dcloudio/uni-stat@^2.0.0-alpha-24420191128001","_id"
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _default = { "pages": { "pages/index/index": { "navigationBarBackgroundColor": "#10AB6C", "navigationBarTextStyle": "white", "usingComponents": {} }, "pages/login/login": { "usingComponents": {} }, "pages/address/addAddress": { "usingComponents": {} }, "pages/login/index": { "usingComponents": {} }, "pages/device/addDevice": { "usingComponents": {} }, "pages/device/device": { "usingComponents": {} }, "pages/device/connectWifi": { "usingComponents": {} }, "pages/login/phoneLogin": { "usingComponents": {} }, "pages/login/clause": { "usingComponents": {} }, "pages/device/searchDevice": { "usingComponents": {} }, "pages/device/settingDevice": { "usingComponents": {} }, "pages/device/settingWifi": { "usingComponents": {} }, "pages/device/deviceDetail": { "usingComponents": {} }, "pages/device/setTimer": { "usingComponents": {} }, "pages/device/settingTime": { "usingComponents": {} }, "pages/device/connectStatus": { "usingComponents": {} }, "pages/device/configDevice": { "usingComponents": {} }, "pages/device/repeat": { "usingComponents": {} }, "pages/device/subscribe": { "usingComponents": {} }, "pages/device/shareDevice": { "usingComponents": {} }, "pages/device/shareManage": { "usingComponents": {} }, "pages/device/serviceDetail": { "usingComponents": {} }, "pages/device/buy": { "usingComponents": {} }, "pages/my/my": { "usingComponents": {} }, "pages/my/about": { "usingComponents": {} }, "pages/my/config": { "usingComponents": {} }, "pages/my/help": { "usingComponents": {} }, "pages/my/message": { "usingComponents": {} }, "pages/my/service": { "usingComponents": {} }, "pages/my/share": { "usingComponents": {} }, "pages/my/opinion": { "usingComponents": {} }, "pages/my/modifyUser": { "usingComponents": {} }, "pages/address/addressList": { "usingComponents": {} }, "pages/address/managerAddress": { "usingComponents": {} }, "pages/address/modifyAddress": { "usingComponents": {} }, "pages/address/createAddress": { "usingComponents": {} }, "components/CitySelect": { "usingComponents": {} }, "pages/my/index": { "usingComponents": {} } }, "globalStyle": { "navigationBarTextStyle": "black", "navigationBarTitleText": "健康生活", "navigationBarBackgroundColor": "#F8F8F8", "backgroundColor": "#F8F8F8", "navigationStyle": "custom" } };exports.default = _default;
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _default = { "pages": { "pages/index/index": { "navigationBarBackgroundColor": "#10AB6C", "navigationBarTextStyle": "white", "usingComponents": {} }, "pages/my/index": { "usingComponents": {} }, "pages/login/login": { "usingComponents": {} }, "pages/address/addAddress": { "usingComponents": {} }, "pages/login/index": { "usingComponents": {} }, "pages/device/addDevice": { "usingComponents": {} }, "pages/device/device": { "usingComponents": {} }, "pages/device/connectWifi": { "usingComponents": {} }, "pages/login/phoneLogin": { "usingComponents": {} }, "pages/login/clause": { "usingComponents": {} }, "pages/device/searchDevice": { "usingComponents": {} }, "pages/device/settingDevice": { "usingComponents": {} }, "pages/device/settingWifi": { "usingComponents": {} }, "pages/device/deviceDetail": { "usingComponents": {} }, "pages/device/setTimer": { "usingComponents": {} }, "pages/device/settingTime": { "usingComponents": {} }, "pages/device/connectStatus": { "usingComponents": {} }, "pages/device/configDevice": { "usingComponents": {} }, "pages/device/repeat": { "usingComponents": {} }, "pages/device/subscribe": { "usingComponents": {} }, "pages/device/shareDevice": { "usingComponents": {} }, "pages/device/shareManage": { "usingComponents": {} }, "pages/device/serviceDetail": { "usingComponents": {} }, "pages/device/buy": { "usingComponents": {} }, "pages/my/my": { "usingComponents": {} }, "pages/my/about": { "usingComponents": {} }, "pages/my/config": { "usingComponents": {} }, "pages/my/help": { "usingComponents": {} }, "pages/my/message": { "usingComponents": {} }, "pages/my/service": { "usingComponents": {} }, "pages/my/share": { "usingComponents": {} }, "pages/my/opinion": { "usingComponents": {} }, "pages/my/modifyUser": { "usingComponents": {} }, "pages/address/addressList": { "usingComponents": {} }, "pages/address/managerAddress": { "usingComponents": {} }, "pages/address/modifyAddress": { "usingComponents": {} }, "pages/address/createAddress": { "usingComponents": {} }, "components/CitySelect": { "usingComponents": {} } }, "globalStyle": { "navigationBarTextStyle": "black", "navigationBarTitleText": "健康生活", "navigationBarBackgroundColor": "#F8F8F8", "backgroundColor": "#F8F8F8", "navigationStyle": "custom" } };exports.default = _default;
 
 /***/ }),
 /* 8 */
@@ -8614,9 +8614,13 @@ var store = new _vuex.default.Store({
 
     currentService: null,
     startTime: null,
-    shutdownTime: null },
+    shutdownTime: null,
+    currentTab: null },
 
   mutations: {
+    setCurrentTab: function setCurrentTab(state, tab) {
+      state.currentTab = tab;
+    },
     modifyCurrentUser: function modifyCurrentUser(state, data) {
       var user = state.currentUser;
       user.avatarUrl = data.avatarUrl;
@@ -19462,12 +19466,12 @@ if ( true && typeof module.exports === "object") {
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.updateFamily = exports.deleteFamily = exports.unBindDevice = exports.listFamilys = exports.listFamilyBindDevices = exports.familyBindDevice = exports.createFamily = void 0;var _request = __webpack_require__(/*! ./request */ 29);
+Object.defineProperty(exports, "__esModule", { value: true });exports.updateFamily = exports.deleteFamily = exports.unBindDevice = exports.listFamilys = exports.listFamilyBindDevices = exports.get = exports.familyBindDevice = exports.createFamily = void 0;var _request = __webpack_require__(/*! ./request */ 29);
 
-var createFamily = function createFamily(city, familyName, unionId) {
+var createFamily = function createFamily(city, cityId, familyName, unionId) {
   return (0, _request.request)({
     url: "family/createFamily",
-    data: { city: city, familyName: familyName, unionId: unionId },
+    data: { city: city, cityId: cityId, familyName: familyName, unionId: unionId },
     method: 'POST' });
 
 };exports.createFamily = createFamily;
@@ -19479,6 +19483,13 @@ var familyBindDevice = function familyBindDevice(deviceName, familyId) {
     method: 'POST' });
 
 };exports.familyBindDevice = familyBindDevice;
+
+var get = function get(id) {
+  return (0, _request.request)({
+    url: "weather/get?id=".concat(id),
+    method: 'GET' });
+
+};exports.get = get;
 
 var listFamilyBindDevices = function listFamilyBindDevices(familyId) {
   return (0, _request.request)({
@@ -19508,10 +19519,10 @@ var deleteFamily = function deleteFamily(familyId) {
 
 };exports.deleteFamily = deleteFamily;
 
-var updateFamily = function updateFamily(city, familyId, familyName) {
+var updateFamily = function updateFamily(city, cityId, familyId, familyName) {
   return (0, _request.request)({
     url: "family/updateFamily",
-    data: { city: city, familyId: familyId, familyName: familyName },
+    data: { city: city, cityId: cityId, familyId: familyId, familyName: familyName },
     method: 'PUT' });
 
 };exports.updateFamily = updateFamily;
@@ -19525,7 +19536,7 @@ var updateFamily = function updateFamily(city, familyId, familyName) {
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.request = exports.baseUrl = void 0;function _objectSpread(target) {for (var i = 1; i < arguments.length; i++) {var source = arguments[i] != null ? arguments[i] : {};var ownKeys = Object.keys(source);if (typeof Object.getOwnPropertySymbols === 'function') {ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) {return Object.getOwnPropertyDescriptor(source, sym).enumerable;}));}ownKeys.forEach(function (key) {_defineProperty(target, key, source[key]);});}return target;}function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;}var baseUrl = 'http://139.217.3.16:9012/api/';exports.baseUrl = baseUrl;
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.request = exports.baseUrl = void 0;function _objectSpread(target) {for (var i = 1; i < arguments.length; i++) {var source = arguments[i] != null ? arguments[i] : {};var ownKeys = Object.keys(source);if (typeof Object.getOwnPropertySymbols === 'function') {ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) {return Object.getOwnPropertyDescriptor(source, sym).enumerable;}));}ownKeys.forEach(function (key) {_defineProperty(target, key, source[key]);});}return target;}function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;}var baseUrl = 'https://xcu.shuimuqingyun.com/api/';exports.baseUrl = baseUrl;
 
 var request = function request(options) {
   var _options = _objectSpread({}, options);
@@ -19767,30 +19778,4 @@ var getOrderDetail = function getOrderDetail(orderId) {
     url: "service/getOrderDetail?orderId=".concat(orderId),
     method: 'GET' });
 
-};exports.getOrderDetail = getOrderDetail;
-
-var getOrderDetailByDeviceId = function getOrderDetailByDeviceId(deviceId) {
-  return (0, _request.request)({
-    url: "service/getOrderDetailByDeviceId?deviceId=".concat(deviceId),
-    method: 'GET' });
-
-};exports.getOrderDetailByDeviceId = getOrderDetailByDeviceId;
-
-var getOrders = function getOrders(unionId) {
-  return (0, _request.request)({
-    url: "service/listOrders?unionId=".concat(unionId),
-    method: 'GET' });
-
-};exports.getOrders = getOrders;
-
-var updateDeviceComment = function updateDeviceComment(deviceComment, deviceId) {
-  return (0, _request.request)({
-    url: "device/updateDeviceComment",
-    data: { deviceComment: deviceComment, deviceId: deviceId },
-    method: 'post' });
-
-};exports.updateDeviceComment = updateDeviceComment;
-
-/***/ })
-]]);
-//# sourceMappingURL=../../.sourcemap/mp-weixin/common/vendor.js.map
+};exports

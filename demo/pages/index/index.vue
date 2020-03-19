@@ -1,7 +1,7 @@
 <template>
 	<view class="index-page">
 		<navbar :isHome="true" :bgColor="'#10AB6C'" :fgColor="'#fff'" :showAddress="true" :title="'首页'"></navbar>
-		<view class="header">
+		<view class="header" v-if="currentUser != null">
 			<view class="info">
 				<view class="location">{{currentAddress.city}}</view>
 				<view><label>空气质量：良</label><label>温度：4°C</label></view>
@@ -9,6 +9,11 @@
 			</view>
 			<view class="img"><cover-image src="/static/images/sun.png"></cover-image></view>
 			<view class="mask" v-if="devices && devices.length > 0"></view>
+		</view>
+		<view class="header no-user" v-else>
+			<view>欢迎使用清云健康小程序</view>
+			<view>要使用小程序控制设备</view>
+			<view>请先进行登录</view>
 		</view>
 		<view v-if="devices && devices.length > 0">
 			<view class="parameters">
@@ -33,12 +38,12 @@
 				<view @click="addDevice" class="empty-btn">去添加</view>
 			</view>
 		</view>
-		<view class="dialog-container" v-if="showDialog || currentUser == null">
+		<view class="dialog-container" v-if="showDialog && currentUser == null">
 			<view class="dialog-mask"></view>
 			<view class="prompt-dialog" style="height:170px;">
 				<view class="dialog-title">提示</view>
 				<view class="dialog-content">
-					如果要使用小程序，需要进行登录才可以，请点击允许进行登录。
+					请先登录小程序，才可以添加设备。
 				</view>
 				<view class="btn-group single-btn">
 					<navigator class="dialog-cancel" open-type="exit" target="miniProgram">拒绝</navigator>
@@ -81,7 +86,7 @@
 			...mapState(["currentAddress", "devices", "currentUser", "address"])
 		},
 		onLoad() {
-			this.$store.commit("setCurrentUser", {})
+			//this.$store.commit("setCurrentUser", {})
 			uni.showLoading({})
 			uni.setNavigationBarTitle({
 			　　title:'首页'
@@ -95,6 +100,7 @@
 			}).exec();
 		},
 		onShow(){
+			this.$store.commit("setCurrentTab", '/pages/index/index')
 			this.showDialog = false;
 			if(this.currentAddress){
 				listFamilyBindDevices(this.currentAddress.id).then(res=>{
@@ -114,7 +120,7 @@
 			
 		},
 		methods: {
-			...mapMutations(["setCurrentUser", "setAddress", "setcurrentAddress"]),
+			...mapMutations(["setCurrentUser", "setAddress", "setcurrentAddress", "setCurrentTab"]),
 			wechatLogin(){
 				login().then(res=>{
 					if(res.firstLogin){
@@ -164,7 +170,7 @@
 					uni.hideLoading();
 					if(res.errMsg.startsWith("getUserInfo:fail")){
 						
-						this.showDialog = true;
+						//this.showDialog = true;
 						this.$store.commit("setCurrentUser", null)
 					}
 				})
@@ -196,9 +202,14 @@
 				})
 			},
 			addDevice(){
-				uni.navigateTo({
-					url:'../device/addDevice'
-				})
+				if(this.currentUser == null){
+					this.showDialog = true;
+				} else {
+					uni.navigateTo({
+						url:'../device/addDevice'
+					})
+				}
+				
 			},
 			fillData() {
 				
@@ -540,5 +551,21 @@
 			border:1px solid #10AB6C;
 			margin:20px auto;
 			color:#10AB6C;
+		}
+		
+		.header.no-user > view{
+			text-align:center;
+			color:#fff;
+			font-size:18px;
+		}
+		
+		.header.no-user > view:first-child{
+			padding-top:20px;
+			padding-bottom:30px;
+			font-size:22px;
+		}
+		
+		.header.no-user > view:last-child{
+			padding-bottom:20px;
 		}
 </style>

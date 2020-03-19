@@ -1,4 +1,4 @@
-export const baseUrl = 'http://139.217.3.16:9012/api/';
+export const baseUrl = 'https://xcu.shuimuqingyun.com/api/';
 
 export const request = options => {
 	let _options = {...options};

@@ -78,5 +78,6 @@
   },
   "usingComponents": {
     "navbar": "/components/navbar"
-  }
+  },
+  "sitemapLocation": "sitemap41.json"
 }

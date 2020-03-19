@@ -1,6 +1,6 @@
 <template>
 	<view class="add-address-page">
-		<navbar :back="false" title="创建家庭"></navbar>
+		<navbar :back="showBack" title="创建家庭"></navbar>
 		<view class="content-container">
 			<view class="input-group">
 				<view class="input-label">家庭名称</view>
@@ -36,12 +36,16 @@
 					city:'',
 					cityid:'',
 				},
+				showBack:false
 			}
 		},
 		computed:{
 			...mapState(["modifyAddress", "currentUser"]) 
 		},
 		onLoad(e){
+			if(e.type == "1"){
+				this.showBack = true;
+			}
 			this.$store.commit("setModifyAddress", this.currentAddress);
 		},
 		onShow(){

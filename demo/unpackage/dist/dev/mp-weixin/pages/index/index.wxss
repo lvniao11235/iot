@@ -229,4 +229,17 @@ page, .index-page{
 		margin:20px auto;
 		color:#10AB6C;
 }
+.header.no-user > view{
+		text-align:center;
+		color:#fff;
+		font-size:18px;
+}
+.header.no-user > view:first-child{
+		padding-top:20px;
+		padding-bottom:30px;
+		font-size:22px;
+}
+.header.no-user > view:last-child{
+		padding-bottom:20px;
+}
 

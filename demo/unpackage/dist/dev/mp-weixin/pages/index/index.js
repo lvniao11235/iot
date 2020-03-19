@@ -174,6 +174,11 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
+
+
+
+
 var _vuex = __webpack_require__(/*! vuex */ 16);
 
 
@@ -205,7 +210,7 @@ var _default = (_data$computed$onLoad = {
   (0, _vuex.mapState)(["currentAddress", "devices", "currentUser", "address"])),
 
   onLoad: function onLoad() {var _this = this;
-    this.$store.commit("setCurrentUser", {});
+    //this.$store.commit("setCurrentUser", {})
     uni.showLoading({});
     uni.setNavigationBarTitle({
       title: '首页' });
@@ -219,6 +224,7 @@ var _default = (_data$computed$onLoad = {
     }).exec();
   },
   onShow: function onShow() {var _this2 = this;
+    this.$store.commit("setCurrentTab", '/pages/index/index');
     this.showDialog = false;
     if (this.currentAddress) {
       (0, _address.listFamilyBindDevices)(this.currentAddress.id).then(function (res) {
@@ -238,7 +244,7 @@ var _default = (_data$computed$onLoad = {
 
   },
   methods: _objectSpread({},
-  (0, _vuex.mapMutations)(["setCurrentUser", "setAddress", "setcurrentAddress"]), {
+  (0, _vuex.mapMutations)(["setCurrentUser", "setAddress", "setcurrentAddress", "setCurrentTab"]), {
     wechatLogin: function wechatLogin() {var _this3 = this;
       (0, _user.login)().then(function (res) {
         if (res.firstLogin) {
@@ -288,7 +294,7 @@ var _default = (_data$computed$onLoad = {
         uni.hideLoading();
         if (res.errMsg.startsWith("getUserInfo:fail")) {
 
-          _this3.showDialog = true;
+          //this.showDialog = true;
           _this3.$store.commit("setCurrentUser", null);
         }
       });
@@ -320,8 +326,13 @@ var _default = (_data$computed$onLoad = {
 
     },
     addDevice: function addDevice() {
-      uni.navigateTo({
-        url: '../device/addDevice' });
+      if (this.currentUser == null) {
+        this.showDialog = true;
+      } else {
+        uni.navigateTo({
+          url: '../device/addDevice' });
+
+      }
 
     },
     fillData: function fillData() {

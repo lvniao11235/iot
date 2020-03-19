@@ -1,6 +1,6 @@
 <template>
 	<view class="address-list">
-		<navbar :back="true" title="家庭列表"></navbar>
+		<navbar :back="true" :url="currentTab" :isTabPage="currentTab && currentTab.length > 0"  title="家庭列表"></navbar>
 		<template v-for="addr in address">
 			<view @click="selectAddress(addr)" :key="addr.id" class="icon-list-item" :class="{'selected':currentAddress.id == addr.id}">
 				<label class="icon"><image src="../../static/images/building.png"></image></label>
@@ -20,7 +20,7 @@
 	import { setCurFamilyId } from '@/api/user'
 	export default {
 		computed:{
-			...mapState(["address", "currentAddress", "currentUser"]) 
+			...mapState(["address", "currentAddress", "currentUser", "currentTab"]) 
 		},
 		mounted(){
 		},
