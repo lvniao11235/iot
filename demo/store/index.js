@@ -47,9 +47,13 @@ const store = new Vuex.Store({
 		startTime:null,
 		shutdownTime:null,
 		currentTab:null,
-		currentFamilyData:{}
+		currentFamilyData:{},
+		testweather:{},
 	},
 	mutations:{
+		setWeatherData(state, data){
+			state.testweather = data;
+		},
 		setCurrentFamilyData(state, data){
 			state.currentFamilyData = data;
 		},
