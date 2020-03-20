@@ -4,8 +4,8 @@
 		<view class="header" v-if="currentUser != null">
 			<view class="info">
 				<view class="location">{{currentAddress.city}}</view>
-				<view><label>空气质量：{{familyData.airQuality}}</label><label>温度：{{familyData.currentTemperature}}</label></view>
-				<view><label>湿度：{{familyData.currentHumidity}}</label><label style="width:150px;">PM2.5：{{familyData.pm25}}</label></view>
+				<view><label>空气质量：{{testweather.data.quality}}</label><label>温度：{{testweather.data.wendu}}°C</label></view>
+				<view><label>湿度：{{testweather.data.shidu}}</label><label style="width:150px;">PM2.5：{{testweather.data.pm25}}μg/m³</label></view>
 			</view>
 			<view class="img"><cover-image src="/static/images/sun.png"></cover-image></view>
 			<view class="mask" v-if="devices && devices.length > 0"></view>
@@ -59,7 +59,7 @@
 		mapState, mapMutations
 	} from 'vuex';
 	import uCharts from '@/u-charts/u-charts.js';
-	import {listFamilyBindDevices, listFamilys} from '@/api/address';
+	import {listFamilyBindDevices, listFamilys, get} from '@/api/address';
 	import { login, decodeUserInfo, setCurFamilyId, getCurFamilyId, getFamilyAvgData } from '@/api/user';
 	var _self;
 	var canvasObj = {};
@@ -80,11 +80,12 @@
 				itemCount: 10,
 				sliderMax: 50,
 				devices:[],
-				familyData:{}
+				familyData:{},
+				testweather:{},
 			}
 		},
 		computed:{
-			...mapState(["currentAddress", "devices", "currentUser", "address", "currentFamilyData"])
+			...mapState(["currentAddress", "devices", "currentUser", "address", "currentFamilyData", "testweather"])
 		},
 		onLoad() {
 			//this.$store.commit("setCurrentUser", {})
@@ -121,7 +122,7 @@
 			
 		},
 		methods: {
-			...mapMutations(["setCurrentUser", "setAddress", "setcurrentAddress", "setCurrentTab", "setCurrentFamilyData"]),
+			...mapMutations(["setCurrentUser", "setAddress", "setcurrentAddress", "setCurrentTab", "setCurrentFamilyData", "setWeatherData"]),
 			wechatLogin(){
 				login().then(res=>{
 					if(res.firstLogin){
@@ -144,6 +145,12 @@
 							getCurFamilyId(this.currentUser.OpenId).then(res=>{
 								if(res.data.data){
 									this.$store.commit("setcurrentAddress", res.data.data)
+									get(res.data.data.cityId).then(res=>{
+										if(res.data.data){
+											this.$store.commit("setWeatherData", res.data.data)
+											this.testweather=res.data.data;
+										}
+									})
 									getFamilyAvgData(1, res.data.data.id).then(res=>{
 										if(res.data.data && res.data.data.familyData){
 											this.familyData = res.data.data.familyData
