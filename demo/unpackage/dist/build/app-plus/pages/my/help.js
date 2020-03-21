@@ -1,2 +1,0 @@
-setCssToHead([".",[1],"help-item{ padding:16px; }\n.",[1],"help-item-content{ margin-left:1em; margin-top:5px; color:#8F8F8F; }\n.",[1],"help-item-title{ color:#000000; font-weight:bold; }\n",],undefined,{path:"./pages/my/help.wxss"})();
-document.dispatchEvent(new CustomEvent("generateFuncReady", { detail: { generateFunc: $gwx('./pages/my/help.wxml') } }));

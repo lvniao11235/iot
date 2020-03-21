@@ -24,9 +24,9 @@
 			<view class="qiun-charts">
 				<view>统计数据</view>
 				<view class="switch-btns">
-					<view class="selected">日</view>
-					<view>月</view>
-					<view>年</view>
+					<view @click="changeLineData(1)" :class="{'selected':lineDataType == 1}">日</view>
+					<view @click="changeLineData(2)" :class="{'selected':lineDataType == 2}">月</view>
+					<view @click="changeLineData(3)" :class="{'selected':lineDataType == 3}">年</view>
 				</view>
 				<canvas canvas-id="canvasLineA" id="canvasLineA" class="charts" disable-scroll=true @touchstart="touchLineA" @touchmove="moveLineA" @touchend="touchEndLineA"></canvas>
 			</view>
@@ -82,6 +82,12 @@
 				devices:[],
 				familyData:{},
 				testweather:{},
+				categories:[],
+				mins:[],
+				averages:[],
+				maxs:[],
+				times:[],
+				lineDataType:1
 			}
 		},
 		computed:{
@@ -95,11 +101,7 @@
 			})
 			this.wechatLogin();
 			_self = this;
-			uni.createSelectorQuery().select(".index-page").boundingClientRect(e=>{
-				this.cWidth = e.width;
-				this.cHeight = 200;
-				this.fillData();
-			}).exec();
+			
 		},
 		onShow(){
 			this.$store.commit("setCurrentTab", '/pages/index/index')
@@ -155,6 +157,24 @@
 											this.familyData = res.data.data.familyData
 											this.$store.commit("setCurrentFamilyData", res.data.data.familyData)
 										}
+										if(res.data.data && res.data.data.avgPm25Value){
+											this.times = [];
+											this.mins = [];
+											this.maxs = [];
+											this.averages = [];
+											for(let i=0; i< res.data.data.avgPm25Value.length; i++){
+												this.times.push(res.data.data.avgPm25Value[i].index)
+												this.averages.push(res.data.data.avgPm25Value[i].value)
+												this.maxs.push(res.data.data.avgPm25Value[i].value + 10)
+												this.mins.push(res.data.data.avgPm25Value[i].value - 10)
+											}
+											uni.createSelectorQuery().select(".index-page").boundingClientRect(e=>{
+												this.cWidth = e.width;
+												this.cHeight = 200;
+												this.fillData(this.times, this.mins, this.averages, this.maxs)
+											}).exec();
+											
+										}
 									})
 								} else {
 									this.$store.commit("setcurrentAddress", addrs[0])
@@ -182,6 +202,29 @@
 						
 						//this.showDialog = true;
 						this.$store.commit("setCurrentUser", null)
+					}
+				})
+			},
+			changeLineData(type){
+				this.lineDataType = type;
+				getFamilyAvgData(type, this.currentAddress.id).then(res=>{
+					if(res.data.data && res.data.data.avgPm25Value){
+						this.times = [];
+						this.mins = [];
+						this.maxs = [];
+						this.averages = [];
+						for(let i=0; i< res.data.data.avgPm25Value.length; i++){
+							this.times.push(res.data.data.avgPm25Value[i].index)
+							this.averages.push(res.data.data.avgPm25Value[i].value)
+							this.maxs.push(res.data.data.avgPm25Value[i].value + 10)
+							this.mins.push(res.data.data.avgPm25Value[i].value - 10)
+						}
+						uni.createSelectorQuery().select(".index-page").boundingClientRect(e=>{
+							this.cWidth = e.width;
+							this.cHeight = 200;
+							this.fillData(this.times, this.mins, this.averages, this.maxs)
+						}).exec();
+						
 					}
 				})
 			},
@@ -221,16 +264,16 @@
 				}
 				
 			},
-			fillData() {
+			fillData(times, mins, averages, maxs) {
 				
 				let LineA = {
 					categories: [],
 					series: []
 				};
-				LineA.categories = [0, 3, 6, 9, 12, 15, 18, 21, 23];
+				LineA.categories = times;
 				LineA.series = [{
 					name:'mine',
-					data:[20, 25, 25, 30, 20, 25, 25, 30, 20],
+					data:maxs,
 					color:'#1890ff',
 					type:'line',
 					show:true,
@@ -238,7 +281,7 @@
 					legendShape:'line'
 				}, {
 					name:'average',
-					data:[15, 20, 21, 19, 15, 20, 21, 19, 15],
+					data:averages,
 					color:'#2fc25b',
 					type:'line',
 					show:true,
@@ -246,7 +289,7 @@
 					legendShape:'line'
 				}, {
 					name:'out_door',
-					data:[10, 15, 17, 8, 10, 15, 17, 8, 10],
+					data:mins,
 					color:'#facc14',
 					type:'line',
 					show:true,

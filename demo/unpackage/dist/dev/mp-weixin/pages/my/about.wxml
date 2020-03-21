@@ -1,1 +1,0 @@
-<view class="my-about"><navbar vue-id="1" back="{{true}}" title="关于" bind:__l="__l"></navbar><view class="icon-list-item"><label class="label">小程序版本号</label><view class="value"><label>1.0.0</label></view></view><view class="icon-list-item"><label class="label">基础库版本</label><view class="value"><label>2.9.4</label></view></view></view>

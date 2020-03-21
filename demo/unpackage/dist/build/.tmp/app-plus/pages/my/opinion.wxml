@@ -1,1 +1,0 @@
-<view class="my-opinion"><navbar vue-id="1" back="{{true}}" title="意见反馈" bind:__l="__l"></navbar><view>您宝贵的意见，是我们不断进步的动力</view><textarea class="{{[(hasFocus)?'focus':'']}}" focus data-event-opts="{{[['focus',[['focus',['$event']]]],['blur',[['blur',['$event']]]]]}}" bindfocus="__e" bindblur="__e"></textarea><view class="confirm-btn">提交</view></view>

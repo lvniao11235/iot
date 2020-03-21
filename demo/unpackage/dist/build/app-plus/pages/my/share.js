@@ -1,2 +1,0 @@
-setCssToHead([".",[1],"my-share .",[1],"icon-list-item .",[1],"label\x3e wx-image{ width:20px; height:23px; position:relative; top:6px; display:inline-block; margin-left:5px; }\n.",[1],"my-share .",[1],"icon-list-item{ margin-bottom:20px; }\n",],undefined,{path:"./pages/my/share.wxss"})();
-document.dispatchEvent(new CustomEvent("generateFuncReady", { detail: { generateFunc: $gwx('./pages/my/share.wxml') } }));

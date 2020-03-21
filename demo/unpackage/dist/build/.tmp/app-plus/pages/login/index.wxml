@@ -1,1 +1,0 @@
-<view><navbar vue-id="1" bind:__l="__l"></navbar><view class="title-image">健康生活</view><view class="login-btns"><button open-type="getUserInfo" withCredentials="true" lang="zh_CN" data-event-opts="{{[['getuserinfo',[['OnWechatAuthorized',['$event']]]]]}}" bindgetuserinfo="__e">微信授权</button></view></view>
