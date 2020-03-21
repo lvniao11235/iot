@@ -127,13 +127,12 @@
 				login().then(res=>{
 					if(res.firstLogin){
 						uni.hideLoading();
-						this.showDialog = true;
+						//this.showDialog = true;
 						this.$store.commit("setCurrentUser", null)
 					} else {
 						this.$store.commit("setCurrentUser", res);
 						return listFamilys(res.OpenId)
 					}
-					
 				}).then(res=>{
 					if(res){
 						if(res.data.data && res.data.data.length == 0){

@@ -204,11 +204,12 @@ var _default = (_data$computed$onLoad = {
       itemCount: 10,
       sliderMax: 50,
       devices: [],
-      familyData: {} };
+      familyData: {},
+      testweather: {} };
 
   },
   computed: _objectSpread({},
-  (0, _vuex.mapState)(["currentAddress", "devices", "currentUser", "address", "currentFamilyData"])),
+  (0, _vuex.mapState)(["currentAddress", "devices", "currentUser", "address", "currentFamilyData", "testweather"])),
 
   onLoad: function onLoad() {var _this = this;
     //this.$store.commit("setCurrentUser", {})
@@ -245,18 +246,17 @@ var _default = (_data$computed$onLoad = {
 
   },
   methods: _objectSpread({},
-  (0, _vuex.mapMutations)(["setCurrentUser", "setAddress", "setcurrentAddress", "setCurrentTab", "setCurrentFamilyData"]), {
+  (0, _vuex.mapMutations)(["setCurrentUser", "setAddress", "setcurrentAddress", "setCurrentTab", "setCurrentFamilyData", "setWeatherData"]), {
     wechatLogin: function wechatLogin() {var _this3 = this;
       (0, _user.login)().then(function (res) {
         if (res.firstLogin) {
           uni.hideLoading();
-          _this3.showDialog = true;
+          //this.showDialog = true;
           _this3.$store.commit("setCurrentUser", null);
         } else {
           _this3.$store.commit("setCurrentUser", res);
           return (0, _address.listFamilys)(res.OpenId);
         }
-
       }).then(function (res) {
         if (res) {
           if (res.data.data && res.data.data.length == 0) {
@@ -268,6 +268,12 @@ var _default = (_data$computed$onLoad = {
             (0, _user.getCurFamilyId)(_this3.currentUser.OpenId).then(function (res) {
               if (res.data.data) {
                 _this3.$store.commit("setcurrentAddress", res.data.data);
+                (0, _address.get)(res.data.data.cityId).then(function (res) {
+                  if (res.data.data) {
+                    _this3.$store.commit("setWeatherData", res.data.data);
+                    _this3.testweather = res.data.data;
+                  }
+                });
                 (0, _user.getFamilyAvgData)(1, res.data.data.id).then(function (res) {
                   if (res.data.data && res.data.data.familyData) {
                     _this3.familyData = res.data.data.familyData;
