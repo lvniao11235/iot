@@ -3,9 +3,9 @@
 		<navbar :isHome="true" :bgColor="'#10AB6C'" :fgColor="'#fff'" :showAddress="true" :title="'首页'"></navbar>
 		<view class="header" v-if="currentUser != null">
 			<view class="info">
-				<view class="location">{{currentAddress.city}}</view>
-				<view><label>空气质量：{{testweather.data.quality}}</label><label>温度：{{testweather.data.wendu}}°C</label></view>
-				<view><label>湿度：{{testweather.data.shidu}}</label><label style="width:150px;">PM2.5：{{testweather.data.pm25}}μg/m³</label></view>
+				<view class="location">{{currentAddress.city ? currentAddress.city:"--"}}</view>
+				<view><label>空气质量：{{testweather.data.quality ? testweather.data.quality:"--"}}</label><label>温度：{{testweather.data.wendu ? testweather.data.wendu:"--"}}°C</label></view>
+				<view><label>湿度：{{testweather.data.shidu ? testweather.data.shidu:"--"}}</label><label style="width:150px;">PM2.5：{{testweather.data.pm25?testweather.data.pm25 + 'μg/m³':"--"}}</label></view>
 			</view>
 			<view class="img"><cover-image src="/static/images/sun.png"></cover-image></view>
 			<view class="mask" v-if="devices && devices.length > 0"></view>
@@ -118,6 +118,7 @@
 					}
 				})
 			}
+			this.changeLineData(this.lineDataType);
 			
 		},
 		onReady() {

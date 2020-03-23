@@ -17,7 +17,7 @@
 		<view class="icon-list-item border">
 			<label class="label">服务类型</label>
 			<view class="value"> 
-				<label>{{currentService.description}}</label>
+				<label>{{currentService.description.substr(0, 10)}}</label>
 			</view>
 		</view>
 		<view class="icon-list-item border">
