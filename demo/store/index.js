@@ -49,8 +49,12 @@ const store = new Vuex.Store({
 		currentTab:null,
 		currentFamilyData:{},
 		testweather:{},
+		openId:null
 	},
 	mutations:{
+		setOpenId(state, openId){
+			state.openId = openId;
+		},
 		setWeatherData(state, data){
 			state.testweather = data;
 		},

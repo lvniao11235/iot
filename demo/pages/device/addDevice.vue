@@ -1,10 +1,10 @@
 <template>
 	<view class="add-device">
 		<navbar :back="true" title="添加设备"></navbar>
-		<view class="search" @click="search">
+		<!-- <view class="search" @click="search">
 			<cover-image src="/static/images/find.png"></cover-image>
 			<label>搜索</label>
-		</view>
+		</view> -->
 		<view class="brands">
 			<view class="brand-item" 
 				v-for="brand in brands"

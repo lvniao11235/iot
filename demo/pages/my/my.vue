@@ -19,7 +19,7 @@
 			</view>
 			<view class="border"></view>
 		</view>
-		<view class="icon-list-item" @click="jumpTo(1)">
+		<!-- <view class="icon-list-item" @click="jumpTo(1)">
 			<label class="icon"><image src="/static/images/link.png"></image></label>
 			<label class="label">设备共享</label>
 			<view class="value">
@@ -27,7 +27,7 @@
 				<label class="value-icon fa fa-angle-right"></label>
 			</view>
 			<view class="border"></view>
-		</view>
+		</view> -->
 		<view class="icon-list-item" @click="jumpTo(2)">
 			<label class="icon"><image src="/static/images/question.png"></image></label>
 			<label class="label">帮助中心</label>
@@ -37,7 +37,7 @@
 			</view>
 			<view class="border"></view>
 		</view>
-		<view class="icon-list-item" @click="jumpTo(3)">
+		<!-- <view class="icon-list-item" @click="jumpTo(3)">
 			<label class="icon"><image src="/static/images/edit.png"></image></label>
 			<label class="label">意见反馈</label>
 			<view class="value">
@@ -45,8 +45,8 @@
 				<label class="value-icon fa fa-angle-right"></label>
 			</view>
 			<view class="border"></view>
-		</view>
-		<view class="icon-list-item" @click="jumpTo(4)">
+		</view> -->
+		<!-- <view class="icon-list-item" @click="jumpTo(4)">
 			<label class="icon"><image src="/static/images/bell.png"></image></label>
 			<label class="label">消息提醒</label>
 			<view class="value">
@@ -54,7 +54,7 @@
 				<label class="value-icon fa fa-angle-right"></label>
 			</view>
 			<view class="border"></view>
-		</view>
+		</view> -->
 		<view class="icon-list-item" @click="jumpTo(5)">
 			<label class="icon"><image src="/static/images/abouts.png"></image></label>
 			<label class="label">关于</label>
@@ -64,14 +64,14 @@
 			</view>
 			<view class="border"></view>
 		</view>
-		<view class="icon-list-item" @click="jumpTo(6)">
+		<!-- <view class="icon-list-item" @click="jumpTo(6)">
 			<label class="icon"><image src="/static/images/config.png"></image></label>
 			<label class="label">设置</label>
 			<view class="value">
 				<label></label>
 				<label class="value-icon fa fa-angle-right"></label>
 			</view>
-		</view>
+		</view> -->
 	</view>
 </template>
 

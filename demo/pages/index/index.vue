@@ -4,7 +4,7 @@
 		<view class="header" v-if="currentUser != null">
 			<view class="info">
 				<view class="location">{{currentAddress.city ? currentAddress.city:"--"}}</view>
-				<view><label>空气质量：{{testweather.data.quality ? testweather.data.quality:"--"}}</label><label>温度：{{testweather.data.wendu ? testweather.data.wendu:"--"}}°C</label></view>
+				<view><label>空气质量：{{testweather.data.quality ? testweather.data.quality:"--"}}</label><label>温度：{{testweather.data.wendu ? testweather.data.wendu + '°C':"--"}}</label></view>
 				<view><label>湿度：{{testweather.data.shidu ? testweather.data.shidu:"--"}}</label><label style="width:150px;">PM2.5：{{testweather.data.pm25?testweather.data.pm25 + 'μg/m³':"--"}}</label></view>
 			</view>
 			<view class="img"><cover-image src="/static/images/sun.png"></cover-image></view>
@@ -17,9 +17,9 @@
 		</view>
 		<view v-if="devices && devices.length > 0">
 			<view class="parameters">
-				<view><label>{{familyData.airQuality}}</label>室内环境</view>
-				<view class="info"><label>温度：{{familyData.currentTemperature}}</label><label>湿度：{{familyData.currentHumidity}}</label></view>
-				<view class="info" ><label style="width:200px;">PM2.5：{{familyData.pm25}}</label></view>
+				<view><label>{{familyData && familyData.airQuality ? familyData.airQuality:'--'}}</label>室内环境</view>
+				<view class="info"><label>温度：{{familyData && familyData.currentTemperature ? familyData.currentTemperature:'--'}}</label><label>湿度：{{familyData && familyData.currentHumidity?familyData.currentHumidity:'--'}}</label></view>
+				<view class="info" ><label style="width:200px;">PM2.5：{{familyData && familyData.pm25?familyData.pm25:'--'}}</label></view>
 			</view>
 			<view class="qiun-charts">
 				<view>统计数据</view>
@@ -125,12 +125,19 @@
 			
 		},
 		methods: {
-			...mapMutations(["setCurrentUser", "setAddress", "setcurrentAddress", "setCurrentTab", "setCurrentFamilyData", "setWeatherData"]),
+			...mapMutations(["setCurrentUser", "setAddress", 
+				"setcurrentAddress", "setCurrentTab", 
+				"setCurrentFamilyData", "setWeatherData",
+				"setOpenId"]),
 			wechatLogin(){
 				login().then(res=>{
 					if(res.firstLogin){
 						uni.hideLoading();
-						//this.showDialog = true;
+						// this.$store.commit("setOpenId", res.OpenId)
+						// //this.showDialog = true;
+						// uni.navigateTo({
+						// 	url:'../address/addAddress'
+						// })
 						this.$store.commit("setCurrentUser", null)
 					} else {
 						this.$store.commit("setCurrentUser", res);
@@ -208,6 +215,9 @@
 			},
 			changeLineData(type){
 				this.lineDataType = type;
+				if(!this.currentAddress){
+					return;
+				}
 				getFamilyAvgData(type, this.currentAddress.id).then(res=>{
 					if(res.data.data && res.data.data.avgPm25Value){
 						this.times = [];

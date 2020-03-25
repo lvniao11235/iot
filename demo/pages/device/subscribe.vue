@@ -14,7 +14,7 @@
 			</view>
 		</radio-group>
 		<view class="info">
-			<view class="head">订阅服务特享</view> 
+			<view class="head">服务描述</view> 
 			<view class="service">1.订阅服务器，一年内最多<span>免费</span>更换一次滤芯。厂家会根据当前设备的滤芯使用情况，在滤芯使用完之前联系用户</view>
 			<view class="service">2.同品牌产品<span>98折</span>优惠特享</view>
 		</view>

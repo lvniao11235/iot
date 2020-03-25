@@ -52,25 +52,9 @@
 		},
 		methods:{
 			goToServiceDetail(){
-				uni.request({
-					url:'http://qingyun.kiwihealthcare123.com/mp/SendMessage',
-					method:"POST",
-					data:{
-						unionid:this.currentUser.OpenId,
-						cost:this.currentService.presentPrice,
-						name:this.currentService.description,
-						orderid:this.orderId
-					},
-					success:res=>{
-						if(this.flag){
-							uni.navigateTo({
-								url:`./serviceDetail?orderId=${this.orderId}`
-							})
-						}
-					}
+				uni.navigateTo({
+					url:`./serviceDetail?orderId=${this.orderId}`
 				})
-				
-				
 			}
 		}
 	}

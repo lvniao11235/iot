@@ -49,6 +49,11 @@
 			},
 			getPhoneNumber: function(e) {
 				if(e.detail.errMsg == "getPhoneNumber:fail user deny"){
+					uni.showModal({
+						title:'授权失败',
+						content:e.detail.errMsg,
+						showCancel:false
+					})
 					return;
 				}
 				let _this = this;
@@ -152,6 +157,11 @@
 							this.showDialog = true;
 							
 						}
+						uni.showModal({
+							title:'授权失败',
+							content:e.detail.errMsg,
+							showCancel:false
+						})
 					});
 				}
  

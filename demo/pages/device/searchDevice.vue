@@ -1,10 +1,10 @@
 <template>
 	<view class="search-device">
 		<navbar :back="true" title="搜索设备"></navbar>
-		<view class="search">
+		<!-- <view class="search">
 			<cover-image src="/static/images/find.png"></cover-image>
 			<label>搜索</label>
-		</view>
+		</view> -->
 		<view class="products">
 			<view class="product-item" v-if="!products">
 				<view class="image-container">

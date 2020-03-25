@@ -8,13 +8,13 @@
 				<label class="value-icon fa fa-angle-right" ></label>
 			</view>
 		</view>
-		<view class="icon-list-item border">
+		<!-- <view class="icon-list-item border">
 			<label class="label">设备共享</label>
 			<view class="value" @click="shareDevice">
 				<label>{{selectDevice.share ? "已共享":"未共享"}}</label>
 				<label class="value-icon fa fa-angle-right"></label>
 			</view>
-		</view>
+		</view> -->
 		<view class="icon-list-item border">
 			<label class="label">服务订阅</label>
 			<view class="value" @click="goToSubscribe">

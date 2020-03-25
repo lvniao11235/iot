@@ -34,9 +34,9 @@
 			</view>
 			<view class="border"></view>
 		</view>
-		<view class="bottom-group">
+		<!-- <view class="bottom-group">
 			<view class="max-btn" @click="modify" style="">修改</view>
-		</view>
+		</view> -->
 		<view class="dialog-container" v-if="showDialog">
 			<view class="dialog-mask"></view>
 			<view class="prompt-dialog" v-if="showNameDialog">
@@ -131,13 +131,13 @@
 				})
 			},
 			jumpTo(type){
-				this.showDialog = true;
-				switch(type){
-					case 1: this.showImageDialog = true; break;
-					case 2: this.showNameDialog = true; break;
-					case 3: this.showGenderDialog = true; break;
-					case 4: this.showBirthdayDialog = true; break;
-				}
+				// this.showDialog = true;
+				// switch(type){
+				// 	case 1: this.showImageDialog = true; break;
+				// 	case 2: this.showNameDialog = true; break;
+				// 	case 3: this.showGenderDialog = true; break;
+				// 	case 4: this.showBirthdayDialog = true; break;
+				// }
 			},
 			modifyNameCancel(){
 				this.showDialog = false;

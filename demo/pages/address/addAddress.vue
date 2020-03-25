@@ -40,7 +40,7 @@
 			}
 		},
 		computed:{
-			...mapState(["modifyAddress", "currentUser"]) 
+			...mapState(["modifyAddress", "currentUser", "openId"]) 
 		},
 		onLoad(e){
 			if(e.type == "1"){
@@ -71,7 +71,9 @@
 				} else {
 					this.currentAddress.addr = this.addressName;
 					this.cityId=this.currentAddress.cityid;
-					createFamily(this.currentAddress.city, this.cityId, this.addressName, this.currentUser.OpenId).then(res=>{
+					let openid = this.currentUser ? this.currentUser.OpenId:this.openId;
+					createFamily(this.currentAddress.city, this.cityId, 
+						this.addressName, openid).then(res=>{
 						if(res.data.msg == '家庭创建成功'){
 							this.$store.commit("createAddress", res.data.data);
 							uni.switchTab({

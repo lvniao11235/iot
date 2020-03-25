@@ -4,7 +4,7 @@
 		<view class="search">
 			<input placeholder="输入城市名称或拼音查询" @input="search" />
 		</view>
-		<view class="location address-item">{{currentCity}}<label>IP定位</label></view>
+		<!-- <view class="location address-item">{{currentCity}}<label>IP定位</label></view> -->
 		<view v-if="!showSearch">
 			<view class="city-category" v-for="group in cities" :key="group.group">
 				<view class="category-title address-item" :id="group.group">{{group.group.toUpperCase()}}</view>
@@ -3593,19 +3593,19 @@
 		},
 		onLoad(e){
 			let _this = this;
-			uni.getLocation({
-				type: 'wgs84',
-				success: function (res) {
-					if(res.errMsg == "getLocation:ok"){
-						uni.request({
-							url:`http://api.map.baidu.com/geocoder?output=json&location=${res.latitude},%20${res.longitude}&key=37492c0ee6f924cb5e934fa08c6b1676`,
-							success:res=>{
-								_this.currentCity = res.data.result.addressComponent.city;
-							}
-						})
-					}
-				}
-			})
+			// uni.getLocation({
+			// 	type: 'wgs84',
+			// 	success: function (res) {
+			// 		if(res.errMsg == "getLocation:ok"){
+			// 			uni.request({
+			// 				url:`http://api.map.baidu.com/geocoder?output=json&location=${res.latitude},%20${res.longitude}&key=37492c0ee6f924cb5e934fa08c6b1676`,
+			// 				success:res=>{
+			// 					_this.currentCity = res.data.result.addressComponent.city;
+			// 				}
+			// 			})
+			// 		}
+			// 	}
+			// })
 		},
 		computed:{
 			...mapState(["modifyAddress"]) 
