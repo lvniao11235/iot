@@ -379,8 +379,8 @@
 				
 			}, 
 			shortName(name){
-				if(name && name.length > 4){
-					return name.substr(0, 4) + "...";
+				if(name && name.length > 7){
+					return name.substr(0, 7) + "...";
 				}
 				return name;
 			},

@@ -17,11 +17,11 @@
 
 <script>
 	import { mapState } from 'vuex';
-	import { listFamilyBindDevices, deleteFamily } from '@/api/address';
+	import { listFamilyBindDevices, deleteFamily, listFamilys } from '@/api/address';
 	
 	export default {
 		computed:{
-			...mapState(["address", "currentAddress"]) 
+			...mapState(["address", "currentAddress", "currentUser"]) 
 		},
 		mounted(){
 		},
@@ -52,7 +52,11 @@
 					}
 				}).then(res=>{
 					if(res && res.data.msg == "删除成功"){
-						this.$store.commit("removeAddress", id);
+						return listFamilys(this.currentUser.OpenId)
+					}
+				}).then(res=>{
+					if(res){
+						this.$store.commit("setAddress", res.data.data)
 					}
 				})
 				

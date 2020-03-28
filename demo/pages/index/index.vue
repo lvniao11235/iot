@@ -93,7 +93,15 @@
 		computed:{
 			...mapState(["currentAddress", "devices", "currentUser", "address", "currentFamilyData", "testweather"])
 		},
-		onLoad() {
+		onLoad(e) {
+			if(e.goto){
+				switch(e.goto){
+					case "serviceDetail":
+						uni.navigateTo({
+							url:`../device/serviceDetail?orderId=${e.orderId}&type=1`
+						})
+				}
+			}
 			//this.$store.commit("setCurrentUser", {})
 			uni.showLoading({})
 			uni.setNavigationBarTitle({

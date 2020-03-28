@@ -129,6 +129,7 @@
 			uni.setNavigationBarTitle({
 			　　title:'我的'
 			})
+			loginOrRegister()
 		},
 		methods: {
 			...mapMutations(["setCurrentUser", "setAddress", "setcurrentAddress"]),
@@ -154,6 +155,7 @@
 				})
 			},
 			loginOrRegister(){
+				uni.showLoading()
 				login().then(res=>{
 					if(res.firstLogin){
 						uni.hideLoading();

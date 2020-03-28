@@ -14,9 +14,8 @@
 			</view>
 		</radio-group>
 		<view class="info">
-			<view class="head">服务描述</view> 
-			<view class="service">1.订阅服务器，一年内最多<span>免费</span>更换一次滤芯。厂家会根据当前设备的滤芯使用情况，在滤芯使用完之前联系用户</view>
-			<view class="service">2.同品牌产品<span>98折</span>优惠特享</view>
+			<view class="head">服务描述</view>
+			<view class="service" v-for="desc in descriptions" :key="desc">{{desc}}</view>
 		</view>
 		<view class="page-bottom">
 			<view class="info">需付金额：￥{{currentService ? currentService.presentPrice:"0.00"}}</view>
@@ -32,11 +31,13 @@
 		data() {
 			return {
 				services:[],
-				price:0
+				price:0,
+				descriptions:[],
 			}
 		},
 		computed:{
 			...mapState(["currentService", "selectDevice"]),
+			
 		},
 		onLoad() {
 			this.$store.commit("setCurrentService", null)
@@ -63,6 +64,11 @@
 				this.services = [];
 				if(res.data.data && res.data.data.length > 0){
 					this.services.push(...res.data.data)
+					if(this.services[0].description && this.services[0].description.length > 0){
+						this.descriptions = this.services[0].description.split("\n")
+					}
+					
+					this.selectService = this.services[0]
 				}
 			}).catch(res=>{
 				console.log(res)
@@ -75,7 +81,11 @@
 			...mapMutations(["setSelectDevice", "setCurrentService"]),
 			selectService(e){
 				let service = this.services.find(x=>x.serviceConfigId == e.detail.value);
+				
 				if(service){
+					if(service.description && service.description.length > 0){
+						this.descriptions = service.description.split("\n")
+					}
 					this.$store.commit("setCurrentService", service)
 				}
 			},
