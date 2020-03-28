@@ -60,20 +60,25 @@
 				let pages = getCurrentPages();
 				let befpage = pages[pages.length - 2];
 				if(this.url && this.url.length > 0){
-					if(this.isTabPage){
+					if(this.isTabPage && this.url == "/pages/index/index"){
+						uni.switchTab({
+							url:this.url
+						});
+						befpage.onLoad();
+					} else if(this.isTabPage){
 						uni.switchTab({
 							url:this.url
 						})
-					} else {
+					}
+					else {
 						uni.navigateTo({
 							url:this.url
 						})
 					}
-					befpage.onLoad();
 				} else {
 					uni.navigateBack({
 						success:function(){
-							befpage.onLoad();
+							
 						}
 					})
 				}
