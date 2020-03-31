@@ -64,7 +64,7 @@
 						uni.switchTab({
 							url:this.url
 						});
-						befpage.onLoad();
+						befpage.onLoad({});
 					} else if(this.isTabPage){
 						uni.switchTab({
 							url:this.url

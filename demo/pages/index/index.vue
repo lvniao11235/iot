@@ -452,10 +452,10 @@
 
 	.index-page .header .img {
 		position: absolute;
-		top: 10px;
-		right: 16px;
-		height: 50px;
-		width: 50px;
+		top: 0px;
+		right: 8px;
+		height: 46px;
+		width: 46px;
 	}
 
 	.index-page .header>view {
@@ -482,7 +482,7 @@
 	.index-page .header .info label,
 	.index-page .parameters .info label {
 		display: inline-block;
-		width: 110px;
+		width: 130px;
 		height: 20px;
 		font-size: 14px;
 	}
