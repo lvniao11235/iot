@@ -1,9 +1,9 @@
 <template>
 	<view class="subscribe-service">
 		<navbar :back="true" title="服务订阅"></navbar>
-		<radio-group @change="selectService">
+		<radio-group @change="selectServiceChnage">
 			<view class="services hscroll">
-				<view class="hscroll-container" style="width:430px;">
+				<view class="hscroll-container" :style="{width:(servicesCount * 140 + 10)  + 'px'}">
 					<view class="service-item hscroll-item" v-for="service in services" :key="service.serviceConfigId">
 						<view><radio :value="service.serviceConfigId"></radio></view>
 						<view>{{service.serviceDuration}}年期服务</view>
@@ -17,6 +17,7 @@
 			<view class="head">服务描述</view>
 			<view class="service" v-for="desc in descriptions" :key="desc">{{desc}}</view>
 		</view>
+		<view class="page-bottom-placeholder"></view>
 		<view class="page-bottom">
 			<view class="info">需付金额：￥{{currentService ? currentService.presentPrice:"0.00"}}</view>
 			<view class="btn" @click="goToServiceDetail">开通</view>
@@ -33,12 +34,14 @@
 				services:[],
 				price:0,
 				descriptions:[],
+				servicesCount:0
 			}
 		},
 		computed:{
 			...mapState(["currentService", "selectDevice"]),
 			
 		},
+		
 		onLoad() {
 			this.$store.commit("setCurrentService", null)
 			uni.setNavigationBarTitle({
@@ -64,11 +67,10 @@
 				this.services = [];
 				if(res.data.data && res.data.data.length > 0){
 					this.services.push(...res.data.data)
+					this.servicesCount = this.services.length;
 					if(this.services[0].description && this.services[0].description.length > 0){
 						this.descriptions = this.services[0].description.split("\n")
 					}
-					
-					this.selectService = this.services[0]
 				}
 			}).catch(res=>{
 				console.log(res)
@@ -79,7 +81,7 @@
 		},
 		methods: {
 			...mapMutations(["setSelectDevice", "setCurrentService"]),
-			selectService(e){
+			selectServiceChnage(e){
 				let service = this.services.find(x=>x.serviceConfigId == e.detail.value);
 				
 				if(service){

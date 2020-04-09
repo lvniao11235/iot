@@ -7,7 +7,7 @@
 				<view><label>空气质量：{{testweather.data.quality ? testweather.data.quality:"--"}}</label><label>温度：{{testweather.data.wendu ? testweather.data.wendu + '°C':"--"}}</label></view>
 				<view><label>湿度：{{testweather.data.shidu ? testweather.data.shidu:"--"}}</label><label style="width:150px;">PM2.5：{{testweather.data.pm25?testweather.data.pm25 + 'μg/m³':"--"}}</label></view>
 			</view>
-			<view class="img"><cover-image src="/static/images/sun.png"></cover-image></view>
+			<view class="img"><cover-image :src="weatherIcon"></cover-image></view>
 			<view class="mask" v-if="devices && devices.length > 0"></view>
 		</view>
 		<view class="header no-user" v-else>
@@ -87,7 +87,20 @@
 				averages:[],
 				maxs:[],
 				times:[],
-				lineDataType:1
+				lineDataType:1,
+				weathers:[
+					{label:'晴', name:'sunny', icon:'/static/images/sunny.png'},
+					{label:'云', name:'cloud', icon:'/static/images/cloud.png'},
+					{label:'雪', name:'snow', icon:'/static/images/snow.png'},
+					{label:'雨', name:'rain', icon:'/static/images/rain.png'},
+					{label:'雾', name:'fog', icon:'/static/images/fog.png'},
+					{label:'沙', name:'sand', icon:'/static/images/sand.png'},
+					{label:'尘', name:'dust', icon:'/static/images/dust.png'},
+					{label:'霾', name:'haze', icon:'/static/images/haze.png'},
+					{label:'阴', name:'overcast', icon:'/static/images/overcast.png'},
+				],
+				weatherIcon:'/static/images/sunny.png',
+				cityWeatherData:{}
 			}
 		},
 		computed:{
@@ -173,6 +186,10 @@
 											this.familyData = res.data.data.familyData
 											this.$store.commit("setCurrentFamilyData", res.data.data.familyData)
 										}
+										if(res.data.data && res.data.data.cityData){
+											this.cityWeatherData = res.data.data.cityData;
+											this.changeWeatherIcon(res.data.data.cityData);
+										}
 										if(res.data.data && res.data.data.avgPm25Value){
 											this.times = [];
 											this.mins = [];
@@ -180,9 +197,9 @@
 											this.averages = [];
 											for(let i=0; i< res.data.data.avgPm25Value.length; i++){
 												this.times.push(res.data.data.avgPm25Value[i].index)
-												this.averages.push(res.data.data.avgPm25Value[i].value)
-												this.maxs.push(res.data.data.avgPm25Value[i].value + 10)
-												this.mins.push(res.data.data.avgPm25Value[i].value - 10)
+												this.averages.push(res.data.data.avgPm25Value[i].value.toFixed(2))
+												this.maxs.push((res.data.data.avgPm25Value[i].value + 10).toFixed(2))
+												this.mins.push((res.data.data.avgPm25Value[i].value - 10).toFixed(2))
 											}
 											uni.createSelectorQuery().select(".index-page").boundingClientRect(e=>{
 												this.cWidth = e.width;
@@ -220,6 +237,14 @@
 						this.$store.commit("setCurrentUser", null)
 					}
 				})
+			},
+			changeWeatherIcon(citydata){
+				for(let i=0; i<this.weathers.length; i++){
+					if(citydata.weather.indexOf(this.weathers[i].label) > -1){
+						this.weatherIcon = this.weathers[i].icon;
+						return;
+					}
+				}
 			},
 			changeLineData(type){
 				this.lineDataType = type;
