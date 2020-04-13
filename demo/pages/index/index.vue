@@ -4,8 +4,8 @@
 		<view class="header" v-if="currentUser != null">
 			<view class="info">
 				<view class="location">{{currentAddress.city ? currentAddress.city:"--"}}</view>
-				<view><label>空气质量：{{testweather.data.quality ? testweather.data.quality:"--"}}</label><label>温度：{{testweather.data.wendu ? testweather.data.wendu + '°C':"--"}}</label></view>
-				<view><label>湿度：{{testweather.data.shidu ? testweather.data.shidu:"--"}}</label><label style="width:150px;">PM2.5：{{testweather.data.pm25?testweather.data.pm25 + 'μg/m³':"--"}}</label></view>
+				<view><label style="width:120px;">空气质量：{{testweather.airQuality ? testweather.airQuality:"--"}}</label><label style="width:120px;">温度：{{testweather.currentTemperature ? testweather.currentTemperature:"--"}}</label></view>
+				<view><label style="width:120px;">湿度：{{testweather.currentHumidity ? testweather.currentHumidity:"--"}}</label><label style="width:150px;">PM2.5：{{testweather.pm25?testweather.pm25:"--"}}</label></view>
 			</view>
 			<view class="img"><cover-image :src="weatherIcon"></cover-image></view>
 			<view class="mask" v-if="devices && devices.length > 0"></view>
@@ -100,13 +100,15 @@
 					{label:'阴', name:'overcast', icon:'/static/images/overcast.png'},
 				],
 				weatherIcon:'/static/images/sunny.png',
-				cityWeatherData:{}
+				cityWeatherData:{},
+				showExecute:true
 			}
 		},
 		computed:{
 			...mapState(["currentAddress", "devices", "currentUser", "address", "currentFamilyData", "testweather"])
 		},
 		onLoad(e) {
+			this.showExecute = false;
 			if(e.goto){
 				switch(e.goto){
 					case "serviceDetail":
@@ -120,26 +122,123 @@
 			uni.setNavigationBarTitle({
 			　　title:'首页'
 			})
+			if(this.currentUser && this.currentUser.OpenId){
+				this.lineDataType = 1;
+				if(this.currentAddress){
+					listFamilyBindDevices(this.currentAddress.id).then(res=>{
+						if(res.data.data && res.data.data.length > 0){
+							this.$store.commit("setDevices", res.data.data)
+							this.devices = [];
+							this.devices.push(...res.data.data);
+							return getFamilyAvgData(1, this.currentAddress.id).then(res=>{
+								
+								if(res.data.data && res.data.data.familyData){
+									this.familyData = res.data.data.familyData
+									this.$store.commit("setCurrentFamilyData", res.data.data.familyData)
+								}
+								if(res.data.data && res.data.data.cityData){
+									this.testweather = res.data.data.cityData;
+									this.cityWeatherData = res.data.data.cityData;
+									this.changeWeatherIcon(res.data.data.cityData);
+								}
+								if(res.data.data && res.data.data.avgPm25Value){
+									this.times = [];
+									this.mins = [];
+									this.maxs = [];
+									this.averages = [];
+									for(let i=0; i< res.data.data.avgPm25Value.length; i++){
+										this.times.push(res.data.data.avgPm25Value[i].index)
+										this.averages.push(res.data.data.avgPm25Value[i].value.toFixed(2))
+										this.maxs.push((res.data.data.avgPm25Value[i].value + 10).toFixed(2))
+										this.mins.push((res.data.data.avgPm25Value[i].value - 10).toFixed(2))
+									}
+									uni.createSelectorQuery().select(".index-page").boundingClientRect(e=>{
+										this.cWidth = e.width;
+										this.cHeight = 200;
+										this.fillData(this.times, this.mins, this.averages, this.maxs)
+									}).exec();
+									
+								}
+							})
+						} else {
+							this.$store.commit("setDevices", [])
+							this.devices = [];
+						}
+						
+					})
+				}
+				this.showExecute = true;
+				uni.hideLoading();
+				return;
+			}
 			this.wechatLogin();
 			_self = this;
 			
 		},
 		onShow(){
+			this.testweather = {};
 			this.$store.commit("setCurrentTab", '/pages/index/index')
 			this.showDialog = false;
-			if(this.currentAddress){
-				listFamilyBindDevices(this.currentAddress.id).then(res=>{
-					if(res.data.data && res.data.data.length > 0){
-						this.$store.commit("setDevices", res.data.data)
-						this.devices = [];
-						this.devices.push(...res.data.data);
-					} else {
-						this.$store.commit("setDevices", [])
-						this.devices = [];
-					}
-				})
+			if(this.showExecute){
+				this.lineDataType = 1;
+				if(this.currentAddress){
+					listFamilyBindDevices(this.currentAddress.id).then(res=>{
+						if(res.data.data && res.data.data.length > 0){
+							this.$store.commit("setDevices", res.data.data)
+							this.devices = [];
+							this.devices.push(...res.data.data);
+							return getFamilyAvgData(1, this.currentAddress.id).then(res=>{
+								
+								if(res.data.data && res.data.data.familyData){
+									this.familyData = res.data.data.familyData
+									this.$store.commit("setCurrentFamilyData", res.data.data.familyData)
+								}
+								if(res.data.data && res.data.data.cityData){
+									this.testweather = res.data.data.cityData;
+									this.cityWeatherData = res.data.data.cityData;
+									this.changeWeatherIcon(res.data.data.cityData);
+								}
+								if(res.data.data && res.data.data.avgPm25Value){
+									this.times = [];
+									this.mins = [];
+									this.maxs = [];
+									this.averages = [];
+									for(let i=0; i< res.data.data.avgPm25Value.length; i++){
+										this.times.push(res.data.data.avgPm25Value[i].index)
+										this.averages.push(res.data.data.avgPm25Value[i].value.toFixed(2))
+										this.maxs.push((res.data.data.avgPm25Value[i].value + 10).toFixed(2))
+										this.mins.push((res.data.data.avgPm25Value[i].value - 10).toFixed(2))
+									}
+									uni.createSelectorQuery().select(".index-page").boundingClientRect(e=>{
+										this.cWidth = e.width;
+										this.cHeight = 200;
+										this.fillData(this.times, this.mins, this.averages, this.maxs)
+									}).exec();
+									
+								}
+							})
+						} else {
+							this.$store.commit("setDevices", [])
+							this.devices = [];
+						}
+						
+					})
+				}
 			}
-			this.changeLineData(this.lineDataType);
+			//this.wechatLogin();
+			// if(this.currentAddress){
+			// 	listFamilyBindDevices(this.currentAddress.id).then(res=>{
+			// 		if(res.data.data && res.data.data.length > 0){
+			// 			this.$store.commit("setDevices", res.data.data)
+			// 			this.devices = [];
+			// 			this.devices.push(...res.data.data);
+			// 		} else {
+			// 			this.$store.commit("setDevices", [])
+			// 			this.devices = [];
+			// 		}
+			// 	})
+			// }
+			
 			
 		},
 		onReady() {
@@ -165,79 +264,81 @@
 						return listFamilys(res.OpenId)
 					}
 				}).then(res=>{
-					if(res){
-						if(res.data.data && res.data.data.length == 0){
-							uni.navigateTo({
-								url:'../address/addAddress'
-							})
-						} else {
-							let addrs = res.data.data
-							getCurFamilyId(this.currentUser.OpenId).then(res=>{
-								if(res.data.data){
-									this.$store.commit("setcurrentAddress", res.data.data)
-									get(res.data.data.cityId).then(res=>{
-										if(res.data.data){
-											this.$store.commit("setWeatherData", res.data.data)
-											this.testweather=res.data.data;
-										}
-									})
-									getFamilyAvgData(1, res.data.data.id).then(res=>{
-										if(res.data.data && res.data.data.familyData){
-											this.familyData = res.data.data.familyData
-											this.$store.commit("setCurrentFamilyData", res.data.data.familyData)
-										}
-										if(res.data.data && res.data.data.cityData){
-											this.cityWeatherData = res.data.data.cityData;
-											this.changeWeatherIcon(res.data.data.cityData);
-										}
-										if(res.data.data && res.data.data.avgPm25Value){
-											this.times = [];
-											this.mins = [];
-											this.maxs = [];
-											this.averages = [];
-											for(let i=0; i< res.data.data.avgPm25Value.length; i++){
-												this.times.push(res.data.data.avgPm25Value[i].index)
-												this.averages.push(res.data.data.avgPm25Value[i].value.toFixed(2))
-												this.maxs.push((res.data.data.avgPm25Value[i].value + 10).toFixed(2))
-												this.mins.push((res.data.data.avgPm25Value[i].value - 10).toFixed(2))
-											}
-											uni.createSelectorQuery().select(".index-page").boundingClientRect(e=>{
-												this.cWidth = e.width;
-												this.cHeight = 200;
-												this.fillData(this.times, this.mins, this.averages, this.maxs)
-											}).exec();
-											
-										}
-									})
-								} else {
-									this.$store.commit("setcurrentAddress", addrs[0])
-								}
-							})
-							this.$store.commit("setAddress", res.data.data)
-							return listFamilyBindDevices(res.data.data[0].id)
-						}
+					if(res.data.data && res.data.data.length == 0){
+						uni.navigateTo({
+							url:'../address/addAddress'
+						})
+					} else {
+						this.$store.commit("setAddress", res.data.data)
+						return getCurFamilyId(this.currentUser.OpenId)
 					}
 				}).then(res=>{
-					if(res){
-						if(res.data.data && res.data.data.length > 0){
-							this.$store.commit("setDevices", res.data.data)
-							this.devices = [];
-							this.devices.push(...res.data.data);
+						if(res.data.data){
+							this.$store.commit("setcurrentAddress", res.data.data)
+							get(res.data.data.cityId).then(res=>{
+								if(res.data.data){
+									this.$store.commit("setWeatherData", res.data.data)
+									this.testweather=res.data.data;
+								}
+							})
+							getFamilyAvgData(1, res.data.data.id).then(res=>{
+								if(res.data.data && res.data.data.familyData){
+									this.familyData = res.data.data.familyData
+									this.$store.commit("setCurrentFamilyData", res.data.data.familyData)
+								}
+								if(res.data.data && res.data.data.cityData){
+									this.testweather = res.data.data.cityData;
+									this.cityWeatherData = res.data.data.cityData;
+									this.changeWeatherIcon(res.data.data.cityData);
+								}
+								if(res.data.data && res.data.data.avgPm25Value){
+									this.times = [];
+									this.mins = [];
+									this.maxs = [];
+									this.averages = [];
+									for(let i=0; i< res.data.data.avgPm25Value.length; i++){
+										this.times.push(res.data.data.avgPm25Value[i].index)
+										this.averages.push(res.data.data.avgPm25Value[i].value.toFixed(2))
+										this.maxs.push((res.data.data.avgPm25Value[i].value + 10).toFixed(2))
+										this.mins.push((res.data.data.avgPm25Value[i].value - 10).toFixed(2))
+									}
+									uni.createSelectorQuery().select(".index-page").boundingClientRect(e=>{
+										this.cWidth = e.width;
+										this.cHeight = 200;
+										this.fillData(this.times, this.mins, this.averages, this.maxs)
+									}).exec();
+									
+								}
+							})
+							return listFamilyBindDevices(res.data.data.id)
 						} else {
-							this.$store.commit("setDevices", [])
-							this.devices = [];
+							this.$store.commit("setcurrentAddress", res.data.data[0])
+							return listFamilyBindDevices(res.data.data[0].id)
+						}
+					}).then(res=>{
+						if(res){
+							if(res.data.data && res.data.data.length > 0){
+								this.$store.commit("setDevices", res.data.data)
+								this.devices = [];
+								this.devices.push(...res.data.data);
+							} else {
+								this.$store.commit("setDevices", [])
+								this.devices = [];
+							}
+							
 						}
 						uni.hideLoading();
-					}
-				}).catch(res=>{
-					uni.hideLoading();
-					if(res.errMsg.startsWith("getUserInfo:fail")){
-						
-						//this.showDialog = true;
-						this.$store.commit("setCurrentUser", null)
-					}
-				})
-			},
+						this.showExecute = true;
+					}).catch(res=>{
+						uni.hideLoading();
+						this.showExecute = true;
+						if(res.errMsg.startsWith("getUserInfo:fail")){
+							
+							//this.showDialog = true;
+							this.$store.commit("setCurrentUser", null)
+						}
+					})
+				},
 			changeWeatherIcon(citydata){
 				for(let i=0; i<this.weathers.length; i++){
 					if(citydata.weather.indexOf(this.weathers[i].label) > -1){
@@ -505,14 +606,14 @@
 	}
 
 	.index-page .header .info label,
-	.index-page .parameters .info label {
+	.index-page .parameters label {
 		display: inline-block;
 		width: 130px;
 		height: 20px;
 		font-size: 14px;
 	}
 	
-	.index-page .parameters .info label{
+	.index-page .parameters label{
 		width:130px;
 		font-size:16px;
 	}

@@ -33,15 +33,8 @@
 					this.flag = true;
 					this.orderId = res.data.data;
 				} else {
-					uni.showModal({
-						title:'提示',
-						content:res.data.msg,
-						showCancel:false,
-						success:res=>{
-							uni.switchTab({
-								url:'./device'
-							})
-						}
+					uni.switchTab({
+						url:'./device'
 					})
 				}
 				
