@@ -16,7 +16,7 @@
 			<view>请先进行登录</view>
 		</view>
 		<view v-if="devices && devices.length > 0">
-			<view class="parameters">
+			<view class="parameters" style="overflow:hidden">
 				<view><label>{{familyData && familyData.airQuality ? familyData.airQuality:'--'}}</label>室内环境</view>
 				<view class="info"><label>温度：{{familyData && familyData.currentTemperature ? familyData.currentTemperature:'--'}}</label><label>湿度：{{familyData && familyData.currentHumidity?familyData.currentHumidity:'--'}}</label></view>
 				<view class="info" ><label style="width:200px;">PM2.5：{{familyData && familyData.pm25?familyData.pm25:'--'}}</label></view>
@@ -80,7 +80,7 @@
 				itemCount: 10,
 				sliderMax: 50,
 				devices:[],
-				familyData:{},
+				familyData:null,
 				testweather:{},
 				categories:[],
 				mins:[],
@@ -135,7 +135,10 @@
 								if(res.data.data && res.data.data.familyData){
 									this.familyData = res.data.data.familyData
 									this.$store.commit("setCurrentFamilyData", res.data.data.familyData)
+								} else {
+									this.familyData = null
 								}
+								
 								if(res.data.data && res.data.data.cityData){
 									this.testweather = res.data.data.cityData;
 									this.cityWeatherData = res.data.data.cityData;
@@ -192,6 +195,8 @@
 								if(res.data.data && res.data.data.familyData){
 									this.familyData = res.data.data.familyData
 									this.$store.commit("setCurrentFamilyData", res.data.data.familyData)
+								} else {
+									this.familyData = null
 								}
 								if(res.data.data && res.data.data.cityData){
 									this.testweather = res.data.data.cityData;
@@ -201,11 +206,11 @@
 								if(res.data.data && res.data.data.avgPm25Value){
 									this.times = [];
 									this.mins = [];
-									this.maxs = [];
 									this.averages = [];
 									for(let i=0; i< res.data.data.avgPm25Value.length; i++){
 										this.times.push(res.data.data.avgPm25Value[i].index)
 										this.averages.push(res.data.data.avgPm25Value[i].value.toFixed(2))
+									this.maxs = [];
 										this.maxs.push((res.data.data.avgPm25Value[i].value + 10).toFixed(2))
 										this.mins.push((res.data.data.avgPm25Value[i].value - 10).toFixed(2))
 									}
@@ -285,6 +290,8 @@
 								if(res.data.data && res.data.data.familyData){
 									this.familyData = res.data.data.familyData
 									this.$store.commit("setCurrentFamilyData", res.data.data.familyData)
+								} else {
+									this.familyData = null
 								}
 								if(res.data.data && res.data.data.cityData){
 									this.testweather = res.data.data.cityData;

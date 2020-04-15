@@ -9,7 +9,7 @@
 			</button> -->
 			<button open-type="getPhoneNumber" withCredentials="true" lang="zh_CN" @getphonenumber="getPhoneNumber">微信登录</button>
 		</view>
-		<view>1.21</view>
+		<view>1.41</view>
 		<view class="login-agree">登录即代表您同意《<label @click="goToClause">健康生活用户服务条款</label>》</view>
 		
 	</view>

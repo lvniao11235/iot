@@ -119,7 +119,8 @@
 					'./about',
 					'./config',
 					'./modifyUser'
-				]
+				],
+				myaddress:null
 			}
 		},
 		computed:{
@@ -129,7 +130,7 @@
 			uni.setNavigationBarTitle({
 			　　title:'我的'
 			})
-			loginOrRegister()
+			this.loginOrRegister()
 		},
 		methods: {
 			...mapMutations(["setCurrentUser", "setAddress", "setcurrentAddress"]),
@@ -174,21 +175,22 @@
 								url:'../address/addAddress'
 							})
 						} else {
-							let addrs = res.data.data
-							getCurFamilyId(this.currentUser.OpenId).then(res=>{
-								if(res.data.data){
-									let addr = addrs.find(x=>x.id == res.data.data);
-									if(addr){
-										this.$store.commit("setcurrentAddress", addr)
-									}
-								} else {
-									this.$store.commit("setcurrentAddress", res.data.data[0])
-								}
-							})
+							this.myaddress = res.data.data;
 							this.$store.commit("setAddress", res.data.data)
-							return listFamilyBindDevices(res.data.data[0].id)
+							return getCurFamilyId(this.currentUser.OpenId)
 						}
 					}
+				}).then(res=>{
+					if(res.data.data){
+						let addr = this.myaddress.find(x=>x.id == res.data.data.id);
+						if(addr){
+							this.$store.commit("setcurrentAddress", addr)
+						}
+					} else {
+						this.$store.commit("setcurrentAddress", this.myaddress[0])
+					}
+					
+					return listFamilyBindDevices(this.currentAddress.id)
 				}).then(res=>{
 					if(res){
 						if(res.data.data && res.data.data.length > 0){

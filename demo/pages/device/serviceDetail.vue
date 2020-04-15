@@ -15,7 +15,7 @@
 			</view>
 		</view>
 		<view class="icon-list-item border">
-			<label class="label">服务类型</label>
+			<label class="label">服务期限</label>
 			<view class="value"> 
 				<label>{{currentService.serviceDuration}}年期服务</label>
 			</view>
