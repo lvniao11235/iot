@@ -4,8 +4,8 @@
 		<view class="header" v-if="currentUser != null">
 			<view class="info">
 				<view class="location">{{currentAddress.city ? currentAddress.city:"--"}}</view>
-				<view><label style="width:120px;">空气质量：{{testweather.airQuality ? testweather.airQuality:"--"}}</label><label style="width:120px;">温度：{{testweather.currentTemperature ? testweather.currentTemperature:"--"}}</label></view>
-				<view><label style="width:120px;">湿度：{{testweather.currentHumidity ? testweather.currentHumidity:"--"}}</label><label style="width:150px;">PM2.5：{{testweather.pm25?testweather.pm25:"--"}}</label></view>
+				<view><label style="width:120px;">空气质量：{{testweather.data.quality ? testweather.data.quality:"--"}}</label><label style="width:120px;">温度：{{testweather.data.wendu ? testweather.data.wendu + '°C':"--"}}</label></view>
+				<view><label style="width:120px;">湿度：{{testweather.data.shidu ? testweather.data.shidu:"--"}}</label><label style="width:150px;">PM2.5：{{testweather.data.pm25?testweather.data.pm25 + 'μg/m³':"--"}}</label></view>
 			</view>
 			<view class="img"><cover-image :src="weatherIcon"></cover-image></view>
 			<view class="mask" v-if="devices && devices.length > 0"></view>
@@ -140,7 +140,7 @@
 								}
 								
 								if(res.data.data && res.data.data.cityData){
-									this.testweather = res.data.data.cityData;
+									//this.testweather = res.data.data.cityData;
 									this.cityWeatherData = res.data.data.cityData;
 									this.changeWeatherIcon(res.data.data.cityData);
 								}
@@ -169,6 +169,12 @@
 						}
 						
 					})
+					get(this.currentAddress.cityId).then(res=>{
+						if(res.data.data){
+							this.$store.commit("setWeatherData", res.data.data)
+							this.testweather=res.data.data;
+						}
+					})
 				}
 				this.showExecute = true;
 				uni.hideLoading();
@@ -179,7 +185,7 @@
 			
 		},
 		onShow(){
-			this.testweather = {};
+			//this.testweather = {};
 			this.$store.commit("setCurrentTab", '/pages/index/index')
 			this.showDialog = false;
 			if(this.showExecute){
@@ -199,7 +205,7 @@
 									this.familyData = null
 								}
 								if(res.data.data && res.data.data.cityData){
-									this.testweather = res.data.data.cityData;
+									//this.testweather = res.data.data.cityData;
 									this.cityWeatherData = res.data.data.cityData;
 									this.changeWeatherIcon(res.data.data.cityData);
 								}
@@ -227,6 +233,12 @@
 							this.devices = [];
 						}
 						
+					})
+					get(this.currentAddress.cityId).then(res=>{
+						if(res.data.data){
+							this.$store.commit("setWeatherData", res.data.data)
+							this.testweather=res.data.data;
+						}
 					})
 				}
 			}
@@ -294,7 +306,7 @@
 									this.familyData = null
 								}
 								if(res.data.data && res.data.data.cityData){
-									this.testweather = res.data.data.cityData;
+									//this.testweather = res.data.data.cityData;
 									this.cityWeatherData = res.data.data.cityData;
 									this.changeWeatherIcon(res.data.data.cityData);
 								}
