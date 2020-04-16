@@ -3646,7 +3646,8 @@
 					this.showSearch = true;
 					this.searchResult = [];
 					for(let i=0; i< this.cities.length; i++){
-						this.searchResult.push(...this.cities[i].cities.filter(x=>x.pinyin.startsWith(e.detail.value)));
+						this.searchResult.push(...this.cities[i].cities.filter(x=>x.pinyin.toLowerCase().startsWith(e.detail.value.trim())
+							|| x.city_name.startsWith(e.detail.value.trim())));
 					}
 					console.log(this.searchResult.length);
 				} else {
