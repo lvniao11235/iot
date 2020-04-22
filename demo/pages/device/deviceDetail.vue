@@ -27,7 +27,7 @@
 				<view class="dispParameter">
 					<view class="leftParameter"  :class="{'not-array':!deviceStatus[deviceStatus.dispParameters[row*2]].isArray}">
 						<template v-if="deviceStatus[deviceStatus.dispParameters[row*2]].isArray">
-							<view class="parameter-title">{{deviceStatus[deviceStatus.dispParameters[row*2]].title}}</view>
+							<view class="parameter-title"><h3>{{deviceStatus[deviceStatus.dispParameters[row*2]].title}}</h3></view>
 							<view class="parameter-value">
 								<view @click="moveToLeft(deviceStatus[deviceStatus.dispParameters[row*2]], row*2)" class="fa fa-angle-left"></view>
 								<view class=" short-hscroll1 hscroll" ref="hscroll">
@@ -43,7 +43,7 @@
 							</view>
 						</template>
 						<template v-else>
-							<view class="parameter-title">{{deviceStatus[deviceStatus.dispParameters[row*2]].title}}</view>
+							<view class="parameter-title"><h3>{{deviceStatus[deviceStatus.dispParameters[row*2]].title}}</h3></view>
 							<view class="parameter-value">
 								{{deviceStatus[deviceStatus.dispParameters[row*2]].value}}{{deviceStatus[deviceStatus.dispParameters[row*2]].unit}}
 							</view>
@@ -52,7 +52,7 @@
 					
 					<view class="rightParameter" v-if="deviceStatus.dispParameters.length > (row*2+1)" :class="{'not-array':!deviceStatus[deviceStatus.dispParameters[row*2+1]].isArray}">
 						<template v-if="deviceStatus[deviceStatus.dispParameters[row*2+1]].isArray">
-							<view class="parameter-title">{{deviceStatus[deviceStatus.dispParameters[row*2+1]].title}}</view>
+							<view class="parameter-title"><h3>{{deviceStatus[deviceStatus.dispParameters[row*2+1]].title}}</h3></view>
 							<view class="parameter-value">
 								<view @click="moveToLeft(deviceStatus[deviceStatus.dispParameters[row*2+1]], row*2+1)" class="fa fa-angle-left"></view>
 								<view class=" short-hscroll1 hscroll" ref="hscroll">
@@ -68,7 +68,7 @@
 							</view>
 						</template>
 						<template v-else>
-							<view class="parameter-title">{{deviceStatus[deviceStatus.dispParameters[row*2+1]].title}}</view>
+							<view class="parameter-title"><h3>{{deviceStatus[deviceStatus.dispParameters[row*2+1]].title}}</h3></view>
 							<view class="parameter-value">
 								{{deviceStatus[deviceStatus.dispParameters[row*2+1]].value}}{{deviceStatus[deviceStatus.dispParameters[row*2+1]].unit}}
 							</view>
@@ -519,6 +519,7 @@
 	.leftParameter > .parameter-title,
 	.rightParameter > .parameter-title{
 		text-align:center;
+		font-weight:bold;
 	}
 	.leftParameter > .parameter-value,
 	.rightParameter > .parameter-value{
@@ -746,8 +747,6 @@
 		height:50px;
 		width:50px;
 		margin:30px auto;
-		box-shadow: 0 0 10px #808080;
-		border-radius:25px;
 	}
 	
 	.param1 > view{

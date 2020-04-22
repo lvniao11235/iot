@@ -3,11 +3,11 @@
 		<navbar :isHome="true" :bgColor="'#10AB6C'" :fgColor="'#fff'" :showAddress="true" :title="'首页'"></navbar>
 		<view class="header" v-if="currentUser != null">
 			<view class="info">
-				<view class="location">{{currentAddress.city ? currentAddress.city:"--"}}</view>
-				<view><label style="width:120px;">空气质量：{{testweather.data.quality ? testweather.data.quality:"--"}}</label><label style="width:120px;">温度：{{testweather.data.wendu ? testweather.data.wendu + '°C':"--"}}</label></view>
-				<view><label style="width:120px;">湿度：{{testweather.data.shidu ? testweather.data.shidu:"--"}}</label><label style="width:150px;">PM2.5：{{testweather.data.pm25?testweather.data.pm25 + 'μg/m³':"--"}}</label></view>
+				<view class="location" style="padding-top:20px;">{{currentAddress.city ? currentAddress.city:"--"}}</view>
+				<view style="margin-top:3px;"><label style="width:120px;">空气质量：{{testweather.data.quality ? testweather.data.quality:"--"}}</label><label style="width:120px;">温度：{{testweather.data.wendu ? testweather.data.wendu + '°C':"--"}}</label></view>
+				<view style="margin-top:3px;"><label style="width:120px;">湿度：{{testweather.data.shidu ? testweather.data.shidu:"--"}}</label><label style="width:150px;">PM2.5：{{testweather.data.pm25?testweather.data.pm25 + 'μg/m³':"--"}}</label></view>
 			</view>
-			<view class="img"><cover-image :src="weatherIcon"></cover-image></view>
+			<view class="img"><cover-image  :src="weatherIcon"></cover-image></view>
 			<view class="mask" v-if="devices && devices.length > 0"></view>
 		</view>
 		<view class="header no-user" v-else>
@@ -18,14 +18,14 @@
 		<view v-if="devices && devices.length > 0">
 			<view class="parameters" style="overflow:hidden">
 				<view><label>{{familyData && familyData.airQuality ? familyData.airQuality:'--'}}</label>室内环境</view>
-				<view class="info"><label>温度：{{familyData && familyData.currentTemperature ? familyData.currentTemperature:'--'}}</label><label>湿度：{{familyData && familyData.currentHumidity?familyData.currentHumidity:'--'}}</label></view>
-				<view class="info" ><label style="width:200px;">PM2.5：{{familyData && familyData.pm25?familyData.pm25:'--'}}</label></view>
+				<view style="margin-top:3px;" class="info"><label>温度：{{familyData && familyData.currentTemperature ? familyData.currentTemperature:'--'}}</label><label>湿度：{{familyData && familyData.currentHumidity?familyData.currentHumidity:'--'}}</label></view>
+				<view style="margin-top:3px;" class="info" ><label style="width:200px;">PM2.5：{{familyData && familyData.pm25?familyData.pm25:'--'}}</label></view>
 			</view>
 			<view class="qiun-charts">
-				<view>统计数据</view>
+				<view><label class="title-border"></label>统计数据</view>
 				<view class="switch-btns">
-					<view @click="changeLineData(1)" :class="{'selected':lineDataType == 1}">日</view>
-					<view @click="changeLineData(2)" :class="{'selected':lineDataType == 2}">月</view>
+					<view style="margin-right:5px;" @click="changeLineData(1)" :class="{'selected':lineDataType == 1}">日</view>
+					<view style="margin-right:5px;" @click="changeLineData(2)" :class="{'selected':lineDataType == 2}">月</view>
 					<view @click="changeLineData(3)" :class="{'selected':lineDataType == 3}">年</view>
 				</view>
 				<canvas canvas-id="canvasLineA" id="canvasLineA" class="charts" disable-scroll=true @touchstart="touchLineA" @touchmove="moveLineA" @touchend="touchEndLineA"></canvas>
@@ -34,7 +34,7 @@
 		<view v-else>
 			<view class="no-device" style="z-index:1;">
 				<image src="/static/images/phone.png"></image>
-				<view>添加设备，更多服务</view>
+				<view style="color:#adadad;">添加设备，更多服务</view>
 				<view @click="addDevice" class="empty-btn">去添加</view>
 			</view>
 		</view>
@@ -50,6 +50,9 @@
 					<view class="dialog-ok" @click="loginOk">去登录</view>
 				</view>
 			</view>
+		</view>
+		<view class="pushinfo-dialog">
+			
 		</view>
 	</view>
 </template>
@@ -566,7 +569,6 @@
 	
 	.qiun-charts > view:first-child{
 		margin-left:10px;
-		border-left:3px solid #10AB6C;
 		padding-left:5px;
 		font-size:20px;
 		font-weight:bold;
@@ -598,7 +600,7 @@
 	.index-page .header .img {
 		position: absolute;
 		top: 0px;
-		right: 8px;
+		right: 20px;
 		height: 46px;
 		width: 46px;
 	}
@@ -784,5 +786,19 @@
 		
 		.header.no-user > view:last-child{
 			padding-bottom:20px;
+		}
+		
+		.pushinfo-dialog{
+			height:80px;
+			display:none;
+			width:calc(100% - 32px);
+			margin:0 auto;
+			box-shadow:0 0 5px #8F8F8F;
+			position:fixed;
+			bottom:50px;
+			left:0;
+			right:0;
+			background-color:#fff;
+			border-radius:5px;
 		}
 </style>

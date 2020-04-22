@@ -5,7 +5,9 @@
 			<view class="fa fa-exclamation-circle"></view>
 			<view>请将手机连接到名称为Airpurfier-xxx的Wi-Fi，连接成功后，返回小程序当中</view>
 		</view>
-		<view @click="next">已设置wifi</view>
+		<view class="bottom-group">
+			<view class="max-btn" @click="next">已设置wifi</view>
+		</view>
 	</view>
 </template>
 
@@ -23,9 +25,7 @@
 
 <style>
 	page, .connect-wifi{
-		position:relative;
-		height:100%;
-		width:100%;
+		
 	}
 	.connect-wifi .tip{
 		position:absolute;
@@ -51,19 +51,5 @@
 		margin:20px auto;
 	}
 	
-	.connect-wifi > view:last-child{
-		position:absolute;
-		bottom:50px;
-		left:0;
-		right:0;
-		margin:auto;
-		height:30px;
-		width:200px;
-		background-color:#10AB6C;
-		color:#fff;
-		line-height:30px;
-		vertical-align:middle;
-		text-align:center;
-		border-radius:5px;
-	}
+	
 </style>

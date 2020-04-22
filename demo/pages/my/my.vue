@@ -17,8 +17,8 @@
 				<label></label>
 				<label class="value-icon fa fa-angle-right"></label>
 			</view>
-			<view class="border"></view>
 		</view>
+		<view class="line-separate"></view>
 		<!-- <view class="icon-list-item" @click="jumpTo(1)">
 			<label class="icon"><image src="/static/images/link.png"></image></label>
 			<label class="label">设备共享</label>
@@ -35,8 +35,8 @@
 				<label></label>
 				<label class="value-icon fa fa-angle-right"></label>
 			</view>
-			<view class="border"></view>
 		</view>
+		<view class="line-separate"></view>
 		<!-- <view class="icon-list-item" @click="jumpTo(3)">
 			<label class="icon"><image src="/static/images/edit.png"></image></label>
 			<label class="label">意见反馈</label>
@@ -62,8 +62,8 @@
 				<label></label>
 				<label class="value-icon fa fa-angle-right"></label>
 			</view>
-			<view class="border"></view>
 		</view>
+		<view class="line-separate"></view>
 		<!-- <view class="icon-list-item" @click="jumpTo(6)">
 			<label class="icon"><image src="/static/images/config.png"></image></label>
 			<label class="label">设置</label>

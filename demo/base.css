@@ -162,7 +162,7 @@
 }
 
 .line-separate{
-	border-top:1px solid #F3F5F4;
+	border-top:1px solid #f8f8f8;
 	width:100%;
 }
 
@@ -188,7 +188,7 @@
 }
 
 .icon-list-item.border{
-	border-bottom:1px solid #B1B1B1;
+	border-bottom:1px solid #f8f8f8;
 }
 
 .icon-list-item > *{
@@ -253,4 +253,13 @@
 	
 .hscroll .hscroll-item{
 	display:inline-block;
+}
+
+.title-border{
+	position:relative;
+	top:3px;
+	margin-right:2px;
+	display:inline-block;
+	border-left:3px solid #10AB6C;
+	height:20px;
 }

@@ -1,14 +1,16 @@
 <template>
 	<view class="setting-wifi">
 		<navbar :back="true" title="设备配网"></navbar>
-		<view class="tip"><label class="fa fa-exclamation-circle" style="color:#10AB6C;"></label>选择设备工作的Wi-Fi</view>
+		<view class="tip" style="color:#adadad;"><label class="fa fa-exclamation-circle" style="color:#10AB6C;"></label>选择设备工作的Wi-Fi</view>
 		<view style="margin-left:10px;">SSID</view>
 		<picker @change="bindPickerChange" :value="index" :range="wifis" range-key="SSID">
 			<view class="uni-input">{{wifis[index].SSID}}</view>
 		</picker>
 		<view style="margin-left:10px;">密码</view>
 		<input password="true"></input>
-		<view class="next" @click="next">下一步</view>
+		<view class="bottom-group">
+			<view class="max-btn" @click="next">下一步</view>
+		</view>
 	</view>
 </template>
 

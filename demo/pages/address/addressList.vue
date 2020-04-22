@@ -3,13 +3,14 @@
 		<navbar :back="true" :url="currentTab" :isTabPage="currentTab && currentTab.length > 0"  title="家庭列表"></navbar>
 		<template v-for="addr in address">
 			<view @click="selectAddress(addr)" :key="addr.id" class="icon-list-item" :class="{'selected':currentAddress.id == addr.id}">
-				<label class="icon"><image src="../../static/images/building.png"></image></label>
+				<label class="icon"><image style="height:14px;width:14px;top:0;" src="../../static/images/building.png"></image></label>
 				<label class="label">{{addr.familyName}}</label>
 				<label v-if="currentAddress.id == addr.id" class="checked fa fa-check"></label>
 			</view>
+			<view class="line-separate" :key="addr.id"></view>
 		</template>
-		<view :key="addr.id" class="icon-list-item" @click="gotoManager">
-			<label class="icon"><image src="../../static/images/building.png"></image></label>
+		<view :key="addr.id" class="icon-list-item" @click="gotoManager" style="text-align:center;">
+			<label class="icon"><image style="width:16px;height:16px;" src="../../static/images/bianji.png"></image></label>
 			<label class="label">家庭管理</label>
 		</view>
 	</view>

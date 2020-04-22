@@ -3,15 +3,19 @@
 		<navbar :back="true" title="管理家庭"></navbar>
 		<template v-for="addr in address">
 			<view :key="addr.id" class="icon-list-item">
-				<label class="icon"><image src="../../static/images/building.png"></image></label>
+				<label class="icon"><image style="height:14px;width:14px;top:0;" src="../../static/images/building.png"></image></label>
 				<label class="label">{{addr.familyName}}</label>
 				<view class="btns">
 					<label @click="modify(addr.id)">修改</label>
 					<label @click="remove(addr.id)" style="color:red;">删除</label>
 				</view>
 			</view>
+			<view class="line-separate" :key="addr.id"></view>
 		</template>
-		<view class="btn" @click="create">添加</view>
+		<view class="bottom-group">
+			<view class="max-btn" @click="create">添加</view>
+		</view>
+		
 	</view>
 </template>
 
@@ -48,15 +52,24 @@
 							showCancel:false
 						})
 					} else {
-						return deleteFamily(id)
-					}
-				}).then(res=>{
-					if(res && res.data.msg == "删除成功"){
-						return listFamilys(this.currentUser.OpenId)
-					}
-				}).then(res=>{
-					if(res){
-						this.$store.commit("setAddress", res.data.data)
+						uni.showModal({
+							content:'删除家庭后，绑定的所有设备都会解绑',
+							showCancel:true,
+							success:res=>{
+								if(res.confirm){
+									deleteFamily(id).then(res=>{
+										if(res && res.data.msg == "删除成功"){
+											return listFamilys(this.currentUser.OpenId)
+										}
+									}).then(res=>{
+										if(res){
+											this.$store.commit("setAddress", res.data.data)
+										}
+									})
+								}
+								
+							}
+						})
 					}
 				})
 				

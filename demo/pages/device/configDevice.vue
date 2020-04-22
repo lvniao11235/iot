@@ -108,26 +108,34 @@
 				})
 			},
 			removeDevice(){
-				unBindDevice(this.selectDevice.deviceId).then(res=>{
-					if(res.data.msg == "删除成功"){
-						uni.switchTab({
-							url:'./device'
-						})
-					} else {
-						uni.showModal({
-						    title: '提示',
-						    content: '解除失败',
-						    success: function (res) {
-						        if (res.confirm) {
-						            console.log('用户点击确定');
-						        } else if (res.cancel) {
-						            console.log('用户点击取消');
-						        }
-						    }
-						});
-					}
-					
-				})
+				uni.showModal({
+				    content: '是否要解绑该设备',
+				    success: res=> {
+				        if (res.confirm) {
+							unBindDevice(this.selectDevice.deviceId).then(res=>{
+								if(res.data.msg == "删除成功"){
+									uni.switchTab({
+										url:'./device'
+									})
+								} else {
+									uni.showModal({
+									    title: '提示',
+									    content: '解除失败',
+									    success: res=> {
+									        if (res.confirm) {
+									            console.log('用户点击确定');
+									        } else if (res.cancel) {
+									            console.log('用户点击取消');
+									        }
+									    }
+									});
+								}
+								
+							})
+				        }
+				    }
+				});
+				
 			}
 		},
 	}

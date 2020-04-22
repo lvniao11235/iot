@@ -2,7 +2,7 @@
 	<view class="device">
 		<navbar :showAddress="true" title="智能设备"></navbar>
 		<view class="has-device" v-if="devices && devices.length > 0">
-			<view class="mydevice">我的设备</view>
+			<view class="mydevice" style="height:40px;line-height:40px;vertical-align:middle;"><label style="position:relative;top:3px;margin-right:2px;display:inline-block;border-left:3px solid #10AB6C;height:20px;"></label>我的设备</view>
 			<view class="devices">
 				<view class="device-item" v-for="device in devices"
 				 :key="device.deviceName" @click="selectDevice(device)">
@@ -149,7 +149,7 @@
 
 <style>
 	page{
-		background-color:#f2f2f2;
+		background-color:#fff;
 	}
 	.content {
 		display: flex;
@@ -209,7 +209,6 @@
 	
 	
 	.device .has-device .mydevice{
-		border-left:2px solid #10AB6C;
 		height:20px;
 		line-height:20px;
 		vertical-align:middle;

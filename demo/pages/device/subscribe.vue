@@ -5,7 +5,7 @@
 			<view class="services hscroll">
 				<view class="hscroll-container" :style="{width:(servicesCount * 140 + 10)  + 'px'}">
 					<view class="service-item hscroll-item" v-for="service in services" :key="service.serviceConfigId">
-						<view><radio :value="service.serviceConfigId"></radio></view>
+						<view><radio :value="service.serviceConfigId" :color="'#10AB6C'"></radio></view>
 						<view>{{service.serviceDuration}}年期服务</view>
 						<view>原价：￥{{service.originalPrice}}</view>
 						<view>现价：￥{{service.presentPrice}}</view>
@@ -19,7 +19,7 @@
 		</view>
 		<view class="page-bottom-placeholder"></view>
 		<view class="page-bottom">
-			<view class="info">需付金额：￥{{currentService ? currentService.presentPrice:"0.00"}}</view>
+			<view class="info">需付金额：<label style="color:#10AB6C;">￥{{currentService ? currentService.presentPrice:"0.00"}}</label></view>
 			<view class="btn" @click="goToServiceDetail">开通</view>
 		</view>
 	</view>

@@ -6,7 +6,7 @@
 			:style="{Top:0, paddingTop:paddingTop+'px', 
 				backgroundColor:background,
 				color:color}">
-			<view @click="switchAddress" :style="{color:addressColor}" v-if="showAddress && currentAddress != null" class="address">{{currentAddress.familyName}}<label class="fa fa-angle-right"></label></view>
+			<view @click="switchAddress" :style="{color:addressColor}" v-if="showAddress && currentAddress != null" class="address">{{familyName}}<label class="fa fa-angle-right"></label></view>
 			<view @click="navigateBack" class="back" v-if="back"><label class="fa fa-angle-left"></label></view>
 			<label class="navbar-title">{{dispTitle}}</label>
 		</view>
@@ -29,6 +29,7 @@
 				foregroudColor:'#000'
 			}
 		},
+		
 		computed:{
 			...mapState(["appName", "currentAddress"]),
 			background(){
@@ -42,6 +43,16 @@
 			},
 			addressColor(){
 				return this.isHome ? "#fff" : "#585858"
+			},
+			familyName(){
+				if(this.currentAddress && this.currentAddress.familyName){
+					if(this.currentAddress.familyName.length > 5){
+						return this.currentAddress.familyName.substr(0, 5) + '...';
+					} else {
+						return this.currentAddress.familyName;
+					}
+				}
+				return "";
 			}
 		},
 		methods:{
@@ -111,12 +122,13 @@
 	
 	.navbar-component .address{
 		display:inline-block;
-		width:100px;
 		position:absolute;
+		min-width:60px;
 		left:0px;
 		height:45px;
 		z-index:10001;
 		font-size:15px;
+		padding-left:5px;
 	}
 	
 	.navbar-component .address label{

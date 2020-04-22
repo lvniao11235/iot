@@ -4,7 +4,9 @@
 		<view class="tip">按照下图的提示，长按配置按钮 10s 以上，确认 LED 灯变成闪烁状态</view>
 		<cover-image style="margin:auto;position:absolute;top:0;left:0;bottom:0;right:0;width:200px;height:200px;" class="product" :src="selectProduct.imageUrl"></cover-image>
 		<view class="confirm"><radio-group @change="change"><radio>已确认上述操作</radio></radio-group></view>
-		<view class="next" :class="{'enable':confirm, 'disable':!confirm}"  @click="next">下一步</view>
+		<view class="bottom-group">
+			<view class="max-btn" :class="{'enable':confirm, 'disable':!confirm}"  @click="next">下一步</view>
+		</view>
 	</view>
 </template>
 
@@ -88,7 +90,7 @@
 		background-color:#10AB6C;
 	}
 	
-	.setting-device .next.disable{
+	.setting-device .max-btn.disable{
 		background-color:#8F8F8F;
 	}
 </style>

@@ -1,7 +1,7 @@
 <template>
 	<view class="service-detail">
 		<navbar :back="true" :url="back" :isTabPage='true' title="订阅服务"></navbar>
-		<view class="head">订阅信息</view> 
+		<view class="head"><label class="title-border"></label>订阅信息</view> 
 		<view class="icon-list-item border" style="border-top:1px solid #B1B1B1;">
 			<label class="label">订单编号</label>
 			<view class="value">
@@ -39,8 +39,8 @@
 			</view>
 		</view>
 		<view class="info">
-			<view class="head">订阅服务特享</view> 
-			<view class="service" v-for="desc in descriptions" :key="desc">{{desc}}</view>
+			<view class="head"><label style="position:relative;top:3px;margin-right:2px;display:inline-block;border-left:3px solid #10AB6C;height:20px;"></label>订阅服务特享</view> 
+			<view class="service" style="color:#5b5b5b;" v-for="desc in descriptions" :key="desc">{{desc}}</view>
 		</view>
 		<!-- <view class="page-bottom">
 			<view class="btn" @click="goToDevices">确定</view>
@@ -166,7 +166,6 @@
 	}
 	.service-detail > .info .head,
 	.service-detail > .head{
-		border-left:3px solid #10AB6C;
 		color:#333333;
 		font-size:20px;
 		font-weight:bold;
@@ -193,5 +192,12 @@
 		color:#DD524D;
 	}
 	
+	.service-detail .icon-list-item > label{
+		color:#6e6e6e;
+	}
+	
+	.service-detail .icon-list-item .value label{
+		color:#5b5b5b;
+	}
 	
 </style>
