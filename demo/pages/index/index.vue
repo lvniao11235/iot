@@ -23,12 +23,20 @@
 			</view>
 			<view class="qiun-charts">
 				<view><label class="title-border"></label>统计数据</view>
-				<view class="switch-btns">
-					<view style="margin-right:5px;" @click="changeLineData(1)" :class="{'selected':lineDataType == 1}">日</view>
-					<view style="margin-right:5px;" @click="changeLineData(2)" :class="{'selected':lineDataType == 2}">月</view>
-					<view @click="changeLineData(3)" :class="{'selected':lineDataType == 3}">年</view>
-				</view>
-				<canvas canvas-id="canvasLineA" id="canvasLineA" class="charts" disable-scroll=true @touchstart="touchLineA" @touchmove="moveLineA" @touchend="touchEndLineA"></canvas>
+				<template v-if="hasLineData">
+					<view class="switch-btns">
+						<view style="margin-right:5px;" @click="changeLineData(1)" :class="{'selected':lineDataType == 1}">日</view>
+						<view style="margin-right:5px;" @click="changeLineData(2)" :class="{'selected':lineDataType == 2}">月</view>
+						<view @click="changeLineData(3)" :class="{'selected':lineDataType == 3}">年</view>
+					</view>
+					<canvas canvas-id="canvasLineA" id="canvasLineA" class="charts" disable-scroll=true @touchstart="touchLineA" @touchmove="moveLineA" @touchend="touchEndLineA"></canvas>
+				</template>
+				<template v-else>
+					<view class="nolinedata">
+						<image src="../../static/images/nolinedata.png"></image>
+						<view>暂无数据！</view>
+					</view>
+				</template>
 			</view>
 		</view>
 		<view v-else>
@@ -51,8 +59,15 @@
 				</view>
 			</view>
 		</view>
-		<view class="pushinfo-dialog">
-			
+		<view class="pushinfo-dialog" v-if="showPushInfo">
+			<view class="pushinfo-header">
+				<label>{{'智能推荐'}}</label>
+				<image @click="closePushInfo" src="../../static/images/close.png"></image>
+			</view>
+			<view class="pushinfo-content">
+				<view>{{pushInfos[pushInfoType-1].content}}</view>
+				<view @click="pushInfoClick(pushInfoType)">{{pushInfos[pushInfoType-1].btnContent}}</view>
+			</view>
 		</view>
 	</view>
 </template>
@@ -104,7 +119,33 @@
 				],
 				weatherIcon:'/static/images/sunny.png',
 				cityWeatherData:{},
-				showExecute:true
+				showExecute:true,
+				showPushInfo:false,
+				pushInfos:[
+					{
+						content:"为了让您及时使用上干净的水源，建议您为净水器设置在7:30时定时开机",
+						btnContent:"去设置",
+						type:1,
+					},
+					{
+						content:"让定时关机帮您省钱，建议您为净水器设置每天21:30时定时关机",
+						btnContent:"去设置",
+						type:2,
+					},
+					{
+						content:"当前城市空气质量为中度污染，建议您一键开启所有空气净化器",
+						btnContent:"一键开机",
+						type:3,
+					}
+				],
+				pushInfoType:1,
+				lineData:[],
+				hasLineData:false,
+				lineColors:[
+					'#10AB6C', '#ED4040', '#4B92DF', '#08CFC4', '#F5A623',
+					'#6E58E5', '#DC3CF5', '#EECE1F', '#2F94AD', '#A443E8'
+					
+				]
 			}
 		},
 		computed:{
@@ -118,6 +159,10 @@
 						uni.navigateTo({
 							url:`../device/serviceDetail?orderId=${e.orderId}&type=1`
 						})
+					case "pushInfo":
+						this.pushInfoType = e.type;
+						this.showPushInfo = true;
+						break;
 				}
 			}
 			//this.$store.commit("setCurrentUser", {})
@@ -147,24 +192,7 @@
 									this.cityWeatherData = res.data.data.cityData;
 									this.changeWeatherIcon(res.data.data.cityData);
 								}
-								if(res.data.data && res.data.data.avgPm25Value){
-									this.times = [];
-									this.mins = [];
-									this.maxs = [];
-									this.averages = [];
-									for(let i=0; i< res.data.data.avgPm25Value.length; i++){
-										this.times.push(res.data.data.avgPm25Value[i].index)
-										this.averages.push(res.data.data.avgPm25Value[i].value.toFixed(2))
-										this.maxs.push((res.data.data.avgPm25Value[i].value + 10).toFixed(2))
-										this.mins.push((res.data.data.avgPm25Value[i].value - 10).toFixed(2))
-									}
-									uni.createSelectorQuery().select(".index-page").boundingClientRect(e=>{
-										this.cWidth = e.width;
-										this.cHeight = 200;
-										this.fillData(this.times, this.mins, this.averages, this.maxs)
-									}).exec();
-									
-								}
+								this.displayLineData(res.data.data);
 							})
 						} else {
 							this.$store.commit("setDevices", [])
@@ -212,24 +240,7 @@
 									this.cityWeatherData = res.data.data.cityData;
 									this.changeWeatherIcon(res.data.data.cityData);
 								}
-								if(res.data.data && res.data.data.avgPm25Value){
-									this.times = [];
-									this.mins = [];
-									this.averages = [];
-									for(let i=0; i< res.data.data.avgPm25Value.length; i++){
-										this.times.push(res.data.data.avgPm25Value[i].index)
-										this.averages.push(res.data.data.avgPm25Value[i].value.toFixed(2))
-									this.maxs = [];
-										this.maxs.push((res.data.data.avgPm25Value[i].value + 10).toFixed(2))
-										this.mins.push((res.data.data.avgPm25Value[i].value - 10).toFixed(2))
-									}
-									uni.createSelectorQuery().select(".index-page").boundingClientRect(e=>{
-										this.cWidth = e.width;
-										this.cHeight = 200;
-										this.fillData(this.times, this.mins, this.averages, this.maxs)
-									}).exec();
-									
-								}
+								this.displayLineData(res.data.data);
 							})
 						} else {
 							this.$store.commit("setDevices", [])
@@ -313,24 +324,7 @@
 									this.cityWeatherData = res.data.data.cityData;
 									this.changeWeatherIcon(res.data.data.cityData);
 								}
-								if(res.data.data && res.data.data.avgPm25Value){
-									this.times = [];
-									this.mins = [];
-									this.maxs = [];
-									this.averages = [];
-									for(let i=0; i< res.data.data.avgPm25Value.length; i++){
-										this.times.push(res.data.data.avgPm25Value[i].index)
-										this.averages.push(res.data.data.avgPm25Value[i].value.toFixed(2))
-										this.maxs.push((res.data.data.avgPm25Value[i].value + 10).toFixed(2))
-										this.mins.push((res.data.data.avgPm25Value[i].value - 10).toFixed(2))
-									}
-									uni.createSelectorQuery().select(".index-page").boundingClientRect(e=>{
-										this.cWidth = e.width;
-										this.cHeight = 200;
-										this.fillData(this.times, this.mins, this.averages, this.maxs)
-									}).exec();
-									
-								}
+								this.displayLineData(res.data.data);
 							})
 							return listFamilyBindDevices(res.data.data.id)
 						} else {
@@ -375,24 +369,7 @@
 					return;
 				}
 				getFamilyAvgData(type, this.currentAddress.id).then(res=>{
-					if(res.data.data && res.data.data.avgPm25Value){
-						this.times = [];
-						this.mins = [];
-						this.maxs = [];
-						this.averages = [];
-						for(let i=0; i< res.data.data.avgPm25Value.length; i++){
-							this.times.push(res.data.data.avgPm25Value[i].index)
-							this.averages.push(res.data.data.avgPm25Value[i].value)
-							this.maxs.push(res.data.data.avgPm25Value[i].value + 10)
-							this.mins.push(res.data.data.avgPm25Value[i].value - 10)
-						}
-						uni.createSelectorQuery().select(".index-page").boundingClientRect(e=>{
-							this.cWidth = e.width;
-							this.cHeight = 200;
-							this.fillData(this.times, this.mins, this.averages, this.maxs)
-						}).exec();
-						
-					}
+					this.displayLineData(res.data.data);
 				})
 			},
 			loginCancel(){
@@ -431,38 +408,71 @@
 				}
 				
 			},
-			fillData(times, mins, averages, maxs) {
+			displayLineData(data){
+				if(data && data.avgPm25Value){
+					let arr = [];
+					arr.push(...data.avgPm25Value);
+					this.lineData = [];
+					for(let i=0; i< arr.length; i++){
+						if(arr[i].values && 
+							arr[i].values.length > 0){
+							var e = {
+								name:'',
+								value:[],
+								time:[]
+							};
+							let temp = arr[i];
+							e.name = temp.deviceName;
+							for(let j=0; j<temp.values.length; j++){
+								
+								let time = this.$moment(new Date(parseInt(temp.values[j].time))).format("HH:mm");
+								if(e.time.indexOf(time) == -1){
+									e.time.push(time);
+									e.value.push(parseFloat(temp.values[j].value))
+								}
+							}
+							
+							this.lineData.push(e);
+						}
+					}
+					uni.createSelectorQuery().select(".index-page").boundingClientRect(e=>{
+						this.cWidth = uni.upx2px(750);;
+						this.cHeight = 200;
+						this.fillData(this.lineData)
+					}).exec();
+					this.hasLineData = true;
+				} else {
+					this.hasLineData = false;
+				}
+			},
+			fillData(data) {
 				
 				let LineA = {
 					categories: [],
 					series: []
 				};
-				LineA.categories = times;
-				LineA.series = [{
-					name:'mine',
-					data:maxs,
-					color:'#1890ff',
-					type:'line',
-					show:true,
-					pointShape:'circle',
-					legendShape:'line'
-				}, {
-					name:'average',
-					data:averages,
-					color:'#2fc25b',
-					type:'line',
-					show:true,
-					pointShape:'circle',
-					legendShape:'line'
-				}, {
-					name:'out_door',
-					data:mins,
-					color:'#facc14',
-					type:'line',
-					show:true,
-					pointShape:'circle',
-					legendShape:'line'
-				}];
+				let start = 0;
+				// if(data[0].time.length > 8){
+				// 	start = data[0].time.length - 8;
+				// }
+				let max = 0;
+				for(let i=1; i<data.length; i++){
+					if(data[i].time.length > data[max].time.length){
+						max = i;
+					}
+				}
+				LineA.categories = data[max].time.splice(start);
+				for(let i=0; i<data.length; i++){
+					LineA.series.push({
+						name:data[i].name,
+						data:data[i].value.splice(start),
+						color:this.lineColors[i],
+						type:'line',
+						show:true,
+						pointShape:'circle',
+						legendShape:'line'
+					})
+				}
 				this.showLineA("canvasLineA", LineA);
 			},
 					
@@ -491,8 +501,9 @@
 					animation: false,
 					enableScroll: true, //开启图表拖拽功能
 					xAxis: {
-						itemCount: 30,
+						itemCount: 50,
 						scrollAlign: 'left',
+						scrollShow: true, 
 					},
 					yAxis: {
 						min: 10,
@@ -522,7 +533,23 @@
 					}
 				});
 			},
-			
+			pushInfoClick(type){
+				let url = '';
+				switch(type){
+					case 1:
+						url = `/pages/device/settingTime?type=1`;
+						break;
+					case 2:
+						url = `/pages/device/settingTime?type=2`;
+						break;
+				}
+				uni.navigateTo({
+					url:url
+				})
+			},
+			closePushInfo(){
+				this.showPushInfo = false;
+			}
 		},
 		computed: {
 			...mapState(["currentAddress", "currentUser"])
@@ -789,16 +816,72 @@
 		}
 		
 		.pushinfo-dialog{
-			height:80px;
-			display:none;
 			width:calc(100% - 32px);
 			margin:0 auto;
 			box-shadow:0 0 5px #8F8F8F;
 			position:fixed;
-			bottom:50px;
+			bottom:10px;
 			left:0;
 			right:0;
 			background-color:#fff;
 			border-radius:5px;
+		}
+		
+		.pushinfo-dialog .pushinfo-header{
+			font-size:14px;
+			padding:2px 5px;
+		}
+		
+		.pushinfo-dialog .pushinfo-header > label:first-child{
+			font-weight:bold;
+		}
+		
+		.pushinfo-dialog .pushinfo-header > image:last-child{
+			font-weight:normal;
+			float:right;
+			height:14px;
+			width:14px;
+			position:relative;
+			top:5px;
+			right:5px;
+		}
+		
+		.pushinfo-dialog .pushinfo-content{
+			font-size:12px;
+			padding:5px;
+		}
+		
+		.pushinfo-dialog .pushinfo-content > view:first-child{
+			display:inline-block;
+			width:calc(100% - 100px);
+		}
+		
+		.pushinfo-dialog .pushinfo-content > view:last-child{
+			display:inline-block;
+			width:75px;
+			background-color:#10AB6C;
+			height:20px;
+			line-height:20px;
+			vertical-align:middle;
+			text-align:center;
+			color:#fff;
+			border-radius:3px;
+			float:right;
+			margin-top:7px;
+			margin-right:10px;
+		}
+		
+		.nolinedata image{
+			height:85px;
+			width:115px;
+			display:block;
+			margin:20px auto;
+			margin-bottom:5px;
+		}
+		
+		.nolinedata view{
+			text-align:center;
+			font-size:16px;
+			color:#adadad;
 		}
 </style>

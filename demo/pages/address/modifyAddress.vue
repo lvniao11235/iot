@@ -15,9 +15,9 @@
 					<lable class="fa fa-angle-right"></lable>
 				</view>
 			</view>
-			<view class="input-group">
-				<view class="input-ok" @click="createAddress">修改家庭</view>
-			</view>
+		</view>
+		<view class="bottom-group">
+			<view class="max-btn" @click="createAddress">修改家庭</view>
 		</view>
 	</view>
 </template>

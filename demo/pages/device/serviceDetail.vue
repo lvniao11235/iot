@@ -2,7 +2,7 @@
 	<view class="service-detail">
 		<navbar :back="true" :url="back" :isTabPage='true' title="订阅服务"></navbar>
 		<view class="head"><label class="title-border"></label>订阅信息</view> 
-		<view class="icon-list-item border" style="border-top:1px solid #B1B1B1;">
+		<view class="icon-list-item border" style="border-top:1px solid #f8f8f8;">
 			<label class="label">订单编号</label>
 			<view class="value">
 				<label>{{currentService.orderId}}</label>
