@@ -24,11 +24,11 @@
 			<view class="qiun-charts">
 				<view><label class="title-border"></label>统计数据</view>
 				<template v-if="hasLineData">
-					<view class="switch-btns">
+					<!-- <view class="switch-btns">
 						<view style="margin-right:5px;" @click="changeLineData(1)" :class="{'selected':lineDataType == 1}">日</view>
 						<view style="margin-right:5px;" @click="changeLineData(2)" :class="{'selected':lineDataType == 2}">月</view>
 						<view @click="changeLineData(3)" :class="{'selected':lineDataType == 3}">年</view>
-					</view>
+					</view> -->
 					<canvas canvas-id="canvasLineA" id="canvasLineA" class="charts" disable-scroll=true @touchstart="touchLineA" @touchmove="moveLineA" @touchend="touchEndLineA"></canvas>
 				</template>
 				<template v-else>
@@ -423,11 +423,13 @@
 							};
 							let temp = arr[i];
 							e.name = temp.deviceName;
+							let times = [];
 							for(let j=0; j<temp.values.length; j++){
 								
 								let time = this.$moment(new Date(parseInt(temp.values[j].time))).format("HH:mm");
-								if(e.time.indexOf(time) == -1){
-									e.time.push(time);
+								if(times.indexOf(time) == -1){
+									times.push(time)
+									e.time.push(new Date(parseInt(temp.values[j].time)));
 									e.value.push(parseFloat(temp.values[j].value))
 								}
 							}
@@ -483,8 +485,13 @@
 					type: 'line',
 					fontSize: 11,
 					padding:[15,15,15,15],
+					showToolTipTitle:true,
+					toolTipTitle:this.$moment(new Date).format("MM月DD日"),
+					toolTipTitleFormat:(option, index)=>{
+						return this.$moment(option.categories[index]).format("MM月DD日 HH:mm");
+					},
 					legend:{
-						show:true,
+						show:false,
 						padding:5,
 						lineHeight:11,
 						margin:5,
@@ -503,7 +510,11 @@
 					xAxis: {
 						itemCount: 50,
 						scrollAlign: 'left',
-						scrollShow: true, 
+						scrollShow: false,
+						labelCount:2,
+						format:val=>{
+							return this.$moment(val).format("HH:mm");
+						}
 					},
 					yAxis: {
 						min: 10,
@@ -514,8 +525,8 @@
 					},
 					width: _self.cWidth * _self.pixelRatio,
 					height: _self.cHeight * _self.pixelRatio,
-					dataLabel: true,
-					dataPointShape: true
+					dataLabel: false,
+					dataPointShape: false
 				});
 			},	
 			touchLineA(e) {
@@ -529,7 +540,7 @@
 				//下面是toolTip事件，如果滚动后不需要显示，可不填写
 				canvasObj['canvasLineA'].showToolTip(e, {
 					format: function(item, category) {
-						return category + ' ' + item.name + ':' + item.data
+						return item.name + ':' + item.data + "μg/m³"
 					}
 				});
 			},

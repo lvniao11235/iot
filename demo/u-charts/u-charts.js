@@ -1923,9 +1923,15 @@ function drawToolTip(textList, offset, opts, config, context, eachSpacing, xAxis
   var textWidth = textList.map(function(item) {
     return measureText(item.text, config.fontSize);
   });
+  if(opts.toolTipTitle && opts.toolTipTitle.length > 0){
+  	let titleWidth = measureText(opts.toolTipTitle, config.fontSize);
+	textWidth.push(titleWidth);
+  }
   var toolTipWidth = legendWidth + legendMarginRight + 4 * config.toolTipPadding + Math.max.apply(null, textWidth);
   var toolTipHeight = 2 * config.toolTipPadding + textList.length * config.toolTipLineHeight;
-
+  if(opts.toolTipTitle && opts.toolTipTitle.length > 0){
+  	toolTipHeight = 2 * config.toolTipPadding + (textList.length+1) * config.toolTipLineHeight;
+  }
   // if beyond the right border
   if (offset.x - Math.abs(opts._scrollDistance_) + arrowWidth + toolTipWidth > opts.width) {
     isOverRightBorder = true;
@@ -1965,7 +1971,7 @@ function drawToolTip(textList, offset, opts, config, context, eachSpacing, xAxis
       context.beginPath();
       context.setFillStyle(item.color);
       var startX = offset.x + arrowWidth + 2 * config.toolTipPadding;
-      var startY = offset.y + (config.toolTipLineHeight - config.fontSize) / 2 + config.toolTipLineHeight * index +
+      var startY = offset.y + (config.toolTipLineHeight - config.fontSize) / 2 + config.toolTipLineHeight * (index+1) +
         config.toolTipPadding + 1;
       if (isOverRightBorder) {
         startX = offset.x - toolTipWidth - arrowWidth + 2 * config.toolTipPadding;
@@ -1976,13 +1982,25 @@ function drawToolTip(textList, offset, opts, config, context, eachSpacing, xAxis
   });
 
   // draw text list
-
+  var startX = offset.x + arrowWidth + 2 * config.toolTipPadding + legendWidth + legendMarginRight;
+  if (isOverRightBorder) {
+    startX = offset.x - toolTipWidth - arrowWidth + 2 * config.toolTipPadding + +legendWidth + legendMarginRight;
+  }
+  var startY = offset.y + (config.toolTipLineHeight - config.fontSize) / 2 +
+    config.toolTipPadding;
+  context.beginPath();
+  context.setFontSize(config.fontSize);
+  context.setFillStyle(toolTipOption.fontColor);
+  context.fillText(opts.toolTipTitle, startX, startY + config.fontSize);
+  context.closePath();
+  context.stroke();
+  
   textList.forEach(function(item, index) {
     var startX = offset.x + arrowWidth + 2 * config.toolTipPadding + legendWidth + legendMarginRight;
     if (isOverRightBorder) {
       startX = offset.x - toolTipWidth - arrowWidth + 2 * config.toolTipPadding + +legendWidth + legendMarginRight;
     }
-    var startY = offset.y + (config.toolTipLineHeight - config.fontSize) / 2 + config.toolTipLineHeight * index +
+    var startY = offset.y + (config.toolTipLineHeight - config.fontSize) / 2 + config.toolTipLineHeight * (index+1) +
       config.toolTipPadding;
     context.beginPath();
     context.setFontSize(config.fontSize);
@@ -2818,10 +2836,19 @@ function drawXAxis(categories, opts, config, context) {
       if (i % ratio !== 0) {
         newCategories.push("");
       } else {
-        newCategories.push(categories[i]);
+		  if(opts.xAxis.format){
+			newCategories.push(opts.xAxis.format(categories[i]));
+		  } else {
+			newCategories.push(categories[i]);
+		  }
       }
     }
-    newCategories[cgLength - 1] = categories[cgLength - 1];
+	if(opts.xAxis.format){
+		newCategories[cgLength - 1] = opts.xAxis.format(categories[cgLength - 1]);
+	} else {
+		newCategories[cgLength - 1] = categories[cgLength - 1];
+	}
+    
 
     var xAxisFontSize = opts.xAxis.fontSize || config.fontSize;
     if (config._xAxisTextAngle_ === 0) {
@@ -4829,6 +4856,14 @@ Charts.prototype.showToolTip = function(e) {
           textList = _getToolTipData.textList,
           offset = _getToolTipData.offset;
         offset.y = _touches$.y;
+		if(this.opts.showToolTipTitle){
+			if(this.opts.toolTipTitleFormat){
+				opts.toolTipTitle = this.opts.toolTipTitleFormat(this.opts, index);
+			} else {
+				opts.toolTipTitle = this.opts.toolTipTitle + " " + this.opts.categories[index]
+			}
+			
+		}
         opts.tooltip = {
           textList: textList,
           offset: offset,
