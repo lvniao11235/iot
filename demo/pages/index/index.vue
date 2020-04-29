@@ -17,9 +17,9 @@
 		</view>
 		<view v-if="devices && devices.length > 0">
 			<view class="parameters" style="overflow:hidden">
-				<view><label>{{familyData && familyData.airQuality ? familyData.airQuality:'--'}}</label>室内环境</view>
-				<view style="margin-top:3px;" class="info"><label>温度：{{familyData && familyData.currentTemperature ? familyData.currentTemperature:'--'}}</label><label>湿度：{{familyData && familyData.currentHumidity?familyData.currentHumidity:'--'}}</label></view>
-				<view style="margin-top:3px;" class="info" ><label style="width:200px;">PM2.5：{{familyData && familyData.pm25?familyData.pm25:'--'}}</label></view>
+				<view><label style="width:auto;margin-bottom:5px;">{{familyData && familyData.airQuality ? familyData.airQuality:'--'}}</label>室内环境</view>
+				<view style="margin-bottom:5px;" class="info"><label>温度：{{familyData && familyData.currentTemperature ? familyData.currentTemperature:'--'}}</label><label>湿度：{{familyData && familyData.currentHumidity?familyData.currentHumidity:'--'}}</label></view>
+				<view style="margin-bottom:5px;" class="info" ><label style="width:200px;">PM2.5：{{familyData && familyData.pm25?familyData.pm25:'--'}}</label></view>
 			</view>
 			<view class="qiun-charts">
 				<view><label class="title-border"></label>统计数据</view>
@@ -29,7 +29,7 @@
 						<view style="margin-right:5px;" @click="changeLineData(2)" :class="{'selected':lineDataType == 2}">月</view>
 						<view @click="changeLineData(3)" :class="{'selected':lineDataType == 3}">年</view>
 					</view> -->
-					<canvas canvas-id="canvasLineA" id="canvasLineA" class="charts" disable-scroll=true @touchstart="touchLineA" @touchmove="moveLineA" @touchend="touchEndLineA"></canvas>
+					<canvas canvas-id="canvasLineA" disable-scroll=true id="canvasLineA" class="charts" @touchstart="touchLineA" @touchmove="moveLineA" @touchend="touchEndLineA"></canvas>
 				</template>
 				<template v-else>
 					<view class="nolinedata">
@@ -90,8 +90,8 @@
 		data() {
 			return {
 				showDialog:false,
-				cWidth: '',
-				cHeight: '',
+				cWidth: uni.upx2px(750),
+				cHeight: uni.upx2px(500),
 				tips: '',
 				pixelRatio: 1,
 				serverData: '',
@@ -152,6 +152,9 @@
 			...mapState(["currentAddress", "devices", "currentUser", "address", "currentFamilyData", "testweather"])
 		},
 		onLoad(e) {
+			this.cWidth = uni.upx2px(750);
+			this.cHeight = uni.upx2px(500);
+			_self = this;
 			this.showExecute = false;
 			if(e.goto){
 				switch(e.goto){
@@ -212,7 +215,7 @@
 				return;
 			}
 			this.wechatLogin();
-			_self = this;
+			
 			
 		},
 		onShow(){
@@ -437,11 +440,7 @@
 							this.lineData.push(e);
 						}
 					}
-					uni.createSelectorQuery().select(".index-page").boundingClientRect(e=>{
-						this.cWidth = uni.upx2px(750);;
-						this.cHeight = 200;
-						this.fillData(this.lineData)
-					}).exec();
+					this.fillData(this.lineData)
 					this.hasLineData = true;
 				} else {
 					this.hasLineData = false;
@@ -508,10 +507,12 @@
 					animation: false,
 					enableScroll: true, //开启图表拖拽功能
 					xAxis: {
-						itemCount: 50,
+						itemCount: 8,
+						scrollShow: true,
 						scrollAlign: 'left',
-						scrollShow: false,
 						labelCount:2,
+						scrollColor:"#fff",
+						scrollBackgroundColor:"#fff",
 						format:val=>{
 							return this.$moment(val).format("HH:mm");
 						}
@@ -526,7 +527,10 @@
 					width: _self.cWidth * _self.pixelRatio,
 					height: _self.cHeight * _self.pixelRatio,
 					dataLabel: false,
-					dataPointShape: false
+					dataPointShape: false,
+					extra: {
+						lineStyle: 'straight'
+					},
 				});
 			},	
 			touchLineA(e) {
@@ -754,7 +758,7 @@
 	
 		/* 通用样式 */
 		.qiun-charts {
-			width: 100%;
+			width: 750upx;
 			height: 500upx;
 			background-color: #FFFFFF;
 		}
@@ -765,21 +769,21 @@
 		}
 	
 		.charts {
-			width: 100%;
+			width: 750upx;
 			height: 500upx;
 			background-color: #FFFFFF;
 		}
 	
 		/* 横屏样式 */
 		.qiun-charts-rotate {
-			width: 100%;
+			width: 750upx;
 			height: 1100upx;
 			background-color: #FFFFFF;
 			padding: 25upx;
 		}
 	
 		.charts-rotate {
-			width: 100%;
+			width: 750upx;
 			height: 1100upx;
 			background-color: #FFFFFF;
 		}
