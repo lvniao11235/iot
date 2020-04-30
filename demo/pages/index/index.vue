@@ -18,7 +18,7 @@
 		<view v-if="devices && devices.length > 0">
 			<view class="parameters" style="overflow:hidden">
 				<view><label style="width:auto;margin-bottom:5px;">{{familyData && familyData.airQuality ? familyData.airQuality:'--'}}</label>室内环境</view>
-				<view style="margin-bottom:5px;" class="info"><label>温度：{{familyData && familyData.currentTemperature ? familyData.currentTemperature:'--'}}</label><label>湿度：{{familyData && familyData.currentHumidity?familyData.currentHumidity:'--'}}</label></view>
+				<view style="margin-bottom:5px;margin-top:10px;" class="info"><label>温度：{{familyData && familyData.currentTemperature ? familyData.currentTemperature:'--'}}</label><label>湿度：{{familyData && familyData.currentHumidity?familyData.currentHumidity:'--'}}</label></view>
 				<view style="margin-bottom:5px;" class="info" ><label style="width:200px;">PM2.5：{{familyData && familyData.pm25?familyData.pm25:'--'}}</label></view>
 			</view>
 			<view class="qiun-charts">
@@ -508,6 +508,7 @@
 					enableScroll: true, //开启图表拖拽功能
 					xAxis: {
 						itemCount: 8,
+						justShowEnd:true,
 						scrollShow: true,
 						scrollAlign: 'left',
 						labelCount:2,
@@ -683,7 +684,6 @@
 
 	.index-page .parameters {
 		width: calc(90% - 20px);
-		height: 100px;
 		margin: auto;
 		background-color: #fff;
 		box-shadow: 0 5px 10px #C0C0C0;
@@ -693,6 +693,9 @@
 		padding: 10px;
 		color:#585858;
 		font-size:16px;
+		background-image:url(../../static/images/house.png);
+		background-repeat:no-repeat no-repeat;
+		background-position:bottom right;
 	}
 
 	.index-page .parameters>view:first-child {

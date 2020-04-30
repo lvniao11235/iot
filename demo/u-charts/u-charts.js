@@ -2853,10 +2853,18 @@ function drawXAxis(categories, opts, config, context) {
     var xAxisFontSize = opts.xAxis.fontSize || config.fontSize;
     if (config._xAxisTextAngle_ === 0) {
       newCategories.forEach(function(item, index) {
+		
         var offset = - measureText(item, xAxisFontSize) / 2;
         if(boundaryGap == 'center'){
           offset+=eachSpacing / 2;
         }
+		
+		if(opts.xAxis.justShowEnd){
+			if(index != 0 && index != newCategories.length - 1){
+				return;
+			}
+		}
+		
         context.beginPath();
         context.setFontSize(xAxisFontSize);
         context.setFillStyle(opts.xAxis.fontColor || '#666666');
@@ -2876,6 +2884,13 @@ function drawXAxis(categories, opts, config, context) {
         if(boundaryGap == 'center'){
           offset+=eachSpacing / 2;
         }
+		
+		if(opts.xAxis.justShowEnd){
+			if(index != 0 && index != newCategories.length - 1){
+				return;
+			}
+		}
+		
         var _calRotateTranslate = calRotateTranslate(xAxisPoints[index] + eachSpacing / 2, startY + xAxisFontSize / 2 + 5, opts.height),
           transX = _calRotateTranslate.transX,
           transY = _calRotateTranslate.transY;

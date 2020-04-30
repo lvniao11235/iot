@@ -1,17 +1,11 @@
 <template>
 	<view class="manager-address">
 		<navbar :back="true" title="管理家庭"></navbar>
-		<template v-for="addr in address">
-			<view :key="addr.id" class="icon-list-item">
-				<label class="icon"><image style="height:14px;width:14px;top:0;" src="../../static/images/building.png"></image></label>
-				<label class="label">{{addr.familyName}}</label>
-				<view class="btns">
-					<label @click="modify(addr.id)">修改</label>
-					<label @click="remove(addr.id)" style="color:red;">删除</label>
-				</view>
-			</view>
-			<view class="line-separate" :key="addr.id"></view>
-		</template>
+		<uni-swipe-action >
+			<uni-swipe-action-item v-for="(addr, index) in address" :key="addr.id"  :options="options2" @change="change" @click="bindClick($event, addr)">
+				<view class="cont"><image src="../../static/images/building.png"></image>{{addr.familyName}}</view>
+			</uni-swipe-action-item>
+		</uni-swipe-action>
 		<view class="bottom-group">
 			<view class="max-btn" @click="create">添加</view>
 		</view>
@@ -22,14 +16,57 @@
 <script>
 	import { mapState } from 'vuex';
 	import { listFamilyBindDevices, deleteFamily, listFamilys } from '@/api/address';
-	
+	import uniSwipeAction from '@/components/uni-swipe-action/uni-swipe-action.vue'
+	import uniSwipeActionItem from '@/components/uni-swipe-action-item/uni-swipe-action-item.vue'
 	export default {
+		components: {
+			uniSwipeAction,
+			uniSwipeActionItem
+		},
+		data:function(){
+			return {
+				isOpened: true,
+				options2: [{
+						text: '编辑',
+						icon:'/static/images/amodify.png',
+						style: {
+							backgroundColor: '#F2BD7C'
+						}
+					}, {
+						text: '删除',
+						icon:'/static/images/remove.png',
+						style: {
+							backgroundColor: '#F27C7F'
+						}
+					}],
+				showButton:[]
+			}
+		},
 		computed:{
 			...mapState(["address", "currentAddress", "currentUser"]) 
+		},
+		onLoad(){
+			this.address.forEach(x=>{
+				this.showButton.push(false);
+			})
 		},
 		mounted(){
 		},
 		methods:{
+			bindClick(e, addr) {
+				if(e.content.text == "编辑"){
+					this.modify(addr.id);
+				} else if (e.content.text == "删除"){
+					this.remove(addr.id);
+				}
+			},
+			change(e) {
+				let flag = !this.showButton[e];
+				for(let i=0; i<this.showButton.length; i++){
+					this.showButton[i] = false;
+				}
+				this.showButton[e] = flag;
+			},
 			modify(id){
 				uni.navigateTo({
 					url:'./modifyAddress' + '?id=' + id
@@ -84,6 +121,7 @@
 </script>
 
 <style>
+	
 	.manager-address .icon-list-item .icon{
 		height:16px !important;
 		
@@ -104,5 +142,25 @@
 		color:#fff;
 		text-align:center;
 		border-radius:2px;
+	}
+	
+	.cont {
+			flex: 1;
+			height: 45px;
+			line-height: 45px;
+			padding: 0 15px;
+			position: relative;
+			background-color: #fff;
+			font-size: 15px;
+			border-bottom-color: #F5F5F5;
+			border-bottom-width: 1px;
+			border-bottom-style: solid;
+		}
+	.cont image{
+		height:14px;
+		width:14px;
+		top:0;
+		display:inline-block;
+		margin-right:5px;
 	}
 </style>
